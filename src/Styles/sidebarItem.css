@@ -1,0 +1,8 @@
+/* Custom hover color */
+.ant-menu-item:hover {
+    background-color: #F7D47A !important}
+    .ant-menu-item-icon :hover {
+        background-color: #ffff!important}
+        .ant-menu > .ant-menu-submenu:hover{
+            color: aqua;
+        }

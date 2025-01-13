@@ -1,0 +1,24 @@
+.ant-input-password.custom_Input_Hover {
+  border-color: #d9e1e7;
+}
+
+.ant-input-password.custom_Input_Hover:focus,
+.ant-input-password.custom_Input_Hover:hover,
+.ant-input-password.custom_Input_Hover:focus-within {
+  border-color: #f7d47a !important;
+  box-shadow: 0 0 0 2px rgba(247, 212, 122, 0.3) !important;
+}
+
+.ant-input-password.custom_Input_Hover:focus,
+.ant-input-password.custom_Input_Hover:active {
+  border-color: #f7d47a !important;
+}
+/* Customizing the icon's color on focus */
+.custom_Input_Hover .ant-input-affix-wrapper:focus .ant-input-suffix svg {
+  color: #f7d47a !important; /* Set the color to your desired color */
+}
+
+/* Optionally, if you want to customize the icon when it's focused */
+.custom_Input_Hover .ant-input-affix-wrapper:focus .ant-input-suffix svg {
+  color: #f7d47a !important; /* Ensure golden color on focus */
+}

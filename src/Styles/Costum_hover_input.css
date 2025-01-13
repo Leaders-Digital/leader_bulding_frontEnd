@@ -1,0 +1,21 @@
+/* Base styles for Ant Input */
+div.custom_Input_hover .ant-input {
+  border-color: #d9e1e7 !important;
+}
+
+/* On focus, hover, or active states */
+div.custom_Input_hover .ant-input:focus,
+div.custom_Input_hover .ant-input:hover,
+div.custom_Input_hover .ant-input:focus-within {
+  border-color: #f7d47a !important;
+  box-shadow: 0 0 0 2px rgba(247, 212, 122, 0.3) !important;
+  border-width: 100px;
+}
+
+/* Target the wrapper */
+div.custom_Input_hover .ant-input-affix-wrapper:focus,
+div.custom_Input_hover .ant-input-affix-wrapper:hover,
+div.custom_Input_hover .ant-input-affix-wrapper:focus-within {
+  border-color: #f7d47a !important;
+  box-shadow: 0 0 0 2px rgba(247, 212, 122, 0.3) !important;
+}
