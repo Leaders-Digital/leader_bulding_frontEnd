@@ -1,39 +1,22 @@
 /* eslint-disable no-unused-vars */
 
-import React, { useState } from "react";
+import React, { Children, useState } from "react";
 import { Layout, Button } from "antd";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { Outlet } from "react-router-dom";
 import Sidebar from "../Components/SideBar/Sidebar";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { HomeIcon, ProfileIcon } from "../Components/SideBar/icons";
+import routes from "../Routes/DashboardRoutes"
+import { UseAuth } from "../Contexts/AuthContext";
 
 const { Header, Content } = Layout;
 
 const MainLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
-
-  const routes = [
-    {
-      path: "/home",
-      name: "Home",
-      icon: <Icon icon="hugeicons:advertisement" width="24" height="24" />,
-      hovIcon:<Icon icon="hugeicons:activity-01" width="24" height="24" />
-    },
-    {
-      path: "/profile",
-      name: "Profile",
-      icon: <Icon icon="hugeicons:advertisement" width="24" height="24" />,
-      hovIcon:<Icon icon="hugeicons:activity-01" width="24" height="24" />
-    },
-    {
-      path: "/settings",
-      name: "Settings",
-      icon: <Icon icon="hugeicons:advertisement" width="24" height="24" />,
-      hovIcon:<Icon icon="hugeicons:activity-01" width="24" height="24" />
-    },
-  ];
-
+console.log("rouuuuuut",routes)
+  const{isAuthenticated}=UseAuth()
+  console.log("auth from layout",isAuthenticated)
   return (
     <Layout className="min-h-screen">
       <Sidebar

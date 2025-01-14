@@ -11,6 +11,7 @@ export const UseAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
+  const [isLoading,setIsloading]=useState(true)
   const navigate = useNavigate();
 
   const { data, error } = useSWR("/user/me", getCurrentUser, {
@@ -24,6 +25,7 @@ export const AuthProvider = ({ children }) => {
       if (error.response && error.response.status === 401) {
         setIsAuthenticated(false);
         setUser(null);
+        setIsloading(false)
         navigate("/login");
       }
     }
@@ -34,6 +36,7 @@ export const AuthProvider = ({ children }) => {
       console.log("dataaa from the auth context", data);
       setIsAuthenticated(true);
       setUser(data);
+      isLoading(false)
     }
   }, [data]);
 
@@ -53,5 +56,9 @@ export const AuthProvider = ({ children }) => {
     login,
     logout,
   };
+  if(isLoading){
+    return null
+  }
+  console.log("hiiiiiiiiiii",isAuthenticated)
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
