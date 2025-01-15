@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useSWR, { mutate } from "swr";
 import { getCurrentUser } from "../API/Auth";
+import useCurrentUser from "../Hooks/useUser";
 
 const AuthContext = createContext();
 export const UseAuth = () => useContext(AuthContext);
@@ -14,11 +15,8 @@ export const AuthProvider = ({ children }) => {
   //const [isLoading,setIsloading]=useState(true)
   const navigate = useNavigate();
 
-  const { data, error } = useSWR("/user/me", getCurrentUser, {
-    revalidateOnFocus: false,
-    shouldRetryOnError: false,
-  });
-  
+  const { data, error } = useCurrentUser()
+  console.log( "auth contxt",data,error)
   useEffect(() => {
     if (data) {
   
@@ -32,7 +30,7 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(false);
         setUser(null);
        // setIsloading(false)
-        navigate("/login");
+        //navigate("/login");
       }
     }
   }, [error, navigate,data]);
@@ -62,6 +60,6 @@ export const AuthProvider = ({ children }) => {
 
   }*/
 
-  console.log("hiiiiiiiiiii",isAuthenticated)
+ 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
