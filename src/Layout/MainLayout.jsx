@@ -29,7 +29,7 @@ console.log("rouuuuuut",routes)
         <Header className="p-0 bg-white flex justify-between items-center shadow-md lg:block hidden h-16">
           <div className="text-lg">My Application</div>
         </Header>
-       <div className="h-36 w-full">
+       <div className="h-28 w-full">
 hiiiiiiiiiiiiiiiiiiiiiiiii
        </div>
         <Content className=" p-6 flex-1 overflow-auto bg-white rounded-lg mb-4 mr-7 m-2  ">

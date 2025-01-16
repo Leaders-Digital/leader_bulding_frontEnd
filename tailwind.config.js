@@ -12,6 +12,9 @@ export default {
           500: "#F7D47A",
         },
       },
+      fontFamily: {
+        jakarta: ['"Plus Jakarta Sans"', "sans-serif"],
+      },
     },
   },
   plugins: [],
