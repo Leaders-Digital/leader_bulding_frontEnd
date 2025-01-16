@@ -18,19 +18,21 @@ console.log("rouuuuuut",routes)
   const{isAuthenticated}=UseAuth()
   console.log("auth from layout",isAuthenticated)
   return (
-    <Layout className="min-h-screen">
+    <Layout className="h-screen overflow-hidden">
       <Sidebar
         routes={routes}
         collapsed={collapsed}
         setCollapsed={setCollapsed}
       />
 
-      <Layout>
-        <Header className="p-0 bg-white flex justify-between items-center shadow-md lg:block hidden">
+      <Layout className=" flex-1 overflow-hidden">
+        <Header className="p-0 bg-white flex justify-between items-center shadow-md lg:block hidden h-16">
           <div className="text-lg">My Application</div>
         </Header>
-
-        <Content className="m-6 p-6 min-h-[280px] bg-white rounded-lg">
+       <div className="h-36 w-full">
+hiiiiiiiiiiiiiiiiiiiiiiiii
+       </div>
+        <Content className=" p-6 flex-1 overflow-auto bg-white rounded-lg mb-4 mr-7 m-2  ">
           <Outlet />
         </Content>
       </Layout>

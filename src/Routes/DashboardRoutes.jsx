@@ -2,6 +2,9 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import MainLayout from "../Layout/MainLayout";
 import Home from "../Pages/Auth/Dashbord/Home";
 import clientManagementRoutes from "./clientsManagement";
+import UsersTable from "../Pages/Auth/Dashbord/Pages/UserManagementPage/usersTable";
+import UserManagementPage from "../Pages/Auth/Dashbord/Pages/UserManagementPage/userManagementPage";
+
 
 const dashboardRoutes = [
   {   
@@ -12,7 +15,7 @@ const dashboardRoutes = [
       {
         path: "users",
         name:"Gestion Utilisateurs",
-        element: <Home />,
+        element: <UserManagementPage/>   ,
         protected: true,
         icon: <Icon icon="hugeicons:edit-user-02" width="24" height="24"  />,
         

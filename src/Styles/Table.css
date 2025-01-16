@@ -1,0 +1,28 @@
+/* src/Styles/Table.css */
+.custom-table-row {
+    box-shadow: 0 2px 5px rgba(229, 229, 233, 1); 
+    margin-bottom: 10px; 
+    background-color: #fff; 
+    border-radius: 5px; 
+    overflow: hidden; 
+    transition: box-shadow 0.2s ease; 
+  }
+  
+  .custom-table-row:hover {
+    box-shadow: 0 4px 10px rgba(200, 200, 210, 1); 
+  }
+  /* src/Styles/Table.css */
+
+  .ant-pagination {
+    display: flex;  
+    justify-content: center;  /* Centers pagination horizontally */
+    margin-top: 20px;  /* Space between table and pagination */
+    padding-left: 0;
+    padding-right: 0;
+  }
+  
+  /* Optional: Ensure there's space between the table and pagination */
+  .ant-table {
+    margin-bottom: 20px;
+  }
+  
