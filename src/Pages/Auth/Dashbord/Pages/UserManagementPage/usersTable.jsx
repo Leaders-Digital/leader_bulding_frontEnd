@@ -7,7 +7,7 @@ const UsersTable = () => {
     const[filter,setFilter]=useState("")
     const[pagination,setPagination]=useState({current:1,pageSize:10})
 
-    const{users,isLoading,error,totalPages}=userUsers(filter,pagination)
+    const{users,isLoading,error,totalPages,totalItems}=userUsers(filter,pagination)
     const handleTableChange=(pagination ,filters)=>{
        console.log("from antdesing",filters.role)
       const selectedFilter = filters.role ?filters.role[0]:""
@@ -26,7 +26,7 @@ if(!isLoading)console.log("from table page ",users)
       pagination={{
           current:pagination.current,
           pageSize:pagination.pageSize,
-          total:totalPages*pagination.pageSize,
+          total:totalItems,
           onchange:handleTableChange
       
       }}

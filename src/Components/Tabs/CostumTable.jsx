@@ -1,4 +1,4 @@
-import { Table } from 'antd'
+import { Pagination, Table } from 'antd'
 import React from 'react'
 import "../../Styles/Table.css"
 const CostumTable = ({
@@ -26,7 +26,15 @@ const CostumTable = ({
       loading={loading} 
       onChange={onChange} 
       rowClassName={()=>'custom-table-row'}
-      className='w-full'
+      className='w-full '
+    />
+    <Pagination
+    showQuickJumper
+    current={pagination.current}
+    pageSize={pagination.pageSize}
+    total={pagination.total}
+    onChange={onchange}
+    
     />
     </div>
   )

@@ -18,6 +18,7 @@ const userUsers = (
     error,
     isLoading,
     totalPages: data?.totalPages,
+    totalItems: data?.totalItems,
   };
 };
 export default userUsers;

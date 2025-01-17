@@ -75,7 +75,7 @@ const getIconColor = (routePath)=>{
          
         />
         <div className="p-4 flex justify-center items-center bg-white rounded-t-2xl mb-5">
-         <img src={logo} alt="logo" className={`${collapsed?"h-6 w-6 ml-2 translate-x-0":"h-28 w-26"}`} />
+         <img src={logo} alt="logo" className={`${collapsed?"h-6 w-6 ml-2 translate-x-0":"h-28 w-26 hover:filter drop-shadow-[0_4px_6px_rgba(0,0,0,0.4)]"}`} />
         </div>
         <div  className=" w-full h-10 flex flex-row items-center justify-center px-4 mt-2">
           {collapsed?<Icon icon="hugeicons:search-01" width="20" height="20"  style={{color: "#3A3541"}}  />:<Input
