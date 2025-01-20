@@ -23,7 +23,7 @@ const UsersTable = () => {
     const currentPage = pagination.current>totalPages?totalPages:pagination.current
 if(!isLoading)console.log("from table page ",users)
   return (
-    <div className='w-full h-full ' > {!isLoading?(<CostumTable
+    <div className='w-full h-4/5 ' > {!isLoading?(<CostumTable
       columns={userscolumns}
       data={users}
       loading={isLoading}

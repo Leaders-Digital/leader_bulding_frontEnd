@@ -22,7 +22,7 @@ const CostumTable = ({
    }
   return (
     <div className='w-full h-full flex flex-col '  >
-<div className='flex-1 overflow-y-auto'><Table
+<div className='flex-1 overflow-y-auto flex-grow min-h-[35rem] '><Table
       columns={styledColumns} 
       dataSource={data}
       pagination={false} 
@@ -30,14 +30,17 @@ const CostumTable = ({
       onChange={onChange} 
       rowClassName={()=>'custom-table-row'}
       className='w-full '
+      size='middle'
     /></div>
 
-    <div className=''> <Pagination
+    <div className='flex items-center justify-center   pt-4  bg-white   w-full justify-items-center rounded-xl '> <Pagination
     showQuickJumper
     current={pagination.current}
     pageSize={pagination.pageSize}
     total={pagination.total}
     onChange={handlePaginationTable}
+    responsive={false}
+    className='mb-4'
     
     
     /></div>
