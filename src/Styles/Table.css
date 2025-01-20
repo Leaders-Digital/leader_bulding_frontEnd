@@ -4,7 +4,7 @@
     margin-bottom: 10px; 
     background-color: #fff; 
     border-radius: 5px; 
-    overflow: hidden; 
+    /*overflow: hidden; */
     transition: box-shadow 0.2s ease; 
   }
   

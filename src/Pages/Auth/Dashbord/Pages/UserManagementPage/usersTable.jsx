@@ -1,37 +1,43 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import userUsers from '../../../../../Hooks/useUsers'
 import CostumTable from '../../../../../Components/Tabs/CostumTable'
 import userscolumns from '../../../../../Utils/usersColums'
+import { Skeleton } from 'antd'
 
 const UsersTable = () => {
     const[filter,setFilter]=useState("")
     const[pagination,setPagination]=useState({current:1,pageSize:10})
 
     const{users,isLoading,error,totalPages,totalItems}=userUsers(filter,pagination)
-    const handleTableChange=(pagination ,filters)=>{
-       console.log("from antdesing",filters.role)
-      const selectedFilter = filters.role ?filters.role[0]:""
+    useEffect(()=>{setPagination((prevstate)=>({...prevstate,current:1}) )},[filter])
+    const handleTableChange=(newPagination ,filters)=>{
+      let selectedFilter=""
+     
+      if (filters){  selectedFilter = filters?.role ?filters.role[0]:""}
+    console.log("filters",filters)
+    console.log("new pagination",newPagination)
      setFilter(selectedFilter)
-     setPagination({
-        current:pagination.current,
-        pageSize:pagination.pageSize
-     })
+    setPagination({current:newPagination?.current || 1 ,pageSize:newPagination.pageSize|| 10 })
+    
     }
+    const currentPage = pagination.current>totalPages?totalPages:pagination.current
 if(!isLoading)console.log("from table page ",users)
   return (
-    <div className='w-full h-full overflow-hidden' > {!isLoading?(<CostumTable
+    <div className='w-full h-full ' > {!isLoading?(<CostumTable
       columns={userscolumns}
       data={users}
       loading={isLoading}
       pagination={{
-          current:pagination.current,
+          current:currentPage,
           pageSize:pagination.pageSize,
           total:totalItems,
-          onchange:handleTableChange
+          onChange:(page,pageSize)=>{
+            setPagination({current:page,pageSize})
+          }
       
       }}
       onChange={handleTableChange}
-      />):null}
+      />):<Skeleton active paragraph={{rows:15}} className='mt-5 bg-white'/>}
 
 
     </div>

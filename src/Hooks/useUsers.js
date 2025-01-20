@@ -12,7 +12,7 @@ const userUsers = (
       revalidateOnFocus: false,
     }
   );
-  console.log("use users hook", data);
+
   return {
     users: data?.data,
     error,

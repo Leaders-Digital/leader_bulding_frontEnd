@@ -16,26 +16,32 @@ const CostumTable = ({
         style: { textAlign: 'center' }, 
       }),
     }));
+   console.log("from costum table",pagination)
+   const handlePaginationTable=(page,pageSize)=>{
+   onChange({current:page,pageSize: pageSize})
+   }
   return (
-    <div className='w-full h-full' >
-
-<Table
+    <div className='w-full h-full flex flex-col '  >
+<div className='flex-1 overflow-y-auto'><Table
       columns={styledColumns} 
       dataSource={data}
-      pagination={pagination} 
+      pagination={false} 
       loading={loading} 
       onChange={onChange} 
       rowClassName={()=>'custom-table-row'}
       className='w-full '
-    />
-    <Pagination
+    /></div>
+
+    <div className=''> <Pagination
     showQuickJumper
     current={pagination.current}
     pageSize={pagination.pageSize}
     total={pagination.total}
-    onChange={onchange}
+    onChange={handlePaginationTable}
     
-    />
+    
+    /></div>
+   
     </div>
   )
 }

@@ -5,7 +5,7 @@ import ProtectedRoutes from "./Routes/ProtectedRoutes";
 import { AuthProvider } from "./Contexts/AuthContext";
 
 function App() {
-  console.log("from app js ",routes)
+  
   const routing = useRoutes(
     routes.map((route) => {
       if (route.protected) {

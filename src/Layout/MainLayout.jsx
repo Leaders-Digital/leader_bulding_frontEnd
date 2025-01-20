@@ -14,9 +14,9 @@ const { Header, Content } = Layout;
 
 const MainLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
-console.log("rouuuuuut",routes)
+
   const{isAuthenticated}=UseAuth()
-  console.log("auth from layout",isAuthenticated)
+
   return (
     <Layout className="h-screen  bg-[#F4F5F9]">
       <Sidebar

@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
   const { data, error } = useCurrentUser()
-  console.log( "auth contxt",data,error)
+  
   useEffect(() => {
     if (data) {
   
@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }) => {
   }, [error, navigate,data]);
 
 
-  console.log("auth works after loading", isAuthenticated);
+
   const login = async () => {
     setIsAuthenticated(true);
     await mutate("/user/me");
