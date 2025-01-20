@@ -1,10 +1,14 @@
 const userscolumns = [
   {
-    title: "Name",
+    title: "Nom",
     dataIndex: "name",
     sorter: true,
     render: (name, record) => `${record.name} ${record.lastName}`,
     width: "20%",
+  },
+  {
+    title: "Prénom",
+    dataIndex: "lastName",
   },
   {
     title: "Email",
@@ -20,10 +24,7 @@ const userscolumns = [
     ],
     filterMultiple: false,
   },
-  {
-    title: "Department",
-    dataIndex: "department",
-  },
+
   {
     title: "Phone",
     dataIndex: "telephone",
