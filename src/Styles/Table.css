@@ -32,7 +32,7 @@
              
 }
 .ant-pagination .ant-pagination-item-active:hover a {
-  color: #000 !important;
+  color: #3A3541 !important;
 }
 .ant-pagination .ant-pagination-item-active a {
   color: #000 !important; /* Text color for the link */
