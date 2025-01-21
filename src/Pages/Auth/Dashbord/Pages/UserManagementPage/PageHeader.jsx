@@ -1,9 +1,19 @@
 
 import { Icon } from '@iconify/react/dist/iconify.js'
-import { Button, Input } from 'antd'
-import React from 'react'
+import { Button, Input, Modal } from 'antd'
+import React, { useState } from 'react'
+import CreateUserForm from '../../../../../Forms/createUserForm'
 
 const PageHeader = () => {
+  const[isModalVisible,setIsModalVisible]=useState()
+
+  const showModal=()=>{
+    setIsModalVisible(true)
+  }
+  const handleCancel=()=>{
+    setIsModalVisible(false)
+  }
+
   return (
     <div className='h-full w-full flex flex-col'>
         <div className=' mb-3'><span className=' font-jakarta text-3xl  font-bold size-6  text-[#3A3541]'>Gestion Utilisateurs </span></div>
@@ -20,7 +30,23 @@ const PageHeader = () => {
             <div className='flex flex-row gap-2 mt-6 '>  <button className=' h-12 w-40  bg-transparent border-2 border-[#BC983E] rounded-lg hover:border-black hover:text-black'>
                <div className='flex flex-row gap-1 ml-3 w-full h-full  items-center'><Icon icon="hugeicons:square-arrow-down-02" width="24" height="24"  style={{color:"#BC983E"}} />
             <span className=' font-jakarta font-bold text-base text-[#BC983E] hover:text-black'>  Export excel</span></div>  </button>
-            <button className='h-12 w-44 bg-black  rounded-lg border-2 border-black  hover:bg-transparent  hover:text-black '> <div className='flex flex-row gap-1 justify-center'><Icon icon="hugeicons:add-square" width="24" height="24"  style={{color:"#fff"}}/> <span className='font-jakarta font-bold text-base text-white hover:text-black'>Ajouter un client</span></div> </button>
+            <button className='h-12 w-44 bg-black  rounded-lg border-2 border-black hover:bg-transparent  hover:text-black ' onClick={showModal}> <div className='flex flex-row gap-1 justify-center'><Icon icon="hugeicons:add-square" width="24" height="24"  style={{color:"#fff"}}/> <span className='font-jakarta font-bold text-base text-white hover:text-black'>Ajouter un client</span></div> </button>
+             <Modal 
+             
+             visible={isModalVisible}
+             onCancel={handleCancel}
+             footer={null}
+             className="h-[50rem] w-[42rem] px-3 py-3"
+             
+             bodyStyle={{
+              height: "45rem", // Ensure the height applies to the modal content
+              padding: "1rem",
+              width:"42rem",
+            }}
+             >
+            <CreateUserForm/>
+             </Modal>
+                         
             </div>
           
             <div></div>
