@@ -1,12 +1,25 @@
 
 import { Icon } from '@iconify/react/dist/iconify.js'
-import { Button, Input, Modal } from 'antd'
+import { Button, Input, Modal, Select } from 'antd'
 import React, { useState } from 'react'
 import CreateUserForm from '../../../../../Forms/createUserForm'
 
-const PageHeader = () => {
+const PageHeader = ({onFilterChange}) => {
   const[isModalVisible,setIsModalVisible]=useState()
-
+  const roles =[
+    {
+      value: 'user',
+      label: 'User',
+    },
+    {
+      value: 'admin',
+      label: 'Admin',
+    },
+    
+  ]
+ const handleFilterchange=(value)=>{ 
+  onFilterChange(value || '')
+  console.log('valueeeeeeee',value)}
   const showModal=()=>{
     setIsModalVisible(true)
   }
@@ -23,8 +36,9 @@ const PageHeader = () => {
                 <label htmlFor="name" className=' text-sm font-medium text-gray-700 mb-1'> Nom et prénom</label>
                 <Input className='h-12'/>
                 </div>
-                <div className='flex flex-col'><label htmlFor="status" className=' text-sm font-medium text-gray-700 mb-1'> Status</label>
-                <Input className='h-12'/></div>
+                <div className='flex flex-col'><label htmlFor="status" className=' text-sm font-medium text-gray-700 mb-1'> Role</label>
+                <Select className='h-12 w-40' options={roles} onChange={handleFilterchange} allowClear />
+                </div>
               
             </div>
             <div className='flex flex-row gap-2 mt-6 '>  <button className=' h-12 w-40  bg-transparent border-2 border-[#BC983E] rounded-lg hover:border-black hover:text-black'>

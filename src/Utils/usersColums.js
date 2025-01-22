@@ -18,11 +18,6 @@ const userscolumns = [
   {
     title: "Role",
     dataIndex: "role",
-    filters: [
-      { text: "User", value: "user" },
-      { text: "Admin", value: "admin" },
-    ],
-    filterMultiple: false,
   },
 
   {

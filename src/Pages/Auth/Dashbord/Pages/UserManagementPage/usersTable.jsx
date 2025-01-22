@@ -4,20 +4,24 @@ import CostumTable from '../../../../../Components/Tabs/CostumTable'
 import userscolumns from '../../../../../Utils/usersColums'
 import { Skeleton } from 'antd'
 
-const UsersTable = () => {
-    const[filter,setFilter]=useState("")
+const UsersTable = ({filter}) => {
+    
     const[pagination,setPagination]=useState({current:1,pageSize:10})
 
     const{users,isLoading,error,totalPages,totalItems}=userUsers(filter,pagination)
     useEffect(()=>{setPagination((prevstate)=>({...prevstate,current:1}) )},[filter])
-    const handleTableChange=(newPagination ,filters)=>{
-      let selectedFilter=""
+    const handleTableChange=(newPagination )=>{
+      
+      const updatedPagination = {
+        current: newPagination?.current || pagination.current,
+        pageSize: newPagination?.pageSize || pagination.pageSize,
+      };
+  
+    
+      console.log("New Pagination:", updatedPagination);
+  
      
-      if (filters){  selectedFilter = filters?.role ?filters.role[0]:""}
-    console.log("filters",filters)
-    console.log("new pagination",newPagination)
-     setFilter(selectedFilter)
-    setPagination({current:newPagination?.current || 1 ,pageSize:newPagination.pageSize|| 10 })
+      setPagination(updatedPagination);
     
     }
     const currentPage = pagination.current>totalPages?totalPages:pagination.current

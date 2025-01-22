@@ -18,7 +18,8 @@ const CostumTable = ({
     }));
    console.log("from costum table",pagination)
    const handlePaginationTable=(page,pageSize)=>{
-   onChange({current:page,pageSize: pageSize})
+   onChange({current:page,pageSize: pageSize}) 
+   
    }
   return (
     <div className='w-full h-full flex flex-col '  >
@@ -34,7 +35,8 @@ const CostumTable = ({
       
     /></div>
 
-    <div className='flex items-center justify-center   pt-4  bg-white   w-full justify-items-center rounded-xl '> <Pagination
+    <div className='flex items-center justify-center   pt-4  bg-white   w-full justify-items-center rounded-xl '>
+       <Pagination
     showQuickJumper
     current={pagination.current}
     pageSize={pagination.pageSize}
