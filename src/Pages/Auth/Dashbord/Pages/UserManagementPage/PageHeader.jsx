@@ -32,19 +32,22 @@ const PageHeader = () => {
             <span className=' font-jakarta font-bold text-base text-[#BC983E] hover:text-black'>  Export excel</span></div>  </button>
             <button className='h-12 w-44 bg-black  rounded-lg border-2 border-black hover:bg-transparent  hover:text-black ' onClick={showModal}> <div className='flex flex-row gap-1 justify-center'><Icon icon="hugeicons:add-square" width="24" height="24"  style={{color:"#fff"}}/> <span className='font-jakarta font-bold text-base text-white hover:text-black'>Ajouter un client</span></div> </button>
              <Modal 
-             
+             title={<span className=' font-jakarta text-xl  font-bold size-6 ml-10 my-8 text-[#3A3541] '>Ajouter un utilisateur </span>}
              visible={isModalVisible}
              onCancel={handleCancel}
+             closeIcon={<Icon icon="hugeicons:cancel-circle" width="24" height="24"  style={{color:"#F7D47A"}} />}
              footer={null}
              className="h-[50rem] w-[42rem] px-3 py-3"
-             
+             width={"45rem"}
              bodyStyle={{
-              height: "45rem", // Ensure the height applies to the modal content
+              height: "45rem", 
               padding: "1rem",
-              width:"42rem",
+            
             }}
              >
-            <CreateUserForm/>
+            <CreateUserForm
+            handelCancel={handleCancel}
+            />
              </Modal>
                          
             </div>
