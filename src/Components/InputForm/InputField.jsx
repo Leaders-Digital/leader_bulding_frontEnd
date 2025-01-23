@@ -1,6 +1,6 @@
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
-//className={`${inputClassName}`}
+
 const InputField = ({name,label,type,required,...rest}) => {
   
   const {register,formState:{errors}}=useFormContext()

@@ -3,7 +3,7 @@ import UsersTable from './usersTable'
 import PageHeader from './PageHeader'
 
 const UserManagementPage = () => {
-  const[filter,setFilter]=useState('')
+  const[filter,setFilter]=useState({role:'',search:""})
   const handleFilterChange=(newFilter)=>{
 setFilter(newFilter)
   }

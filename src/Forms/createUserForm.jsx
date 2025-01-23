@@ -14,8 +14,7 @@ const CreateUserForm = ({handelCancel}) => {
     const onSubmit= async(user)=>{
         
         const dateNaissance= dayjs(user.birth).toISOString()
-        console.log("datenaiosnce",dateNaissance)
-        console.log("from form",user) 
+        
       await createUser(user)
     if(data){
       reset()

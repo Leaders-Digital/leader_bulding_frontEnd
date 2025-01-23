@@ -3,9 +3,8 @@ import { PostFetcher } from "../Config/SwrConfig";
 
 const CreateUser = async (url, { arg }) => {
   try {
-    console.log("from create user hook", arg);
     const response = await PostFetcher("admin/createUser", arg);
-    console.log("response from hook", response);
+
     return response;
   } catch (e) {
     throw e;

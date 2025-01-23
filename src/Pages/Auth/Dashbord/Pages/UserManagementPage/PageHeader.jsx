@@ -5,6 +5,8 @@ import React, { useState } from 'react'
 import CreateUserForm from '../../../../../Forms/createUserForm'
 
 const PageHeader = ({onFilterChange}) => {
+  const[role,setRole]=useState("")
+  const[search,setSearch]=useState("")
   const[isModalVisible,setIsModalVisible]=useState()
   const roles =[
     {
@@ -18,8 +20,17 @@ const PageHeader = ({onFilterChange}) => {
     
   ]
  const handleFilterchange=(value)=>{ 
-  onFilterChange(value || '')
-  console.log('valueeeeeeee',value)}
+ 
+  setRole(value)
+  onFilterChange({role:value || '',search})
+ }
+ 
+  const handleSearchChange=(e)=>{
+    const val =e.target.value
+   
+   setSearch(val)
+    onFilterChange({role,search:val||''})
+  }
   const showModal=()=>{
     setIsModalVisible(true)
   }
@@ -34,7 +45,7 @@ const PageHeader = ({onFilterChange}) => {
             <div className='  flex flex-row gap-3 flex-grow'>
                <div className='flex flex-col'> 
                 <label htmlFor="name" className=' text-sm font-medium text-gray-700 mb-1'> Nom et prénom</label>
-                <Input className='h-12'/>
+                <Input className='h-12'  onChange={handleSearchChange}/>
                 </div>
                 <div className='flex flex-col'><label htmlFor="status" className=' text-sm font-medium text-gray-700 mb-1'> Role</label>
                 <Select className='h-12 w-40' options={roles} onChange={handleFilterchange} allowClear />

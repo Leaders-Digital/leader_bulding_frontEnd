@@ -12,7 +12,7 @@ import LogoAnimation from "../../Components/Animated/LogoAnimation";
 import { UseAuth } from "../../Contexts/AuthContext";
 
 const LoginPage = () => {
-  console.log("Width:", window.innerWidth, "Height:", window.innerHeight);
+ 
   const { login } = UseAuth();
   const {
     control,

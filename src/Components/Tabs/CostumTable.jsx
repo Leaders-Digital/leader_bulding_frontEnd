@@ -16,7 +16,7 @@ const CostumTable = ({
         style: { textAlign: 'center' }, 
       }),
     }));
-   console.log("from costum table",pagination)
+  
    const handlePaginationTable=(page,pageSize)=>{
    onChange({current:page,pageSize: pageSize}) 
    
