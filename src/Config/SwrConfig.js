@@ -4,7 +4,7 @@ export const fetcher = (url) => Axios.get(url).then((res) => res.data);
 export const PostFetcher = async (url, arg) => {
   try {
     const response = await Axios.post(url, arg);
-    console.log("consoel from the swr config", response.data);
+
     return response.data;
   } catch (e) {
     console.log("error from fetcher", error);
@@ -14,7 +14,7 @@ export const PostFetcher = async (url, arg) => {
 export const PutFetcher = async (url, arg) => {
   try {
     const res = await Axios.put(url, arg);
-    console.log("consoel from the swr config", res.data);
+
     return res.data;
   } catch (e) {
     console.log("error from fetcher", e);

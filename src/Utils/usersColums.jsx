@@ -6,7 +6,7 @@ const userscolumns=({onActionClick}) => [
     title: "Nom",
     dataIndex: "name",
     sorter: true,
-    render: (name, record) => `${record.name} ${record.lastName}`,
+    render: (name, record) => `${record.name} `,
     width: "20%",
   },
   {

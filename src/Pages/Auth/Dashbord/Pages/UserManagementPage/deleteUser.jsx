@@ -1,7 +1,26 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React from 'react'
+import UseDeleteUser from '../../../../../Hooks/useDeleteUser'
+import { toast, ToastContainer } from 'react-toastify'
 
-const DeleteUser = ({handleCancel}) => {
+const DeleteUser = ({handleCancel,user,usersMutation}) => {
+
+const { data,deleteUser,isMutating,error  }=UseDeleteUser()
+const HandleDeleteUser=async()=>{
+  try{
+const response = await toast.promise(
+    deleteUser({id:user._id}),{
+      pending: 'Suppression en cours...',
+      success: 'Utilisateur supprimé avec succès!',
+      error: 'Erreur lors de la suppression!',
+    }
+  )
+if(response){
+  usersMutation()
+  handleCancel()
+}  
+  }catch(e){console.log(e)}
+}
   return (
     <div className='w-full h-full flex flex-col gap-6   ' >
     <div className='flex flex-row justify-center mt-7'>
@@ -13,9 +32,9 @@ const DeleteUser = ({handleCancel}) => {
         cet utilisateur ?
         </span>
     </div>
-   <div className='flex flex-row justify-end gap-3 mt-11'> 
+   <div className='flex flex-row justify-center gap-10 mt-11'> 
    <button className='text-black font-jakarta text-l  hover:text-red-600' onClick={handleCancel}>Annuler</button>
-  <button className='h-12 w-28 bg-[#FF2E2E] rounded-lg text-white font-jakarta text-l  font-bold hover:bg-red-600' >Supprimer </button>
+  <button className='h-12 w-28 bg-[#FF2E2E] rounded-lg text-white font-jakarta text-l  font-bold hover:bg-red-600' onClick={HandleDeleteUser} >{isMutating ? 'En cours...' : 'Supprimer'} </button>
   
 
    </div>

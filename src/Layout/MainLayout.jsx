@@ -9,6 +9,7 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { HomeIcon, ProfileIcon } from "../Components/SideBar/icons";
 import routes from "../Routes/DashboardRoutes"
 import { UseAuth } from "../Contexts/AuthContext";
+import { ToastContainer } from "react-toastify";
 
 const { Header, Content } = Layout;
 
@@ -35,6 +36,17 @@ const MainLayout = () => {
           <Outlet />
         </Content>
       </Layout>
+      <ToastContainer
+       position="top-right" 
+       autoClose={3000} 
+        
+       newestOnTop 
+       closeOnClick 
+       rtl={false} 
+       pauseOnFocusLoss 
+       draggable 
+       pauseOnHover 
+      />
     </Layout>
   );
 };

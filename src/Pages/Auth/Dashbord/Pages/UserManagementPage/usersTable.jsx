@@ -13,7 +13,7 @@ const UsersTable = ({filter}) => {
     const [record ,setRecord]=useState()
     const[pagination,setPagination]=useState({current:1,pageSize:10})
 
-    const{users,isLoading,error,totalPages,totalItems}=userUsers(filter,pagination)
+    const{users,isLoading,error,totalPages,totalItems,usersMutation}=userUsers(filter,pagination)
     useEffect(()=>{setPagination((prevstate)=>({...prevstate,current:1}) )},[filter])
     const handleTableChange=(newPagination )=>{
       
@@ -32,6 +32,7 @@ if(!isLoading)console.log("from table page ",users)
   setIsModalEditVisible(true) 
  }
  if(action ==="delete"){
+  setRecord(record)
   setIsModalArchivedVisible(true)
  }
   }
@@ -77,13 +78,13 @@ if(!isLoading)console.log("from table page ",users)
      </Modal>
      <Modal
      visible={isModalArchivedVisible}
-     closeIcon={<Icon icon="hugeicons:cancel-circle" width="24" height="24"  style={{color:"#F7D47A"}} />}
+     closeIcon={<Icon icon="hugeicons:cancel-circle" width="24" height="24"  style={{color:"#FF2E2E"}} />}
        footer={null}
        width={"33rem"}
        centered={true}
        onCancel={handleCancelArchived}
      >
-    <DeleteUser handleCancel={handleCancelArchived}/>
+    <DeleteUser handleCancel={handleCancelArchived} user={record} usersMutation={usersMutation}/>
      </Modal>
     </div>
   )

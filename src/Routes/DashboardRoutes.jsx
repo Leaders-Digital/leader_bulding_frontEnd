@@ -4,6 +4,7 @@ import Home from "../Pages/Auth/Dashbord/Home";
 import clientManagementRoutes from "./clientsManagement";
 import UsersTable from "../Pages/Auth/Dashbord/Pages/UserManagementPage/usersTable";
 import UserManagementPage from "../Pages/Auth/Dashbord/Pages/UserManagementPage/userManagementPage";
+import ArchivedUserPage from "../Pages/Auth/Dashbord/Pages/ArchivedUsers/ArchivedUserPage";
 
 
 const dashboardRoutes = [
@@ -23,7 +24,7 @@ const dashboardRoutes = [
       {
         path: "archive",
         name:"Archivé",
-        element: <Home />,
+        element: <ArchivedUserPage/>,
         protected: true,
         icon: <Icon icon="hugeicons:archive-01" width="24" height="24"   />,
         

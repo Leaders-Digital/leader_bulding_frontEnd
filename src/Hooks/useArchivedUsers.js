@@ -1,9 +1,12 @@
 import useSWR from "swr";
 import { fetcher } from "../Config/SwrConfig";
 
-const userUsers = (filter = "", pagination = { current: 1, pageSize: 10 }) => {
+const useArchivedUsers = (
+  filter = "",
+  pagination = { current: 1, pageSize: 10 }
+) => {
   const { data, error, isLoading, mutate } = useSWR(
-    `/admin/getAllUsers?page=${pagination.current}&limit=${
+    `/admin/ArchivedUsers?page=${pagination.current}&limit=${
       pagination.pageSize
     }&role=${filter.role || ""}&search=${filter.search || ""}`,
     fetcher,
@@ -11,14 +14,14 @@ const userUsers = (filter = "", pagination = { current: 1, pageSize: 10 }) => {
       revalidateOnFocus: false,
     }
   );
-
+  console.log("from the hook get arch:", data);
   return {
-    users: data?.data,
+    archivedUsers: data?.data,
     error,
     isLoading,
     totalPages: data?.totalPages,
     totalItems: data?.totalItems,
-    usersMutation: mutate,
+    mutate,
   };
 };
-export default userUsers;
+export default useArchivedUsers;
