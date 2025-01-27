@@ -40,7 +40,7 @@ const dashboardRoutes = [
       {
         path: "gestionClient",
         name:"Gestion Client et RDV",
-        element: <Home />,
+       // element: <Home />,
         protected: true,
         icon: <Icon icon="hugeicons:user-square" width="24" height="24"  style="color: #000" />,
         children:[...clientManagementRoutes]

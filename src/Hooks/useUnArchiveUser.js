@@ -3,7 +3,6 @@ import { PutFetcher } from "../Config/SwrConfig";
 
 const unArchiveUser = async (url, { arg }) => {
   try {
-    console.log("from the hook", arg);
     const { id } = arg;
     const response = await PutFetcher(`admin/unArchivedUser/${id}`);
     return response;

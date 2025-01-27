@@ -1,11 +1,12 @@
 import Home from "../Pages/Auth/Dashbord/Home";
+import ProspectPage from "../Pages/Auth/Dashbord/Pages/ClientManagement/ProspectManagementPage/ProspectPage";
 
 const clientManagementRoutes=[
 
     {
         path:"/gestionClient/prospect",
         name:"Gestion Prospect",
-        element:<Home/>
+        element:<ProspectPage/>
     },
     {
         path:"/gestionClient/client",

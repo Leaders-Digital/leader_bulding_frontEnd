@@ -10,7 +10,7 @@ const ArchivesModalContent = ({user,handleCancel ,usersMutation}) => {
      const response = await toast.promise(
          unarchive({id:user._id}),{
            pending: 'Suppression en cours...',
-           success: 'Utilisateur supprimé avec succès!',
+           success: 'Utilisateur disarchivé avec succès!',
            error: 'Erreur lors de la suppression!',
          }
        )

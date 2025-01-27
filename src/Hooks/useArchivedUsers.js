@@ -14,7 +14,7 @@ const useArchivedUsers = (
       revalidateOnFocus: false,
     }
   );
-  console.log("from the hook get arch:", data);
+
   return {
     archivedUsers: data?.data,
     error,

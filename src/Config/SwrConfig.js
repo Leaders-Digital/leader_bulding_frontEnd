@@ -7,8 +7,8 @@ export const PostFetcher = async (url, arg) => {
 
     return response.data;
   } catch (e) {
-    console.log("error from fetcher", error);
-    throw error.response?.data || error.message;
+    console.log("error from fetcher", e);
+    throw e.response?.data || e.message;
   }
 };
 export const PutFetcher = async (url, arg) => {

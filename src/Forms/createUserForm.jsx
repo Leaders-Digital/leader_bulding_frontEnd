@@ -3,7 +3,7 @@ import { Controller, FormProvider, useForm } from 'react-hook-form'
 import InputField from '../Components/InputForm/InputField';
 import { DatePicker, Input, Select } from 'antd';
 import dayjs from 'dayjs';
-import Password from 'antd/es/input/Password';
+
 import UseCreateUser from '../Hooks/UseCreateUser';
 import { ToastContainer, toast } from 'react-toastify';
 const CreateUserForm = ({handelCancel}) => {
@@ -30,7 +30,7 @@ const CreateUserForm = ({handelCancel}) => {
       }, [error]);
    
   return (
-    <div className='h-full max-h-[43rem] overflow-y-auto '>
+    <div className='h-[48rem] max-h-[40rem] overflow-y-auto '>
 
         <FormProvider {...methods}>
             <form onSubmit={handleSubmit(onSubmit)}>
