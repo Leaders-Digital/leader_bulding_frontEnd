@@ -8,7 +8,7 @@ const useProspects = (
   const { data, isLoading, error, mutate } = useSWR(
     `prospect/getAll?page=${pagination.current}&limit=${
       pagination.pageSize
-    }&search=${filter.search || ""}&status=${filter.status}`,
+    }&search=${filter.search || ""}&select=${filter.status}`,
     fetcher,
     {
       revalidateOnFocus: false,

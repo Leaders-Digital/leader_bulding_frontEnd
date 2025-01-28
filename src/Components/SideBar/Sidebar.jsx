@@ -111,7 +111,7 @@ const getIconColor = (routePath)=>{
            }
            >
            {route.children.map((child)=>(
-
+             child.name&&
             <Menu.Item key={child.path} title={child.name}>
               <div className=" flex flex-row items-center space-x-2"> <span className="text-black">•</span><SidebarItem route={child} collapsed={collapsed} /> </div>
            

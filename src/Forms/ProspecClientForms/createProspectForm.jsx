@@ -58,7 +58,7 @@ const CreateProspectForm = ({handleCancel}) => {
     },[error])
     
   return (
-    <div className='h-full max-h-[43rem] overflow-y-auto '>
+    <div className='h-full max-h-[43rem] '>
 
     <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)}>

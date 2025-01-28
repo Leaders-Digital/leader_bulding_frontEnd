@@ -1,4 +1,5 @@
 import Home from "../Pages/Auth/Dashbord/Home";
+import ProspectDeatilsPage from "../Pages/Auth/Dashbord/Pages/ClientManagement/ProspectDeatilsPage/ProspectDeatilsPage";
 import ProspectPage from "../Pages/Auth/Dashbord/Pages/ClientManagement/ProspectManagementPage/ProspectPage";
 
 const clientManagementRoutes=[
@@ -8,6 +9,12 @@ const clientManagementRoutes=[
         name:"Gestion Prospect",
         element:<ProspectPage/>
     },
+      {
+    path:"/gestionClient/prospect/:id",
+     element:<ProspectDeatilsPage/>
+
+}
+    ,
     {
         path:"/gestionClient/client",
         name:"Gestion Client",

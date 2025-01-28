@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import { Button, Input, Modal, Select } from 'antd'
 import CreateProspectForm from '../../../../../../Forms/ProspecClientForms/createProspectForm'
 
-const ProspectPageHeader = () => {
+const ProspectPageHeader = ({onFilterChange}) => {
   const[status,setStatus]=useState("")
   const[search,setSearch]=useState("")
   const [createModal,setCreateModal]=useState(false)
@@ -41,17 +41,27 @@ const ProspectPageHeader = () => {
           },
     
     ]
+    const handleFilterChange=(value)=>{
+      setStatus(value)
+      
+   onFilterChange( {status:value || '',search})
+    }
+    const handleSearchChange=(e)=>{
+    const value= e.target.value
+      setSearch(value)
+      onFilterChange({status,search:value||''})
+    }
   return (
     <div className='h-full w-full flex flex-col'>
-        <div className=' mb-3'><span className=' font-jakarta text-3xl  font-bold size-6  text-[#3A3541]'>Gestion Utilisateurs </span></div>
+        <div className=' mb-3'><span className=' font-jakarta text-3xl  font-bold size-6  text-[#3A3541]'>Gestion prospects </span></div>
         <div className=' h-full w-full flex flex-row justify-between '>
             <div className='  flex flex-row gap-3 flex-grow'>
                <div className='flex flex-col'> 
                 <label htmlFor="name" className=' text-sm font-medium text-gray-700 mb-1'> Nom et prénom</label>
-                <Input className='h-12'  />
+                <Input className='h-12'  onChange={handleSearchChange} />
                 </div>
                 <div className='flex flex-col'><label htmlFor="status" className=' text-sm font-medium text-gray-700 mb-1'> Status</label>
-                <Select className='h-12 w-40' options={prostatus} allowClear />
+                <Select className='h-12 w-40' options={prostatus} onChange={handleFilterChange} allowClear />
                 </div>
               
             </div>
@@ -72,7 +82,7 @@ const ProspectPageHeader = () => {
         closeIcon={<Icon icon="hugeicons:cancel-circle" width="24" height="24"  style={{color:"#F7D47A"}} />}
         width={"45rem"}
              bodyStyle={{
-              height: "48rem", 
+              height: "47rem", 
               padding: "1rem",
             
             }}
