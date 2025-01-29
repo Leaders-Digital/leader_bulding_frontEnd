@@ -7,7 +7,7 @@ export const PostFetcher = async (url, arg) => {
 
     return response.data;
   } catch (e) {
-    console.log("error from fetcher", e);
+  
     throw e.response?.data || e.message;
   }
 };
@@ -17,7 +17,7 @@ export const PutFetcher = async (url, arg) => {
 
     return res.data;
   } catch (e) {
-    console.log("error from fetcher", e);
+   
     throw e.response?.data || e.message;
   }
 };
