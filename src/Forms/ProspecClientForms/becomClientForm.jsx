@@ -1,11 +1,11 @@
 import React from 'react'
 import { Controller, FormProvider, useForm } from 'react-hook-form'
-import InputField from '../../../../../../Components/InputForm/InputField'
+import InputField from '../../Components/InputForm/InputField'
 import { Input } from 'antd'
-import useBecomeClient from '../../../../../../Hooks/ProspectClientHooks/useBecomeClient'
+import useBecomeClient from '../../Hooks/ProspectClientHooks/useBecomeClient'
 import { toast } from 'react-toastify'
 
-const BecomClientForm = ({prospectId,handleCancel}) => {
+const BecomClientForm = ({prospectId,handleCancel,mutate}) => {
 
     const{validerClient,data,error,isMutating }=useBecomeClient()
     const methods=useForm()
@@ -17,6 +17,7 @@ const BecomClientForm = ({prospectId,handleCancel}) => {
      toast.success(res.message)
      reset()
      handleCancel(false)
+     mutate()
    }
     }
     if(error){

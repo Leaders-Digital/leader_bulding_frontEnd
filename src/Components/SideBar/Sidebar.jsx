@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Button, Menu, Layout, Input } from "antd";
 import '../../Styles/sidebarItem.css'
 import SidebarItem from "./SidebarItem"; // Import SidebarItem
@@ -12,11 +12,11 @@ import logo from "../../assets/logo_building.png"
 const { Sider } = Layout;
 
 const Sidebar = ({ routes, collapsed, setCollapsed }) => {
+
   const location = useLocation();
   const [selectedKey, setSelectedKey] = useState(location.pathname);
   const [hoverdItem ,setHoveredItem] =useState(null)
-  /*console.log("Screen Width: " + window.innerWidth);
-console.log("Screen Height: " + window.innerHeight);*/
+ const siderRef=useRef(null)
 const handleHover =(key)=>{setHoveredItem(key)}
 const handleLeave =()=>{setHoveredItem(null)}
   useEffect(() => {
@@ -35,6 +35,7 @@ const getIconColor = (routePath)=>{
   return (
     <div className="bg-white mt-6 rounded-r-2xl mr-6">
       <Sider
+      ref={siderRef}
         trigger={null}
         collapsible
         collapsed={collapsed}

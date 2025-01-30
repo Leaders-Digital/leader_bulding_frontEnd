@@ -62,20 +62,17 @@ pagination={{
         setPagination({current:page,pageSize})
     }
 }}
-
 onChange={handleTbaleChange}
 />:<Skeleton active paragraph={{rows:15}} className='mt-5 bg-white'/>}
-
 <Modal
 title={<span className=' font-jakarta text-xl  font-bold size-6 ml-10 my-8 text-[#3A3541] '>Modifer un prospect </span>}
-visible={modifyModal}
+open={modifyModal}
 footer={null}
 className="h-[42rem] w-[42rem] px-3 py-3"
 width={"45rem"}
 bodyStyle={{
  height: "43rem", 
  padding: "1rem",
-
 }}
 onCancel={handleCancelModify}
 >
@@ -83,7 +80,7 @@ onCancel={handleCancelModify}
 </Modal>
 
 <Modal
-visible={deleteModal}
+open={deleteModal}
 footer={null}
 className="h-[50rem] w-[42rem] px-3 py-3"
 width={"35rem"}

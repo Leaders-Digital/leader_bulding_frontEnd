@@ -61,14 +61,16 @@ if(!isLoading)console.log("from table page ",users)
 
      <Modal
       title={<span className=' font-jakarta text-xl  font-bold size-6 ml-10 my-8 text-[#3A3541] '>Modifer un utilisateur </span>}
-      visible={isModalEditVisible}
+      open={isModalEditVisible}
        closeIcon={<Icon icon="hugeicons:cancel-circle" width="24" height="24"  style={{color:"#F7D47A"}} />}
        footer={null}
        className="h-[50rem] w-[42rem] px-3 py-3"
        width={"45rem"}
-       bodyStyle={{
-        height: "45rem", 
+       styles={{
+        body:{
+          height: "45rem", 
         padding: "1rem",
+        }
       
       }}
       onCancel={hadnleCancel}
@@ -77,7 +79,7 @@ if(!isLoading)console.log("from table page ",users)
       <ModifyUserForm user={record}/>
      </Modal>
      <Modal
-     visible={isModalArchivedVisible}
+     open={isModalArchivedVisible}
      closeIcon={<Icon icon="hugeicons:cancel-circle" width="24" height="24"  style={{color:"#FF2E2E"}} />}
        footer={null}
        width={"33rem"}

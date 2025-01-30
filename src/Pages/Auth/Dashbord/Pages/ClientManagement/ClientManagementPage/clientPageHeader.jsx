@@ -76,7 +76,7 @@ const ClientPageHeader = ({onFilterChange}) => {
           </div>
           <Modal
          title={<span className=' font-jakarta text-xl  font-bold size-6 ml-10 my-8 text-[#3A3541] '>Ajouter un prospect </span>}
-          visible={createModal}
+          open={createModal}
           onCancel={handleCnacelCreate}
           closeIcon={<Icon icon="hugeicons:cancel-circle" width="24" height="24"  style={{color:"#F7D47A"}} />}
           width={"45rem"}

@@ -4,6 +4,7 @@ import { DatePicker, Input, Select } from 'antd';
 import InputField from '../../Components/InputForm/InputField';
 import useCreateProspect from '../../Hooks/ProspectClientHooks/useCreateProspect';
 import { toast } from 'react-toastify';
+import { mutate } from 'swr';
 const CreateProspectForm = ({handleCancel}) => {
     const methods=useForm()
     const{handleSubmit,reset,control}=methods
@@ -36,6 +37,11 @@ const CreateProspectForm = ({handleCancel}) => {
           },
     
     ]
+    const refreshData = (newSearch, newSelect) => {
+      const key = `prospect/getAll?page=1&limit=10&search=${newSearch || ""}&select=${newSelect || ""}`;
+      mutate(key);  
+    };
+    
     const onSubmit=async(data)=>{
         
       const result =  await createProspect(data)
@@ -43,6 +49,7 @@ const CreateProspectForm = ({handleCancel}) => {
            
             toast.success(result.message)
             reset()
+            refreshData("","")
         }
     }
     if(isMutating){
