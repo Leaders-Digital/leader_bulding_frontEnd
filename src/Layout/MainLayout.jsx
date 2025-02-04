@@ -19,7 +19,7 @@ const MainLayout = () => {
   const{isAuthenticated}=UseAuth()
 
   return (
-    <Layout className="h-screen  bg-[#F4F5F9]">
+    <Layout className="h-screen  bg-[#F4F5F9] overflow-hidden">
       <Sidebar
         routes={routes}
         collapsed={collapsed}

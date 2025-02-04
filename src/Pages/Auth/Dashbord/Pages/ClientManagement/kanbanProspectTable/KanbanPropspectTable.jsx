@@ -8,7 +8,7 @@ const columns=["pas encore de résultat","À rappeler","Reporter"]
 
 const KanbanPropspectTable = () => {
    const[filter,setFilter]=useState({status:"",search:""})
-   const[pagination,setPagination]=useState({current:1,pageSize:10})
+   const[pagination,setPagination]=useState({current:1,pageSize:100})
     const{ prospects,isLoading,error }=useProspects(  filter ,pagination)
  const[activeProspect,setActiveProspect]=useState(null)
    const [allprospects,setAllProspects]=useState([])
@@ -21,6 +21,7 @@ const KanbanPropspectTable = () => {
     const onDragStart=(event)=>{
         setActiveProspect(event.active.data.current)
         setIsDragging(true)
+        
     }
     const onDragEnd=(event)=>{
         const{active,over}=event
@@ -46,8 +47,8 @@ const KanbanPropspectTable = () => {
                 ))
             }
             </div> 
-            <DragOverlay>
-                <div className='z-50'>{activeProspect?<Prospect prospect={activeProspect}/>:null}</div>
+            <DragOverlay  adjustScale={true}>
+                <div className="z-50 fixed top-0 left-0  shadow-lg">{activeProspect?<Prospect prospect={activeProspect}/>:null}</div>
                 
             </DragOverlay>
 
