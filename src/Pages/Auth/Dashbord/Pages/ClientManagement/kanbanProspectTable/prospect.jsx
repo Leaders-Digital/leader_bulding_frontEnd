@@ -1,4 +1,6 @@
 import { useDraggable } from '@dnd-kit/core'
+import { Icon } from '@iconify/react/dist/iconify.js'
+import { Tag } from 'antd'
 import React from 'react'
 
 const Prospect = ({prospect,isOverlay}) => {
@@ -17,11 +19,26 @@ const Prospect = ({prospect,isOverlay}) => {
     style={{transform:transform?`translate(${transform.x}px,${transform.y}px)`:"none"}}
 
     >
-        <div className='flex flex-col gap-3 mr-3'>
+        <div className='flex flex-col gap-3 mr-2'>
+        <div className="flex flex-row items-center justify-between w-full">
+  
+    <div className="flex flex-row gap-3">
+      <Icon icon="hugeicons:clock-01" width="24" height="24" style={{ color: "#d9d9d9" }} />
+      <p className="text-sm text-gray-500">{prospect.createdAt.substring(0, 10)}</p>
+    </div>
+
+   
+    <Icon icon="hugeicons:more-vertical-circle-01" width="24" height="24" style={{ color: "#3A3541" }} />
+  </div>
+         
     <h3 className='font-semibold font-jakarta text-[#3A3541] '>{prospect.name} {prospect.lastName}</h3>
-    <p className='text-sm text-gray-500'>Email: {prospect.email}</p>
-    <p className='text-sm text-gray-500'>Telephone: {prospect.telephone}</p>
-  <button onClick={(e)=>{e.stopPropagation();showmsg()}}> hiiiiiiii</button>
+
+    <Tag bordered={false} color="processing" className='w-40'>
+        {prospect.status}
+      </Tag>
+   <p className='text-sm text-[#3A3541]'> <span className='text-[#3A3541] font-jakarta font-bold'>Email: </span> {prospect.email}</p>
+    <p className='text-sm text-gray-500'> <span className='text-[#3A3541] font-jakarta font-bold'>Telephone:</span>  {prospect.telephone}</p>
+  
         </div>
 
     </div>
