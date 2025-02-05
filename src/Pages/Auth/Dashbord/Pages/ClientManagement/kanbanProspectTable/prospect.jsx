@@ -1,8 +1,8 @@
 import { useDraggable } from '@dnd-kit/core'
 import React from 'react'
 
-const Prospect = ({prospect}) => {
-    const{attributes,listeners,setNodeRef,transform,isDragging}=useDraggable({id:prospect._id})
+const Prospect = ({prospect,isOverlay}) => {
+    const{attributes,listeners,setNodeRef,transform,isDragging}=useDraggable({id:prospect._id ,data:prospect})
     const showmsg=()=>{
         console.log("dddddddd")
     }
@@ -12,8 +12,8 @@ const Prospect = ({prospect}) => {
     {...listeners}
     {...attributes}
     className={`p-2 mt-2 bg-white rounded-md shadow cursor-pointer mr-3  ${
-        isDragging ? "absolute z-50" : "relative"
-    }`}
+        isDragging ? "  opacity-0" : "relative"
+    }` }
     style={{transform:transform?`translate(${transform.x}px,${transform.y}px)`:"none"}}
 
     >

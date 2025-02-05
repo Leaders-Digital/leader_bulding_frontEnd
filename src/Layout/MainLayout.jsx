@@ -31,7 +31,7 @@ const MainLayout = () => {
           <div className="text-lg">My Application</div>
         </Header>
  
-        <Content className=" px-6 flex-1  bg-[#F4F5F9] rounded-lg mt-0 mb-4 mr-5 mt-11 ">
+        <Content className=" px-6 flex-1  bg-[#F4F5F9] rounded-lg mt-0 mb-4 mr-5 mt-5 ">
 
           <Outlet />
         </Content>
