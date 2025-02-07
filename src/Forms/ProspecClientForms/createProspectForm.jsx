@@ -9,7 +9,7 @@ import { mutate } from 'swr';
 import PhoneInput from 'react-phone-input-2';
 
 import { Icon } from '@iconify/react/dist/iconify.js';
-const CreateProspectForm = ({handleCancel}) => {
+const CreateProspectForm = ({onSubmitForm}) => {
     const methods=useForm()
     const{handleSubmit,reset,control}=methods
     const{resposne,createProspect,error,isMutating}=useCreateProspect()
@@ -111,13 +111,14 @@ setSource(value)
     }
     const onSubmit=async(data)=>{
         
-      const result =  await createProspect(data)
+      /*const result =  await createProspect(data)
         if(result.data){
            
             toast.success(result.message)
             reset()
             refreshData("","")
-        }
+        }*/
+       console.log("dataaa",data)
     }
     if(isMutating){
         console.log("IsMutating")
@@ -130,7 +131,13 @@ setSource(value)
             toast.error(error.message)
         }
     },[error])
-    
+      
+ useEffect(()=>{
+  if(onSubmitForm){
+    onSubmitForm.current=handleSubmit(onSubmit)
+  }
+ },[onSubmitForm,handleSubmit])
+
   return (
     <div className='h-full max-h-[43rem] '>
 
