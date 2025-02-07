@@ -1,4 +1,5 @@
 import Home from "../Pages/Auth/Dashbord/Home";
+import AddPropspectPage from "../Pages/Auth/Dashbord/Pages/ClientManagement/AddProspectPage/AddPropspectPage";
 import ClientPage from "../Pages/Auth/Dashbord/Pages/ClientManagement/ClientManagementPage/ClientPage";
 import KanbanPropspectTable from "../Pages/Auth/Dashbord/Pages/ClientManagement/kanbanProspectTable/KanbanPropspectTable";
 import ProspectDeatilsPage from "../Pages/Auth/Dashbord/Pages/ClientManagement/ProspectDeatilsPage/ProspectDeatilsPage";
@@ -14,6 +15,12 @@ const clientManagementRoutes=[
       {
     path:"/gestionClient/prospect/:id",
      element:<ProspectDeatilsPage/>
+
+}
+,
+{
+    path:"/gestionClient/prospect/ajouter",
+     element:<AddPropspectPage/>
 
 }
     ,

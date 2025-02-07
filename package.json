@@ -20,6 +20,7 @@
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.54.2",
     "react-infinite-scroll-component": "^6.1.0",
+    "react-phone-input-2": "^2.15.1",
     "react-router-dom": "^7.1.1",
     "react-spring": "^9.7.5",
     "react-toastify": "^11.0.3",

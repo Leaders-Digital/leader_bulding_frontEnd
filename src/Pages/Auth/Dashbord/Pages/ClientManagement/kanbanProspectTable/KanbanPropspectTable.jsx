@@ -23,8 +23,7 @@ const columns=[{name:"Prospection",value:"prospection"},{name:"Suivi et Relance"
       const onDragStart=(event)=>{
         console.log("the prospect clicked",event.active)
           setActiveProspect(event.active.data.current)
-          setIsDragging(true)
-          
+          setIsDragging(true)         
       }
       const onDragEnd=(event)=>{
           const{active,over}=event
