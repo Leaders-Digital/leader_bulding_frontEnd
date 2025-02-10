@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useForm,Controller,FormProvider } from 'react-hook-form'
 import { DatePicker, Input, Select } from 'antd';
 import InputField from '../../Components/InputForm/InputField';
@@ -83,42 +83,83 @@ const CreateProspectForm = ({onSubmitForm}) => {
     const[bien,setBien]=useState()
   const[floor,setFloor]=useState(1)
   const[rooms,setRooms]=useState({1:1})
+  const roomsRef= useRef(rooms)
   const handlebienchange=(e)=>{
     console.log("bien",e)
   setBien(e)
   }
-  const handleFloorChange=(e)=>{
+  const handleFloorChange = (e) => {
+    let newFloorCount = parseInt(e.target.value, 10) || 1;
+    setFloor(newFloorCount);
   
-  let newFloorCount= parseInt(e.target.value,10)||1
-  setFloor( newFloorCount)
-  setRooms((prev)=> {
-    let updatedRomms={...prev}
-    for(let i=1;i<=newFloorCount;i++){
-      if(!updatedRomms[i]){updatedRomms[i]=1}
-    }
-    return updatedRomms
-  })
-
-  }
+    setRooms((prev) => {
+      let updatedRooms = { ...prev };
+  
+      
+      for (let i = 1; i <= newFloorCount; i++) {
+        if (updatedRooms[i] === undefined) {
+          updatedRooms[i] = 1; 
+        }
+      }
+  
+   
+      for (let i = newFloorCount + 1; i <= Object.keys(updatedRooms).length; i++) {
+        delete updatedRooms[i];
+      }
+  
+      return updatedRooms;
+    });
+  };
+  
 
   const handleRoomChange=(floor,change)=>{
   setRooms((prev)=>({...prev,[floor]:Math.max(1,(prev[floor]||1)+change)}))
 
   }
-    const handelSource=(value)=>{
-console.log("value",value)
-setSource(value)
-    }
+useEffect(() => {
+  roomsRef.current=rooms
+  console.log("Updated rooms state:", rooms);
+}, [rooms]); 
+
     const onSubmit=async(data)=>{
-        
-      /*const result =  await createProspect(data)
+      const propertyDetails = {
+        rooms: roomsRef.current,  
+        floors: Array.from({ length: floor }, (_, i) => ({
+          floorNumber: i + 1,
+          rooms: roomsRef.current[i + 1] || 1, 
+        })),
+      };
+    
+      
+      const prospectData = {
+        name: data.name,
+        lastName: data.lastName,
+        telephone: data.telephone,
+        email: data.email,
+        adress: data.adress,
+
+        status: "prospection",
+        propertyType: data.bien,
+        propertyDetails: propertyDetails,
+        projectType: data.projet,
+        source: data.source,
+        agence: data.source === "agence" ? { name: data.agence, agent: data.agent } : {},
+        socialMedia: data.source === "Social Media" ? { platform: data.platform, link: data.link } : {},
+        otherSourceDescription: data.source === "Other" ? data.autre : null,
+        service: data.service,
+        profilePicId: data.profilePicId,
+      };
+        console.log("prospect",prospectData)
+      const result =  await createProspect(prospectData)
         if(result.data){
            
             toast.success(result.message)
             reset()
             refreshData("","")
-        }*/
+           
+        }
        console.log("dataaa",data)
+       console.log("rooms",roomsRef.current)
     }
     if(isMutating){
         console.log("IsMutating")
@@ -187,21 +228,21 @@ setSource(value)
             <label htmlFor="" className=' font-jakarta   font-bold size-1  my-5 text-[#3A3541] w-full '>Source</label>
             <Controller
             
-            name='role'
+            name='source'
             control={control}
-            render={({field})=>(<Select {...field} options={prostatus} className='h-12 w-full' onChange={(value)=>handelSource(value)}/>)}
+            render={({field})=>(<Select {...field} options={prostatus} className='h-12 w-full' onChange={(value)=>{field.onChange(value);setSource(value)}}/>)}
             />
         </div>
 
         {source ==="agence" && <div className='flex flex-col'> <InputField
-    name="Agence"
+    name="agence"
     label="Agence"
     placeholder="Agence"
     required="agence is required"
     className="h-12 w-full rounded-lg bg-[#F4F5F9] p-4"
     />
     <InputField
-    name="Agent"
+    name="agent"
     label="Agent"
     placeholder="Agent"
     required="agent is required"
@@ -257,10 +298,9 @@ setSource(value)
         <div className='px-6 flex flex-col gap-1 mt-3 '>
             <label htmlFor="" className=' font-jakarta   font-bold size-1  my-5 text-[#3A3541] w-full '>Type de projet</label>
             <Controller
-            
-            name='type de projet'
+            name='projet'
             control={control}
-            render={({field})=>(<Select {...field} options={typeProjet} className='h-12 w-full' onChange={(value)=>setTypeProjets(value)}/>) }
+            render={({field})=>(<Select {...field} options={typeProjet} className='h-12 w-full' onChange={(value)=>{field.onChange(value);setTypeProjets(value)}}/>) }
             />
         </div>
         {typeProjets==="Autre"&& <InputField
@@ -274,9 +314,9 @@ setSource(value)
         <div className='px-6 flex flex-col gap-1 mt-3 '>
             <label htmlFor="" className=' font-jakarta   font-bold size-1  my-5 text-[#3A3541] w-full '>Type de bien</label>
             <Controller
-            name='type de bien'
+            name='bien'
             control={control}
-            render={({field})=>(<Select {...field} options={typeBien} className='h-12 w-full' onChange={(value)=>handlebienchange(value)}/>)}
+            render={({field})=>(<Select {...field} options={typeBien} className='h-12 w-full' onChange={(value)=>{field.onChange(value);setBien(value)}}/>)}
             />
         </div>
     
