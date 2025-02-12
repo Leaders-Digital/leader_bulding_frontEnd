@@ -1,5 +1,6 @@
 import React from 'react'
 import DynamicInfo from '../../../../../../../Components/Sections/DynamicInfo'
+import { Tag } from 'antd';
 
 const InfoProspect = ({prospect}) => {
 
@@ -18,16 +19,28 @@ const InfoProspect = ({prospect}) => {
       <span className=' font-jakarta text-l w-32  font-bold size-6  text-[#BC983E]'>Détails du client </span>
     </div>
     <div className='flex felex-row gap-3 pl-40'>
-   <div className='w-[40rem] h-[21.4rem] bg-white flex flex-col rouned' >
+   <div className='w-[40rem] h-[21.4rem] bg-white flex flex-col rounded-lg' >
     <div className='w-full h-[3.5rem] border-b-2 border-gray p-3'>
         <span className='font-jakarta text-lg font-bold text-[#3A3541]'>Informations Personnels</span>
     </div>
      <DynamicInfo data={prospectInfo}/>
    </div>
-   <div className='w-[35rem] h-[21.4rem] bg-white flex flex-col rouned'  >
+   <div className='w-[35rem] h-[21.4rem] bg-white flex flex-col rounded-lg '  >
    <div className='w-full h-[3.5rem] border-b-2 border-gray p-3'>
         <span className='font-jakarta text-lg font-bold text-[#3A3541]'>Evolution Prospect</span>
-    </div>
+    </div>  
+    <div className='flex flex-col p-4'>
+        <span  className="font-jakarta text-sm font-bold size-6 text-[#3A3541] ">Situation</span>
+        <Tag bordered={false} color="processing" className='w-20 font-semibold text-[1rem]'>
+       {prospect?.data?.stage}
+      </Tag>
+        </div>
+        <div className='flex flex-col p-4'>
+        <span  className="font-jakarta text-sm font-bold size-6 text-[#3A3541] ">Statut</span>
+        <Tag bordered={false} color="purple" className='w-44 font-semibold text-[1rem]'>
+       {prospect?.data?.status}
+      </Tag>
+        </div>
    </div>
    <div></div>
 
@@ -36,26 +49,26 @@ const InfoProspect = ({prospect}) => {
     <div className='w-full h-[3.5rem] border-b-2 border-gray p-3'>
         <span className='font-jakarta text-lg font-bold text-[#3A3541]'>Détails du Projet</span>
     </div>
-    <div className='flex flex-col gap-12 p-10 '>
+    <div className='flex flex-col gap-5 p-10 '>
      <div className='flex flex-row gap-96'>
         <div className='flex flex-col'>
         <span  className="font-jakarta text-sm font-bold size-6 text-[#3A3541] w-full">Service proposé</span>
-        <span>{prospect?.service}</span>
+        <span>{prospect?.data?.service}</span>
         </div>
         <div className='flex flex-col'>
         <span  className="font-jakarta text-sm font-bold size-6 text-[#3A3541] w-full">Type de projet</span>
-        <span>{prospect?.projet}</span>
+        <span>{prospect?.data?.projectType}</span>
         </div>
        
      </div>
      <div className='flex flex-row gap-96'>
         <div className='flex flex-col'>
         <span  className="font-jakarta text-sm font-bold size-6 text-[#3A3541] w-full">Type de bien</span>
-        <span>{prospect?.service}</span>
+        <span>{prospect?.data?.propertyType} /{prospect?.data?.propertyDetails?.floors?.length}</span>
         </div>
         <div className='flex flex-col ml-6'>
         <span  className="font-jakarta text-sm font-bold size-6 text-[#3A3541] w-full">Nombre de piéces</span>
-        <span>{prospect?.projet}</span>
+        <span>{prospect?.data?.propertyDetails?.rooms}</span>
         </div>
        
      </div>
@@ -63,7 +76,7 @@ const InfoProspect = ({prospect}) => {
      <div className='flex flex-col gap-3'>
      <span  className="font-jakarta text-sm font-bold size-6 text-[#3A3541] w-full">Description de bien</span>
      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem obcaecati aspernatur asperiores, ipsum in nemo cumque quibusdam adipisci quasi consequatur sit molestias corrupti corporis recusandae necessitatibus veniam molestiae natus non!
-   Accusantium nihil omnis nam. Cum iusto sed ipsum impedit? Quis porro soluta corporis consequatur rem delectus quod, ducimus reprehenderit voluptatum? Fugit earum magni voluptatem eius eaque aperiam neque similique tempora?</p>
+   cimus reprehenderit voluptatum? Fugit earum magni voluptatem eius eaque aperiam neque similique tempora?</p>
      </div>
     </div>
       
