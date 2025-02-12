@@ -3,6 +3,7 @@ import AddPropspectPage from "../Pages/Auth/Dashbord/Pages/ClientManagement/AddP
 import ClientPage from "../Pages/Auth/Dashbord/Pages/ClientManagement/ClientManagementPage/ClientPage";
 import KanbanPropspectTable from "../Pages/Auth/Dashbord/Pages/ClientManagement/kanbanProspectTable/KanbanPropspectTable";
 import ProspectDeatilsPage from "../Pages/Auth/Dashbord/Pages/ClientManagement/ProspectDeatilsPage/ProspectDeatilsPage";
+import DetailProspectPgae from "../Pages/Auth/Dashbord/Pages/ClientManagement/ProspectManagementPage/DetailProspectPage/DetailProspectPgae";
 import ProspectPage from "../Pages/Auth/Dashbord/Pages/ClientManagement/ProspectManagementPage/ProspectPage";
 
 const clientManagementRoutes=[
@@ -12,16 +13,14 @@ const clientManagementRoutes=[
         name:"Gestion Prospect",
         element:<ProspectPage/>
     },
-      {
+    {
     path:"/gestionClient/prospect/:id",
-     element:<ProspectDeatilsPage/>
-
+     element:<DetailProspectPgae/>
 }
 ,
 {
-    path:"/gestionClient/prospect/ajouter",
+     path:"/gestionClient/prospect/ajouter",
      element:<AddPropspectPage/>
-
 }
     ,
     {

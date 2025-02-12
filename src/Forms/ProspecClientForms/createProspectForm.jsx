@@ -9,55 +9,12 @@ import { mutate } from 'swr';
 import PhoneInput from 'react-phone-input-2';
 
 import { Icon } from '@iconify/react/dist/iconify.js';
+import PersonelDetails from './personelDetails';
+import DetaileProjet from './detaileProjet';
 const CreateProspectForm = ({onSubmitForm}) => {
     const methods=useForm()
     const{handleSubmit,reset,control}=methods
     const{resposne,createProspect,error,isMutating}=useCreateProspect()
-    const prostatus =[
-        {
-          value: 'agence',
-          label: 'Agence',
-        },
-        {
-          value: 'rs',
-          label: 'Réseaux sociaux',
-        },
-        {
-            value: 'Siteweb',
-            label: 'Siteweb',
-          },{
-            value: 'autre',
-            label: 'Autre',
-          }
-    
-    ]
-    const serviceprop=[{
-      value: 'Etude de projet',
-      label: 'Etude de projet',},{
-        value: 'Construction',
-        label: 'Construction',},{
-          value: 'Reamingement-Renovation-Extention',
-          label: 'Reamingement-Renovation-Extention',},
-          {
-            value: 'Clotue',
-            label: 'Clotue',},
-            {
-              value: 'Autre',
-              label: 'Autre',}
-    ]
-    const typeProjet=[   {
-      value: 'Résidentiel',
-      label: 'Résidentiel',},
-      {
-        value: 'Commercial',
-        label: 'Commercial',},
-        {
-          value: 'Bureau',
-          label: 'Bureau',}
-          ,    {
-            value: 'Autre',
-            label: 'Autre',}
-      ]
       const typeBien=[
         {
           value: 'RDC',
@@ -73,48 +30,36 @@ const CreateProspectForm = ({onSubmitForm}) => {
     const owner=[
       {value:"Particulier",label:"Particulier"},{value:"Lotissement",label:"Lotissement"}
     ]
-    const platform=[{value:"Facebook",label:"Facebook"},{value:"Instagram",label:"Instagram"},{value:"TikTok",label:"TikTok"}]
+    
     const refreshData = (newSearch, newSelect) => {
       const key = `prospect/getAll?page=1&limit=10&search=${newSearch || ""}&select=${newSelect || ""}`;
       mutate(key);  
     };
-    const[source,setSource]=useState()
-    const[typeProjets,setTypeProjets]=useState()
-    const[bien,setBien]=useState()
+   
+  const[bien,setBien]=useState()
   const[floor,setFloor]=useState(1)
   const[rooms,setRooms]=useState({1:1})
   const roomsRef= useRef(rooms)
-  const handlebienchange=(e)=>{
-    console.log("bien",e)
-  setBien(e)
-  }
+  
   const handleFloorChange = (e) => {
     let newFloorCount = parseInt(e.target.value, 10) || 1;
     setFloor(newFloorCount);
   
     setRooms((prev) => {
-      let updatedRooms = { ...prev };
-  
-      
+      let updatedRooms = { ...prev };  
       for (let i = 1; i <= newFloorCount; i++) {
         if (updatedRooms[i] === undefined) {
           updatedRooms[i] = 1; 
         }
       }
-  
-   
       for (let i = newFloorCount + 1; i <= Object.keys(updatedRooms).length; i++) {
         delete updatedRooms[i];
       }
-  
       return updatedRooms;
     });
   };
-  
-
   const handleRoomChange=(floor,change)=>{
   setRooms((prev)=>({...prev,[floor]:Math.max(1,(prev[floor]||1)+change)}))
-
   }
 useEffect(() => {
   roomsRef.current=rooms
@@ -129,15 +74,12 @@ useEffect(() => {
           rooms: roomsRef.current[i + 1] || 1, 
         })),
       };
-    
-      
       const prospectData = {
         name: data.name,
         lastName: data.lastName,
         telephone: data.telephone,
         email: data.email,
         adress: data.adress,
-
         status: "prospection",
         propertyType: data.bien,
         propertyDetails: propertyDetails,
@@ -164,8 +106,6 @@ useEffect(() => {
     if(isMutating){
         console.log("IsMutating")
       }
- 
-    
     useEffect(()=>{
         if(error){
            
@@ -178,7 +118,6 @@ useEffect(() => {
     onSubmitForm.current=handleSubmit(onSubmit)
   }
  },[onSubmitForm,handleSubmit])
-
   return (
     <div className='h-full max-h-[43rem] '>
 
@@ -186,131 +125,12 @@ useEffect(() => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className='flex flex-row'>
           
-            <div className='flex-1 flex flex-col gap-2 overflow-y-auto max-h-[43rem]'>
-          <span className='font-jakarta text-xl font-bold  text-[#3A3541] ml-3 mt-6 '>Informations personnels </span>
-            
-   <InputField
-    name="name"
-    label="Nom"
-    placeholder="Nom"
-    required="nom is required"
-   className="h-12 w-full rounded-lg bg-[#F4F5F9] p-4"
-  
-    />
-    <InputField
-    name="lastName"
-    label="Prénom"
-    placeholder="Prénom"
-    required="email is required"
-    className="h-12 w-full rounded-lg bg-[#F4F5F9] p-4"
-    />
-    
-   <InputField
-    name="email"
-    label="Adress Email"
-    placeholder="Email"
-    required="nom is required"
-   className="h-12 w-full rounded-lg bg-[#F4F5F9] p-4"
-    />
-     
-     <div className='flex flex-col gap-2 px-6'>
-     <label htmlFor="" className=' font-jakarta   font-bold size-1  my-5 text-[#3A3541] w-full '>Telephone</label>
-     <Controller
-     name='telephone'
-    control={control}
-    rules={{ required: 'Phone number is required' }}
-    render={({field})=>(<PhoneInput {...field} country={'tn'} inputStyle={{ width: '100%', padding: '10px' ,paddingLeft:'50px'}} />)}
-
-     />
-     </div>
-    
-        <div className='px-6 flex flex-col gap-1 '>
-            <label htmlFor="" className=' font-jakarta   font-bold size-1  my-5 text-[#3A3541] w-full '>Source</label>
-            <Controller
-            
-            name='source'
-            control={control}
-            render={({field})=>(<Select {...field} options={prostatus} className='h-12 w-full' onChange={(value)=>{field.onChange(value);setSource(value)}}/>)}
-            />
-        </div>
-
-        {source ==="agence" && <div className='flex flex-col'> <InputField
-    name="agence"
-    label="Agence"
-    placeholder="Agence"
-    required="agence is required"
-    className="h-12 w-full rounded-lg bg-[#F4F5F9] p-4"
-    />
-    <InputField
-    name="agent"
-    label="Agent"
-    placeholder="Agent"
-    required="agent is required"
-    className="h-12 w-full rounded-lg bg-[#F4F5F9] p-4"
-    />
-    </div>}
-{source ==="rs" && <div className='flex flex-col'>
-  <div className='px-6 flex flex-col gap-1 '>
-            <label htmlFor="" className=' font-jakarta   font-bold size-1  my-5 text-[#3A3541] w-full '>Platform</label>
-            <Controller
-            
-            name='platform'
-            control={control}
-            render={({field})=>(<Select {...field} options={platform} className='h-12 w-full' />)}
-            />
-        </div>
-        <InputField
-    name="link"
-    label="Link"
-    placeholder="Link"
-    required="link is required"
-    className="h-12 w-full rounded-lg bg-[#F4F5F9] p-4"
-    />
-  </div>}
-    {source==="autre" && <InputField
-    name="autre"
-    label="Autre"
-    placeholder="autre"
-    required="link is required"
-    className="h-12 w-full rounded-lg bg-[#F4F5F9] p-4"
-    /> }
-        <div className='px-3'>  <InputField
-    name="adress"
-    label="Adress"
-    placeholder="Adress"
-    required="nom is required"
-    className="h-12 w-full rounded-lg bg-[#F4F5F9] px-3"
-  
-    /></div>
-
-      
- </div>  <div className='flex-1 flex flex-col'>
- <span className='font-jakarta text-xl font-bold  text-[#3A3541] ml-6 mt-6 mb-2'>Détails du projet</span>
- <div className='px-6 flex flex-col gap-1  '>
-            <label htmlFor="" className=' font-jakarta   font-bold size-1  my-5 text-[#3A3541] w-full '>Service demandé</label>
-            <Controller
-            
-            name='service'
-            control={control}
-            render={({field})=>(<Select {...field} options={serviceprop} className='h-12 w-full'/>)}
-            />
-        </div>
-        <div className='px-6 flex flex-col gap-1 mt-3 '>
-            <label htmlFor="" className=' font-jakarta   font-bold size-1  my-5 text-[#3A3541] w-full '>Type de projet</label>
-            <Controller
-            name='projet'
-            control={control}
-            render={({field})=>(<Select {...field} options={typeProjet} className='h-12 w-full' onChange={(value)=>{field.onChange(value);setTypeProjets(value)}}/>) }
-            />
-        </div>
-        {typeProjets==="Autre"&& <InputField
-    name="autre projet"
-    label="Autre"
-    placeholder="Autre"
-    required="autre is required"
-    className="h-12 w-full rounded-lg bg-[#F4F5F9] px-3"
-  
-    />}
+          <div className='flex-1 flex flex-col gap-2 overflow-y-auto max-h-[43rem]'>
+        
+        <PersonelDetails control={control}/>
+ </div>  <div className='flex-1 flex flex-col overflow-y-auto max-h-[43rem]'>
+ 
+         <DetaileProjet control={control}/>
         <div className='px-6 flex flex-col gap-1 mt-3 '>
             <label htmlFor="" className=' font-jakarta   font-bold size-1  my-5 text-[#3A3541] w-full '>Type de bien</label>
             <Controller
@@ -347,11 +167,8 @@ useEffect(() => {
           </div>
         ))}
       </div>
-     
      </div> 
-      
      }
-        
         <span className='font-jakarta text-xl font-bold  text-[#3A3541] ml-6 mt-6 mb-2'>Localisation du projet</span>
         <div className='px-6 flex flex-col gap-1 mt-3 '>
             <label htmlFor="" className=' font-jakarta   font-bold size-1  my-5 text-[#3A3541] w-full '>Localisation Terrain/Projet</label>
