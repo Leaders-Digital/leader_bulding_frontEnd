@@ -1,16 +1,33 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PipelineHeader from './pipelineHeader'
 import InfoProspect from './infoProspect'
 import useProspect from '../../../../../../../Hooks/ProspectClientHooks/useProspect'
 import { useParams } from 'react-router-dom'
+import Axios from '../../../../../../../Config/Axios'
+import { fetcher } from '../../../../../../../Config/SwrConfig'
+import useSWR from 'swr'
 
 const DetailProspectPgae = () => {
+  
   const{id}=useParams()
-   const {prospect,error,isLoading,mutate}=useProspect(id)
-   console.log("prospect",prospect)
+  
+  console.log("the id ",id)
+  const { data: prospect, error, isLoading } = useSWR(
+    id ? `prospect/getById/${id}` : null, 
+    fetcher
+  )
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>
+  }
+   console.log("error",error)
+   console.log("prospect",prospect?.data)
   return (
     <div className='h-full w-full flex flex-col gap-3 '>
-    <PipelineHeader/>
+    <PipelineHeader prospect={prospect?.data}/>
 
     <InfoProspect prospect={prospect}/>
    <div className='flex flex-col w-full pb-4'>

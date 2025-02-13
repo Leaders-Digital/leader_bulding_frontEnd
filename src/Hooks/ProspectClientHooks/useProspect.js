@@ -2,11 +2,10 @@ import useSWR from "swr";
 import { fetcher } from "../../Config/SwrConfig";
 
 const useProspect = (id) => {
-  const { data, error, isLoading, mutate } = useSWR(
-    id ? `prospect/getById/${id}` : null,
-    fetcher
-  );
-
+  const url = id ? `prospect/getById/${id}` : null; // Ensure correct pluralization
+  const { data, error, isLoading, mutate } = useSWR(url, fetcher, {
+    revalidateOnMount: true,
+  });
   return { prospect: data, error, isLoading, mutate };
 };
 

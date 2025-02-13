@@ -12,7 +12,10 @@ const InfoProspect = ({prospect}) => {
         adresse:prospect?.data?.adresse,
         CIN:prospect?.data?.cin
       };
-    
+    const sumRooms= Object.values(prospect?.data?.propertyDetails?.rooms).reduce((a,c)=>a+c,0)
+    console.log("rooms",sumRooms)
+    console.log("property type",prospect?.data?.propertyType)
+     const f=Object.values(prospect?.data?.propertyDetails?.rooms).length
   return (
     <div className='flex-1 w-full flex flex-col '>
     <div className=' flex flex-row items-center justify-center border-b-2 mb-3 border-[#BC983E] '>
@@ -64,11 +67,11 @@ const InfoProspect = ({prospect}) => {
      <div className='flex flex-row gap-96'>
         <div className='flex flex-col'>
         <span  className="font-jakarta text-sm font-bold size-6 text-[#3A3541] w-full">Type de bien</span>
-        <span>{prospect?.data?.propertyType} /{prospect?.data?.propertyDetails?.floors?.length}</span>
+        <span>{f>1?"R+N":"RDC"} /{prospect?.data?.propertyDetails?.floors?.length}</span>
         </div>
         <div className='flex flex-col ml-6'>
         <span  className="font-jakarta text-sm font-bold size-6 text-[#3A3541] w-full">Nombre de piéces</span>
-        <span>{prospect?.data?.propertyDetails?.rooms}</span>
+        <span>{sumRooms}</span>
         </div>
        
      </div>
