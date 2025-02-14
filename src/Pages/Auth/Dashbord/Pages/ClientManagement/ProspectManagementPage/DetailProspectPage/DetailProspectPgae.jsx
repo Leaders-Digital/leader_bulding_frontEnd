@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom'
 import Axios from '../../../../../../../Config/Axios'
 import { fetcher } from '../../../../../../../Config/SwrConfig'
 import useSWR from 'swr'
+import ActivitiesProspect from './activitiesProspect'
 
 const DetailProspectPgae = () => {
   
@@ -45,7 +46,7 @@ const DetailProspectPgae = () => {
         </div>
      </div>
    </div>
-
+<ActivitiesProspect/>
     </div>
   )
 }
