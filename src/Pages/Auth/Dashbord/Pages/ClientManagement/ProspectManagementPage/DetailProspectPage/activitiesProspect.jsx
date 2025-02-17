@@ -3,8 +3,9 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import { Modal } from 'antd'
 import React, { useState } from 'react'
 import CreateActivitie from '../../../../../../../Forms/ProspecClientForms/ActivitesForms/createActivitie'
+import UpcomingActivities from './upcomingActivities'
 
-const ActivitiesProspect = () => {
+const ActivitiesProspect = ({id}) => {
     const[openModal,setOpenModal]=useState()
   return (
     <div className='flex-1 w-full flex flex-col'>
@@ -18,16 +19,18 @@ const ActivitiesProspect = () => {
       <span className=' font-jakarta text-l w-52 ml-14   font-bold size-6  text-[#BC983E]'>Activités planifiées</span>
     </div>
         </div>
-
+<UpcomingActivities id={id} />
       <Modal
-    title={<span className=' font-jakarta text-xl  font-bold size-6 ml-10 my-8 text-[#3A3541] '>Ajouter un prospect </span>}
+    title={<span className=' font-jakarta text-xl  font-bold size-6 ml-3 my-8 text-[#3A3541] '>Planifier une activité</span>}
     centered={true}
     width={"45rem"}
     open={openModal}
-              
+    footer={null}
+    onCancel={()=>setOpenModal(false)}
+    className="h-[50rem] w-[42rem] px-3 py-3"
             
       >
-  <CreateActivitie/>
+  <CreateActivitie  prospect={id}/>
       </Modal>
     </div>
 

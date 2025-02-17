@@ -46,7 +46,7 @@ const DetailProspectPgae = () => {
         </div>
      </div>
    </div>
-<ActivitiesProspect/>
+<ActivitiesProspect id={id}/>
     </div>
   )
 }

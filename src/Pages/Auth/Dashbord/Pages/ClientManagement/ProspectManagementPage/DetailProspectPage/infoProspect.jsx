@@ -21,14 +21,14 @@ const InfoProspect = ({prospect}) => {
     <div className=' flex flex-row items-center justify-center border-b-2 mb-3 border-[#BC983E] '>
       <span className=' font-jakarta text-l w-32  font-bold size-6  text-[#BC983E]'>Détails du client </span>
     </div>
-    <div className='flex felex-row gap-3 pl-40'>
-   <div className='w-[40rem] h-[21.4rem] bg-white flex flex-col rounded-lg' >
+    <div className='flex flex-row gap-3 '>
+   <div className='w-full h-[21.4rem] bg-white flex flex-col rounded-lg' >
     <div className='w-full h-[3.5rem] border-b-2 border-gray p-3'>
         <span className='font-jakarta text-lg font-bold text-[#3A3541]'>Informations Personnels</span>
     </div>
      <DynamicInfo data={prospectInfo}/>
    </div>
-   <div className='w-[35rem] h-[21.4rem] bg-white flex flex-col rounded-lg '  >
+   <div className='w-full h-[21.4rem] bg-white flex flex-col rounded-lg '  >
    <div className='w-full h-[3.5rem] border-b-2 border-gray p-3'>
         <span className='font-jakarta text-lg font-bold text-[#3A3541]'>Evolution Prospect</span>
     </div>  
@@ -67,7 +67,7 @@ const InfoProspect = ({prospect}) => {
      <div className='flex flex-row gap-96'>
         <div className='flex flex-col'>
         <span  className="font-jakarta text-sm font-bold size-6 text-[#3A3541] w-full">Type de bien</span>
-        <span>{f>1?"R+N":"RDC"} /{prospect?.data?.propertyDetails?.floors?.length}</span>
+        <span>{f>1?"R+N":"RDC"} /{f}</span>
         </div>
         <div className='flex flex-col ml-6'>
         <span  className="font-jakarta text-sm font-bold size-6 text-[#3A3541] w-full">Nombre de piéces</span>
