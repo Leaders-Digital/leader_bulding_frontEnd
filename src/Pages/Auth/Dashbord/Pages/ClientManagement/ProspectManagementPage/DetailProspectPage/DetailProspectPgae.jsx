@@ -12,7 +12,7 @@ const DetailProspectPgae = () => {
   
   const{id}=useParams()
   
-  console.log("the id ",id)
+  
   const { data: prospect, error, isLoading } = useSWR(
     id ? `prospect/getById/${id}` : null, 
     fetcher
@@ -24,8 +24,7 @@ const DetailProspectPgae = () => {
   if (error) {
     return <div>Error: {error.message}</div>
   }
-   console.log("error",error)
-   console.log("prospect",prospect?.data)
+  
   return (
     <div className='h-full w-full flex flex-col gap-3 '>
     <PipelineHeader prospect={prospect?.data}/>

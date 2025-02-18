@@ -6,7 +6,7 @@ const ModifyProspect = async (url, { arg }) => {
     const { id } = arg;
     console.log("the send data from hook ", arg);
     const response = await PutFetcher(`prospect/update/${id}`, arg);
-    console.log("response from the hook ", response);
+
     return response;
   } catch (e) {
     throw e;

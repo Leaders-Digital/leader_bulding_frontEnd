@@ -9,10 +9,7 @@ const useUpcomingActivities = (
     `activity/getAll?page=${pagination.current}&limit=${pagination.pageSize}&id=${id}&dateFilter=upcoming`,
     fetcher
   );
-  console.log("data from upcoming fetcher", data);
-  if (error) {
-    console.log("error from fetcher", error);
-  }
+
   return {
     activities: data?.data,
     error,
@@ -23,3 +20,4 @@ const useUpcomingActivities = (
   };
 };
 export default useUpcomingActivities;
+0;

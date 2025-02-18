@@ -63,7 +63,7 @@ const CreateProspectForm = ({onSubmitForm}) => {
   }
 useEffect(() => {
   roomsRef.current=rooms
-  console.log("Updated rooms state:", rooms);
+
 }, [rooms]); 
 
     const onSubmit=async(data)=>{
@@ -91,7 +91,7 @@ useEffect(() => {
         service: data.service,
         profilePicId: data.profilePicId,
       };
-        console.log("prospect",prospectData)
+        
       const result =  await createProspect(prospectData)
         if(result.data){
            
@@ -100,8 +100,8 @@ useEffect(() => {
             refreshData("","")
            
         }
-       console.log("dataaa",data)
-       console.log("rooms",roomsRef.current)
+      
+       
     }
     if(isMutating){
         console.log("IsMutating")

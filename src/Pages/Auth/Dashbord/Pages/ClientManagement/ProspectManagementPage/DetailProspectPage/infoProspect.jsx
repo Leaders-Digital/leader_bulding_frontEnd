@@ -13,8 +13,7 @@ const InfoProspect = ({prospect}) => {
         CIN:prospect?.data?.cin
       };
     const sumRooms= Object.values(prospect?.data?.propertyDetails?.rooms).reduce((a,c)=>a+c,0)
-    console.log("rooms",sumRooms)
-    console.log("property type",prospect?.data?.propertyType)
+    
      const f=Object.values(prospect?.data?.propertyDetails?.rooms).length
   return (
     <div className='flex-1 w-full flex flex-col '>

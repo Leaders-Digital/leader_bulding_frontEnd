@@ -6,8 +6,9 @@ import { DatePicker, Select } from 'antd'
 import dayjs from 'dayjs'
 import useCreateActivity from '../../../Hooks/ActivitiesHooks/useCreateActivity'
 import { toast } from 'react-toastify'
+import { mutate } from 'swr'
 
-const CreateActivitie = ({prospect}) => {
+const CreateActivitie = ({prospect,openModal}) => {
     const methods =useForm()
     const{createActivity,error,isMutating}=useCreateActivity()
     const{handleSubmit,reset,control}=methods
@@ -19,14 +20,18 @@ const CreateActivitie = ({prospect}) => {
 
     const onSubmit= async(data)=>{
 
-data.date=dayjs(data.date).toISOString()
-data.propspectId=prospect
+ const newdate = dayjs(data.date).format("YYYY-MM-DD HH:mm");
+data={...data,date:newdate}
 
+data.propspectId=prospect
+console.log("data",data)
 const result= await createActivity(data)
 if(result.data){
   console.log(result.data)
   toast.success("activity created")
   reset()
+  mutate(`activity/getAll?page=${pagination.current}&limit=${pagination.pageSize}&id=${id}&dateFilter=upcoming`)
+  openModal(false)
 }
     }
         if(isMutating){

@@ -1,21 +1,20 @@
 import Axios from "./Axios";
 
 export const fetcher = (url) => {
-  // Check if the URL is defined
   if (!url) {
-    console.error("URL is not defined.");
+    // console.error("URL is not defined.");
     return;
   }
 
-  console.log("Making request to:", url); // Log the URL
+  // console.log("Making request to:", url);
 
   return Axios.get(url)
     .then((res) => {
-      console.log("from fetcher", res.data); // Log response data
+      //  console.log("from fetcher", res.data);
       return res.data;
     })
     .catch((error) => {
-      console.error("Error during request:", error); // Log error if any
+      //  console.error("Error during request:", error);
       throw error;
     });
 };

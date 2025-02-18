@@ -20,6 +20,9 @@ const ActivitiesProspect = ({id}) => {
     </div>
         </div>
 <UpcomingActivities id={id} />
+<div className=' flex flex-row items-center justify-center border-b-2 mb-3 mt-5 border-[#BC983E] '>
+      <span className=' font-jakarta text-l w-52 ml-14   font-bold size-6  text-[#BC983E]'>Activités Passées</span>
+    </div>
       <Modal
     title={<span className=' font-jakarta text-xl  font-bold size-6 ml-3 my-8 text-[#3A3541] '>Planifier une activité</span>}
     centered={true}
@@ -30,7 +33,7 @@ const ActivitiesProspect = ({id}) => {
     className="h-[50rem] w-[42rem] px-3 py-3"
             
       >
-  <CreateActivitie  prospect={id}/>
+  <CreateActivitie  prospect={id} openModal={setOpenModal}/>
       </Modal>
     </div>
 

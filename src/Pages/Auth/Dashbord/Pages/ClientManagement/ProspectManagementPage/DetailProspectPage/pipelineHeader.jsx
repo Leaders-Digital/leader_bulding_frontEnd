@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import React from 'react'
 
 const PipelineHeader = ({prospect}) => {
-  console.log("prospect from pipeline",prospect)
+
   return (
     <div className='flex flex-row  justify-between  w-full h-[8rem] bg-[#F7D47A] bg-opacity-50  items-center px-10 py-2  rounded-full '>
       
