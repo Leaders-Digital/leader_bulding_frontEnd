@@ -11,7 +11,7 @@ const DynamicInfo = ({data}) => {
   return (
     <div className='p-4'>
         {chunks.map((chunk,index)=>(
-        <div  key={index}className="flex flex-row gap-8 mt-3"> {chunk.map((key,index)=>(
+        <div  key={index}className="flex flex-row gap-28 mt-3"> {chunk.map((key,index)=>(
       <div key={index}  className="flex flex-col  gap-5 w-1/3 items-start">
 
         <span  className="font-jakarta text-sm font-bold size-6 text-[#3A3541] w-full">

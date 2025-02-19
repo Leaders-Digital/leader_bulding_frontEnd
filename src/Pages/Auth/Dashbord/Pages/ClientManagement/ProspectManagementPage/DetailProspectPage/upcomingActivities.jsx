@@ -1,34 +1,49 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState } from 'react'
 import useUpcomingActivities from '../../../../../../../Hooks/ActivitiesHooks/useUpcomingActivities'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import { Collapse, Divider, List, Skeleton } from 'antd'
+import { Collapse, Divider, List, Modal, Skeleton } from 'antd'
 import { Icon } from '@iconify/react/dist/iconify.js'
+import DoneActivityForm from '../../../../../../../Forms/ProspecClientForms/ActivitesForms/doneActivityForm'
 
-const UpcomingActivities = ({ id }) => {
+const UpcomingActivities = ({ id, refreshTrigger }) => {
     const [activitiesData, setActivitiesData] = useState([]); 
     const [page, setPage] = useState(1);
-    const [loadedPages, setLoadedPages] = useState(new Set());
-    const { activities, error, isLoading, totalItems } = useUpcomingActivities({ current: page, pageSize: 7 }, id);
-
-
+    const[modalOpen,setModalOpen]=useState()
+    const { activities, error, isLoading, totalItems, mutate } = useUpcomingActivities(
+        { current: page, pageSize: 7 }, 
+        id
+    );
 
     useEffect(() => {
-      if (activities && activities.length > 0 && !loadedPages.has(page)) {
-          setActivitiesData(prev => [...prev, ...activities]);  
-          setLoadedPages(prev => new Set([...prev, page])); 
-      }
-  }, [activities, page, loadedPages]);
+        setPage(1);
+        setActivitiesData([]);
+        mutate();
+    }, [id, refreshTrigger, mutate]);
 
-    const loadMoreData = useCallback(() => {
-        if (!isLoading && !error) {
-            setPage(prevPage => prevPage + 1);
+    useEffect(() => {
+        if (activities && !isLoading) {
+            if (page === 1) {
+                setActivitiesData(activities);
+            } else {
+                setActivitiesData(prev => [...prev, ...activities]);
+            }
         }
-    }, [isLoading, error]);
+    }, [activities, isLoading, page]);
+
+    const loadMoreData = () => {
+        if (!isLoading && !error && activitiesData.length < totalItems) {
+            setPage(prev => prev + 1);
+        }
+    };
+
+    if (error) {
+        return <div>Error loading activities</div>;
+    }
 
     return (
         <div
             id="scrollableDiv"
-            className='bg-white rounded-lg mt-4 w-full h-96'
+            className='bg-white rounded-lg mt-4 w-full h-[calc(100vh-16rem)] md:h-96'
             style={{
                 overflow: 'auto',
                 padding: '0 16px',
@@ -36,71 +51,88 @@ const UpcomingActivities = ({ id }) => {
             }}
         >
             <InfiniteScroll
-                dataLength={activitiesData.length || 0}  
+                dataLength={activitiesData.length}
                 next={loadMoreData}
-                hasMore={activitiesData.length < totalItems}  
+                hasMore={activitiesData.length < totalItems}
                 loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
                 endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
                 scrollableTarget="scrollableDiv"
             >
                 <List
-                className=' rounded-lg'
+                    className='rounded-lg'
                     dataSource={activitiesData}
                     renderItem={(activity) => (
                         <List.Item key={activity.id}>
-                           <div className='flex flex-col gap-1'>
-                            <div className='flex flex-row gap-7 justify-between'>
-                           <div className='flex flex-row gap-2'><div className='flex flex-col gap-3 w-40'><span className='font-jakarta font-semibold'>Activité</span>
-                              <span className='font-jakarta font-semibold'>{activity.activity} </span>
+                           <div className='flex flex-col gap-1 w-full'>
+                            <div className='flex flex-col md:flex-row gap-4 md:gap-7 justify-between'>
+                           <div className='flex flex-col sm:flex-row gap-2'>
+                              <div className='flex flex-col gap-3 w-full sm:w-40'>
+                                <span className='font-jakarta font-semibold'>Activité</span>
+                                <span className='font-jakarta font-semibold break-words'>{activity.activity}</span>
+                              </div>
+                            
+                              <div className='flex flex-col gap-3 w-full sm:w-80'>
+                                <span className='font-jakarta font-semibold'>Date</span>
+                                <span className='text-[#17A937] font-jakarta font-bold text-sm md:text-base break-words'>
+                                  Date: {new Date(activity.date).toLocaleDateString('fr-FR', {
+                                    day: '2-digit',
+                                    month: '2-digit',
+                                    year: 'numeric'
+                                  })} - Heures: {new Date(activity.date).toLocaleTimeString('fr-FR', {
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                    hour12: false
+                                  })}
+                                </span>
+                              </div>
                             </div>
                             
-                            <div className='flex flex-col gap-3 w-80'>
-  <span className='font-jakarta font-semibold'>Date</span>
-                           <span className='text-[#17A937] font-jakarta font-bold'>
-            Date: {new Date(activity.date).toLocaleDateString('fr-FR', {
-            day: '2-digit',
-             month: '2-digit',
-             year: 'numeric'
-             })} - Heures: {new Date(activity.date).toLocaleTimeString('fr-FR', {
-              hour: '2-digit',
-              minute: '2-digit',
-               hour12: false
-             })}
-               </span>
-
-                           </div>
-                            
-                         </div>
-                         <div className='flex flex-col gap-1 justify-center items-center '>
-                           <span className='font-jakarta font-semibold'>Actions</span>
-                           <div className='flex flex-row gap-2'>
-
-                           <button className='h-10 w-10 rounded-full bg-[#17A937] bg-opacity-20 flex flex-row items-center justify-center'><Icon icon="hugeicons:checkmark-circle-01" width="24" height="24"  style={{color:" #17A937"}} /></button>
-                           < button className='h-10 w-10 rounded-full bg-[#9747FF] bg-opacity-20 flex flex-row items-center justify-center'><Icon icon="hugeicons:note-add" width="24" height="24"  style={{color: "#9747FF"}} /></button>
-                           </div>
-
-                           
-                           </div> 
+                            <div className='flex flex-col gap-1 justify-center items-center'>
+                              <span className='font-jakarta font-semibold'>Actions</span>
+                              <div className='flex flex-row gap-2'>
+                                <button className='h-8 w-8 md:h-10 md:w-10 rounded-full bg-[#17A937] bg-opacity-20 flex flex-row items-center justify-center' onClick={()=>setModalOpen(true)}>
+                                  <Icon icon="hugeicons:checkmark-circle-01" className="w-5 h-5 md:w-6 md:h-6" style={{color:" #17A937"}} />
+                                </button>
+                                <button className='h-8 w-8 md:h-10 md:w-10 rounded-full bg-[#9747FF] bg-opacity-20 flex flex-row items-center justify-center'>
+                                  <Icon icon="hugeicons:note-add" className="w-5 h-5 md:w-6 md:h-6" style={{color: "#9747FF"}} />
+                                </button>
+                              </div>
+                            </div> 
                             </div>
-                            {(activity.description.length>0)? 
-                         <div className='w-[70rem]' > <Collapse  
-                           items={[{label:"Notes",key:'1', 
-                            children: activity.description.map((desc, index) => (
-                              <p key={index}>{desc}</p>
-                            ))
-                           }]}
-                           /></div>  
-                          
-                          
-                           :null}
+                            {activity.description && activity.description.length > 0 && (
+                              <div className='w-full md:w-[70rem]'>
+                                <Collapse  
+                                  items={[{
+                                    label: "Notes",
+                                    key: '1', 
+                                    children: activity.description.map((desc, index) => (
+                                      <p key={index} className="break-words">{desc}</p>
+                                    ))
+                                  }]}
+                                />
+                              </div>  
+                            )}
                             </div>
-                         
                         </List.Item>
                     )}
                 />
             </InfiniteScroll>
-        </div>
-    )
-}
+            <Modal
+            title={<span className=' font-jakarta text-xl  font-bold size-6  my-8 text-[#17A937] '>Terminer une activité </span>}
+            open={modalOpen}
+            footer={null}
+            className='h-[60rem] w-[40rem] px-3 py-3'
+            width={"40rem"}
+            height={"60rem"}
+            style={{height: "60rem", 
+              padding: "1rem",}}
+              onCancel={()=>setModalOpen(false)}
+            >
 
-export default UpcomingActivities
+              <DoneActivityForm/>
+            </Modal>
+        </div>
+    );
+};
+
+export default UpcomingActivities;

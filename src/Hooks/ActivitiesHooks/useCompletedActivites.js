@@ -1,17 +1,15 @@
 import useSWR from "swr";
 import { fetcher } from "../../Config/SwrConfig";
 
-const useUpcomingActivities = (
+const useCompletedActivites = (
   pagination = { current: 1, pageSize: 10 },
   id
 ) => {
-  const cacheKey = id ? [`activity/getAll`, id, pagination] : null;
-  
   const { data, mutate, isLoading, error } = useSWR(
-    cacheKey,
-    () => fetcher(`activity/getAll?page=${pagination.current}&limit=${pagination.pageSize}&id=${id}&dateFilter=upcoming`)
+    `activity/getAll?page=${pagination.current}&limit=${pagination.pageSize}&id=${id}&dateFilter=completed`,
+    fetcher
   );
-
+  console.log("data of completed activities", data);
   return {
     activities: data?.data,
     error,
@@ -21,4 +19,4 @@ const useUpcomingActivities = (
     mutate,
   };
 };
-export default useUpcomingActivities;
+export default useCompletedActivites;
