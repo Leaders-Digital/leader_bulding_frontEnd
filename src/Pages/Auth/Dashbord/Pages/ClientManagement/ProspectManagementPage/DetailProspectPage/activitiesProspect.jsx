@@ -8,6 +8,13 @@ import CompletedActivities from './completedActivities'
 const ActivitiesProspect = ({id}) => {
     const [openModal, setOpenModal] = useState(false)
     const [refreshTrigger, setRefreshTrigger] = useState(0)
+    const [revalidate, setRevalidate] = useState(0)
+    
+    const handleActivityStatusChange = () => {
+        // Increment both triggers to refresh both lists
+        setRefreshTrigger(prev => prev + 1)
+        setRevalidate(prev => prev + 1)
+    }
     
     return (
         <div className='flex-1 w-full flex flex-col'>
@@ -22,12 +29,17 @@ const ActivitiesProspect = ({id}) => {
                 </div>
             </div>
             
-            <UpcomingActivities id={id} refreshTrigger={refreshTrigger} />
+            <UpcomingActivities 
+                id={id} 
+                refreshTrigger={refreshTrigger} 
+                onSuccess={handleActivityStatusChange}
+                revalidate={revalidate}
+            />
             
             <div className='flex flex-row items-center justify-center border-b-2 mb-3 mt-5 border-[#BC983E]'>
                 <span className='font-jakarta text-l w-52 ml-14 font-bold size-6 text-[#BC983E]'>Activités Passées</span>
             </div>
-             <CompletedActivities id={id} />
+            <CompletedActivities id={id} revalidate={revalidate} />
             <Modal
                 title={<span className='font-jakarta text-xl font-bold size-6 ml-3 my-8 text-[#3A3541]'>Planifier une activité</span>}
                 centered={true}

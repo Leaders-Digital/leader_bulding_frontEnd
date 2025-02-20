@@ -5,7 +5,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { Collapse, Divider, List, Skeleton } from 'antd';
 import { Icon } from '@iconify/react/dist/iconify.js';
 
-const CompletedActivities = ({id}) => {
+const CompletedActivities = ({id,revalidate}) => {
        const [activitiesData, setActivitiesData] = useState([]); 
     const [page, setPage] = useState(1);
     const{activities,error,isLoading,totalItems,mutate}=useCompletedActivites( { current: page, pageSize: 7 }, 
@@ -13,9 +13,9 @@ const CompletedActivities = ({id}) => {
         useEffect(()=>{
           setPage(1)
           setActivitiesData([])
+          mutate()
 
-
-        },[id,mutate])
+        },[id,mutate,revalidate])
 
            useEffect(() => {
                 if (activities && !isLoading) {
@@ -37,7 +37,7 @@ const CompletedActivities = ({id}) => {
             }
   return (
     <div
-    id="scrollableDiv"
+    id="completedScrollableDiv"
     className='bg-white rounded-lg mt-4 w-full h-[calc(100vh-16rem)] md:h-96'
     style={{
         overflow: 'auto',
@@ -51,7 +51,7 @@ const CompletedActivities = ({id}) => {
         hasMore={activitiesData.length < totalItems}
         loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
         endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
-        scrollableTarget="scrollableDiv"
+        scrollableTarget="completedScrollableDiv"
     >
         <List
             className='rounded-lg'

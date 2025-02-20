@@ -11,7 +11,7 @@ const BecomClientForm = ({prospectId,handleCancel,mutate}) => {
     const methods=useForm()
     const{handleSubmit,control,reset}=methods
     const onSubmit=async(data)=>{
-    console.log("data",data)
+  
    const res= await validerClient({id:prospectId ,data:data})
    if(res.data){
      toast.success(res.message)

@@ -3,16 +3,32 @@ import React from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import InputField from '../../../Components/InputForm/InputField'
 import useMarkasdone from '../../../Hooks/ActivitiesHooks/useMarkasdone'
+import { toast } from 'react-toastify'
 
-const DoneActivityForm = () => {
+const DoneActivityForm = ({id,setModal,onSuccess}) => {
     const methods= useForm()
     const {handleSubmit,control,reset}=methods
     const{markAsdone,error,isMutating}=useMarkasdone()
+    const onSubmit=async(data)=>{
+        try {
+            data={...data,id:id}
+            const res = await markAsdone(data)
+            if(res.data){
+                toast.success("The activity marked as done")
+                // Call onSuccess before closing modal and resetting form
+                onSuccess?.()
+                reset()
+                setModal(false)
+            }
+        } catch (error) {
+            toast.error("Failed to mark activity as done")
+        }
+    }
   return (
     <div className='h-full max-h-[43rem]'>
    
    <FormProvider {...methods}>
-    <form  onSubmit={handleSubmit}>
+    <form  onSubmit={handleSubmit(onSubmit)}>
   <div className='h-[30rem] w-[27.8rem] flex flex-col  items-center'>
     <div className='flex flex-col  mt-4  ml-24 gap-3' >
       <Icon icon="hugeicons:checkmark-circle-04" width="70" height="70"  style={{color:" #17A937"}} className='ml-44'/>
@@ -30,7 +46,7 @@ const DoneActivityForm = () => {
   <div className='flex flex-row gap-2 ml-12 m-4'>
 
     <button className='  border-2 border-[#3A3541] rounded-lg p-2 font-jakarta font-semibold text-[#3A3541] w-[14rem] h-12 '>Terminer et Planifier une autre</button>
-    <button className=' bg-[#17A937] text-white font-jakarta font-semibold p-2 rounded-lg w-32 h-12'>Terminer</button>
+    <button className=' bg-[#17A937] text-white font-jakarta font-semibold p-2 rounded-lg w-32 h-12' type='submit'>Terminer</button>
   </div>
 
     </div>
