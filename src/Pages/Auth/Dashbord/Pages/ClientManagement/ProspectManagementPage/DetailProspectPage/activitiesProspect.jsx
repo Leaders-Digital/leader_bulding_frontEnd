@@ -40,6 +40,7 @@ const ActivitiesProspect = ({id}) => {
                 <span className='font-jakarta text-l w-52 ml-14 font-bold size-6 text-[#BC983E]'>Activités Passées</span>
             </div>
             <CompletedActivities id={id} revalidate={revalidate} />
+            <div className='mt-10'></div>
             <Modal
                 title={<span className='font-jakarta text-xl font-bold size-6 ml-3 my-8 text-[#3A3541]'>Planifier une activité</span>}
                 centered={true}
