@@ -16,8 +16,8 @@ const PersonelDetails = ({control}) => {
           label: 'Réseaux sociaux',
         },
         {
-            value: 'Siteweb',
-            label: 'Siteweb',
+            value: 'site',
+            label: 'Site web',
           },{
             value: 'autre',
             label: 'Autre',
@@ -31,7 +31,7 @@ const PersonelDetails = ({control}) => {
           },
           {
             value: 'Leaders business',
-            label: 'Leaders building',
+            label: 'Leaders business',
           }, {
             value: 'Leaders immobilier',
             label: 'Leaders immobilier',

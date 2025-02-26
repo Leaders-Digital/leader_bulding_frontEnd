@@ -11,7 +11,8 @@ const useProspects = (
     }&search=${filter.search || ""}&select=${filter.status}`,
     fetcher,
     {
-      revalidateOnFocus: false,
+      revalidateOnFocus: true,
+      revalidateOnReconnect: true,
     }
   );
   //console.log("prospects from the hook ", data);

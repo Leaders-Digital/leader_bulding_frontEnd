@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useForm,Controller,FormProvider } from 'react-hook-form'
-import { DatePicker, Input, Select } from 'antd';
+import { DatePicker, Input, InputNumber, Select } from 'antd';
 import InputField from '../../Components/InputForm/InputField';
 import useCreateProspect from '../../Hooks/ProspectClientHooks/useCreateProspect';
 import 'react-phone-input-2/lib/style.css';
@@ -11,10 +11,13 @@ import PhoneInput from 'react-phone-input-2';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import PersonelDetails from './personelDetails';
 import DetaileProjet from './detaileProjet';
+import LocationProject from './locationProject';
 const CreateProspectForm = ({onSubmitForm}) => {
     const methods=useForm()
-    const{handleSubmit,reset,control}=methods
+    const[forceReset,SetforceReset]=useState()
+    const{handleSubmit,reset,control,formState:{isValid}}=methods
     const{resposne,createProspect,error,isMutating}=useCreateProspect()
+    
       const typeBien=[
         {
           value: 'RDC',
@@ -66,7 +69,14 @@ useEffect(() => {
 
 }, [rooms]); 
 
+const resetFloors=()=>{
+  setFloor(1)
+  setRooms({1:1})
+  setBien("")
+}
     const onSubmit=async(data)=>{
+      console.log("Submitted Data:", data);
+  console.log("Fields with Errors:", methods.formState.errors);
       const propertyDetails = {
         rooms: roomsRef.current,  
         floors: Array.from({ length: floor }, (_, i) => ({
@@ -82,7 +92,7 @@ useEffect(() => {
         adress: data.adress,
         status: "prospection",
         propertyType: data.bien,
-        propertyDetails: propertyDetails,
+        propertyDetails: data.bien==="R+N"? propertyDetails:{floors:[{floorNumber:1,rooms:data.rdcRooms}],rooms:{'1':data.rdcRooms}},
         projectType: data.projet,
         source: data.source,
         agence: data.source === "agence" ? { name: data.agence, agent: data.agent } : {},
@@ -90,18 +100,23 @@ useEffect(() => {
         otherSourceDescription: data.source === "Other" ? data.autre : null,
         service: data.service,
         profilePicId: data.profilePicId,
+        percent:data.percent,
+        lotissement:data.location,
+        lotissementCords:data.location ==="Lotissement"?{nom:data?.nomLotiss,numLot:data?.numeroLotiss}:{},
+        adressParticulier:data.adressParticulier
       };
-        
+        console.log("the data of prospect",prospectData)
       const result =  await createProspect(prospectData)
         if(result.data){
            
             toast.success(result.message)
+            console.log("isvalid",isValid)
+            resetFloors()
             reset()
+            SetforceReset(true)
             refreshData("","")
            
         }
-      
-       
     }
     if(isMutating){
         console.log("IsMutating")
@@ -119,18 +134,18 @@ useEffect(() => {
   }
  },[onSubmitForm,handleSubmit])
   return (
-    <div className='h-full max-h-[43rem] '>
+    <div className='h-full max-h-[45rem] '>
 
     <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className='flex flex-row'>
           
-          <div className='flex-1 flex flex-col gap-2 overflow-y-auto max-h-[43rem]'>
+          <div className='flex-1 flex flex-col gap-2 overflow-y-auto max-h-[45  rem]'>
         
         <PersonelDetails control={control}/>
- </div>  <div className='flex-1 flex flex-col overflow-y-auto max-h-[43rem]'>
+ </div>  <div className='flex-1 flex flex-col overflow-y-auto max-h-[45rem]'>
  
-         <DetaileProjet control={control}/>
+         <DetaileProjet control={control} forceReset={forceReset} setForceReset={SetforceReset}/>
         <div className='px-6 flex flex-col gap-1 mt-3 '>
             <label htmlFor="" className=' font-jakarta   font-bold size-1  my-5 text-[#3A3541] w-full '>Type de bien</label>
             <Controller
@@ -149,7 +164,7 @@ useEffect(() => {
             <span className="font-semibold">Etage {floor}</span>
             <div className="flex items-center">
               <button
-              type='button'
+                type='button'     
                 onClick={() => handleRoomChange(floor, -1)}
                 className="px-3 py-1 bg-[#F7D47A] text-white rounded"
               >
@@ -169,16 +184,20 @@ useEffect(() => {
       </div>
      </div> 
      }
-        <span className='font-jakarta text-xl font-bold  text-[#3A3541] ml-6 mt-6 mb-2'>Localisation du projet</span>
-        <div className='px-6 flex flex-col gap-1 mt-3 '>
-            <label htmlFor="" className=' font-jakarta   font-bold size-1  my-5 text-[#3A3541] w-full '>Localisation Terrain/Projet</label>
-            <Controller
-            name='location'
-            control={control}
-            render={({field})=>(<Select {...field} options={owner} className='h-12 w-full'/>)}
-            />
-        </div>
-  </div></div>
+     {bien ==="RDC" && 
+     <div className='flex flex-col gap-3 ml-7'>
+      <label htmlFor=""  className=' font-jakarta   font-bold size-1  my-5 text-[#3A3541] w-full '>Nombre de pieces :</label> 
+      <Controller
+      name='rdcRooms'
+      control={control}
+      render={({field})=> <InputNumber {...field} min={0} max={50}  size='large'/> }
+      />
+     </div>
+     }
+       <LocationProject control={control} forceReset={forceReset}/>
+  </div>
+  
+  </div>
     </form>
     </FormProvider>
    

@@ -1,11 +1,13 @@
 import { useDraggable } from '@dnd-kit/core'
 import { Icon } from '@iconify/react/dist/iconify.js'
-import { Dropdown, Space, Tag } from 'antd'
-import React from 'react'
+import { Dropdown, Modal, Space, Tag } from 'antd'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import DeleteProspect from '../ProspectManagementPage/deleteProspect'
 
-const Prospect = ({prospect,isOverlay}) => {
+const Prospect = ({prospect,isOverlay,mutate}) => {
     const{attributes,listeners,setNodeRef,transform,isDragging}=useDraggable({id:prospect._id ,data:prospect})
+    const[openModal,setIsOpenModal]=useState()
     const navigate=useNavigate()
     const showmsg=()=>{
         console.log("dddddddd")
@@ -14,7 +16,7 @@ const Prospect = ({prospect,isOverlay}) => {
     const viewDetails=()=>{
       navigate(`/gestionClient/prospect/${prospect._id}`)
     }
-    const items=[ {key:"1",label:"Voir",icon:<Icon icon="hugeicons:eye" width="24" height="24" />,onClick:viewDetails},{key:'2',label:"Edit",icon:<Icon icon="hugeicons:pencil-edit-02" width="24" height="24" />,onClick:showmsg},{key:'3',label:"Delete",icon:<Icon icon="hugeicons:delete-02" width="24" height="24" style={{color:"#fb2424"}} />}]
+    const items=[ {key:"1",label:"Voir",icon:<Icon icon="hugeicons:eye" width="24" height="24" />,onClick:viewDetails},{key:'2',label:"Edit",icon:<Icon icon="hugeicons:pencil-edit-02" width="24" height="24" />,onClick:showmsg},{key:'3',label:"Delete",icon:<Icon icon="hugeicons:delete-02" width="24" height="24" style={{color:"#fb2424"}} />,onClick:()=>setIsOpenModal(true)}]
 
     const getTagColor=(status)=>{
 switch (status){
@@ -75,13 +77,24 @@ switch (status){
     <Tag bordered={false} color={getTagColor(prospect.status)} className='w-fit'>
         {prospect.status}
       </Tag>
-   <p className='text-sm text-[#3A3541]'> <span className='text-[#3A3541] font-jakarta font-bold'>Email: </span> {prospect.email}</p>
-    <p className='text-sm text-gray-500'> <span className='text-[#3A3541] font-jakarta font-bold'>Telephone:</span>  {prospect.telephone}</p>
-  
+   
+    <Tag bordered={false} color="success" className='w-fit'>
+        {prospect.percent}%
+      </Tag>
          </div>
   
         </div>
+<Modal
+title={<span className='font-jakarta text-xl font-bold size-6 ml-3 my-8 text-[#3A3541]'>Changer stage</span>}
+open={openModal}
+footer={null}
+centered={true}
+onCancel={()=>setIsOpenModal(false)}
+ className="h-[50rem] w-[42rem] px-3 py-3 mt-20"
+>
 
+  <DeleteProspect prospect={prospect} handleCancel={()=>setIsOpenModal(false)} prospectsMutation={mutate}/>
+</Modal>
     </div>
   )
 }
