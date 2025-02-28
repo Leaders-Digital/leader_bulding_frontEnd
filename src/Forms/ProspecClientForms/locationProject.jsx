@@ -1,45 +1,49 @@
 import { Button, Progress, Select } from 'antd'
 import React, { useState, useCallback, useEffect } from 'react'
-import { Controller } from 'react-hook-form'
+import { Controller, useWatch } from 'react-hook-form'
 import InputField from '../../Components/InputForm/InputField'
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons'
 
 const LocationProject = ({ control,forceReset ,setForceReset}) => {
-  const [location, setLocation] = useState()
-  const [percent, setPercent] = useState(0)
+  //const [location, setLocation] = useState()
+  const location=useWatch({control,name:"location"})
+ // const [percent, setPercent] = useState(0)
+ const percent = useWatch({ control, name: "percent" })
 
   const owner = [
     { value: "Particulier", label: "Particulier" },
     { value: "Lotissement", label: "Lotissement" }
   ]
 
-  const handleLocationChange = useCallback((val, field) => {
+  /*const handleLocationChange = useCallback((val, field) => {
     field.onChange(val)
-    setLocation(val)
+    //setLocation(val)
   }, [])
-
+*/
   const handlePercentChange = useCallback((newValue, field) => {
     field.onChange(newValue)
-    setPercent(newValue)
+    //setPercent(newValue)
   }, [])
 
   const increase = useCallback((field) => {
-    const newPercent = Math.min(percent + 10, 100)
+    const currentPercent = control.getValues('percent') || 0 // Get current value from form
+    const newPercent = Math.min(currentPercent + 10, 100)
     handlePercentChange(newPercent, field)
-  }, [percent, handlePercentChange])
+  }, [control, handlePercentChange])
 
   const decline = useCallback((field) => {
-    const newPercent = Math.max(percent - 10, 0)
+    const currentPercent = control.getValues('percent') || 0 // Get current value from form
+    const newPercent = Math.max(currentPercent - 10, 0)
     handlePercentChange(newPercent, field)
-  }, [percent, handlePercentChange])
- useEffect(()=>{
+  }, [control, handlePercentChange])
+ /*useEffect(()=>{
 if(forceReset){
   setPercent(0)
-  setLocation("")
+  //setLocation("")
  
 }
 
- },[forceReset])
+ },[forceReset])*/
   return (
     <div className="h-full w-full mt-2">
       <span className="font-jakarta text-xl font-bold  text-[#3A3541] ml-6 mt-6 mb-2">
@@ -61,7 +65,7 @@ if(forceReset){
               options={owner}
               className="h-12 w-full"
               value={location}
-              onChange={(val) => handleLocationChange(val, field)}
+           
             />
           )}
         />

@@ -1,6 +1,7 @@
 import Home from "../Pages/Auth/Dashbord/Home";
 import AddPropspectPage from "../Pages/Auth/Dashbord/Pages/ClientManagement/AddProspectPage/AddPropspectPage";
 import ClientPage from "../Pages/Auth/Dashbord/Pages/ClientManagement/ClientManagementPage/ClientPage";
+import EditProspectPage from "../Pages/Auth/Dashbord/Pages/ClientManagement/EditProspectPage/EditProspectPage";
 import KanbanPropspectTable from "../Pages/Auth/Dashbord/Pages/ClientManagement/kanbanProspectTable/KanbanPropspectTable";
 import ProspectDeatilsPage from "../Pages/Auth/Dashbord/Pages/ClientManagement/ProspectDeatilsPage/ProspectDeatilsPage";
 import DetailProspectPgae from "../Pages/Auth/Dashbord/Pages/ClientManagement/ProspectManagementPage/DetailProspectPage/DetailProspectPgae";
@@ -17,6 +18,12 @@ const clientManagementRoutes=[
     path:"/gestionClient/prospect/:id",
      element:<DetailProspectPgae/>
 }
+,
+{
+    path:"/gestionClient/editProspect/:id",
+     element:<EditProspectPage/>
+}
+
 ,
 {
      path:"/gestionClient/prospect/ajouter",

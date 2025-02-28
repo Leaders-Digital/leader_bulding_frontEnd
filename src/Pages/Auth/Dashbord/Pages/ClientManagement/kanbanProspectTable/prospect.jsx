@@ -16,7 +16,10 @@ const Prospect = ({prospect,isOverlay,mutate}) => {
     const viewDetails=()=>{
       navigate(`/gestionClient/prospect/${prospect._id}`)
     }
-    const items=[ {key:"1",label:"Voir",icon:<Icon icon="hugeicons:eye" width="24" height="24" />,onClick:viewDetails},{key:'2',label:"Edit",icon:<Icon icon="hugeicons:pencil-edit-02" width="24" height="24" />,onClick:showmsg},{key:'3',label:"Delete",icon:<Icon icon="hugeicons:delete-02" width="24" height="24" style={{color:"#fb2424"}} />,onClick:()=>setIsOpenModal(true)}]
+    const editProspect=()=>{
+      navigate(`/gestionClient/editProspect/${prospect._id}`)
+    }
+    const items=[ {key:"1",label:"Voir",icon:<Icon icon="hugeicons:eye" width="24" height="24" />,onClick:viewDetails},{key:'2',label:"Edit",icon:<Icon icon="hugeicons:pencil-edit-02" width="24" height="24" />,onClick:editProspect},{key:'3',label:"Delete",icon:<Icon icon="hugeicons:delete-02" width="24" height="24" style={{color:"#fb2424"}} />,onClick:()=>setIsOpenModal(true)}]
 
     const getTagColor=(status)=>{
 switch (status){
@@ -42,7 +45,6 @@ switch (status){
   return (
     <div
     ref={setNodeRef}
- 
     className={`p-2 mt-2 bg-white rounded-md shadow  mr-3  ${
         isDragging ? "  opacity-0" : "relative"
     }` }

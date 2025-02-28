@@ -6,7 +6,7 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import DoneActivityForm from '../../../../../../../Forms/ProspecClientForms/ActivitesForms/doneActivityForm'
 import AddNoteForm from '../../../../../../../Forms/ProspecClientForms/ActivitesForms/addNoteForm'
 
-const UpcomingActivities = ({ id, refreshTrigger,onSuccess,revalidate }) => {
+const UpcomingActivities = ({ id, refreshTrigger,onSuccess,revalidate,openAddModal }) => {
     const [activitiesData, setActivitiesData] = useState([]); 
     const [page, setPage] = useState(1);
     const[modalOpen,setModalOpen]=useState()
@@ -141,7 +141,7 @@ const UpcomingActivities = ({ id, refreshTrigger,onSuccess,revalidate }) => {
               onCancel={()=>{setModalOpen(false) ; setSelectedActivity(null)}}
             >
 
-              <DoneActivityForm id={selectedActivity} setModal={setModalOpen} onSuccess={onSuccess}/>
+              <DoneActivityForm id={selectedActivity} setModal={setModalOpen} onSuccess={onSuccess}  openAddModal={openAddModal} />
             </Modal>
             
             

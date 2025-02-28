@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import InputField from '../../Components/InputForm/InputField';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, useForm, useWatch } from 'react-hook-form';
 import PhoneInput from 'react-phone-input-2';
 import { Select } from 'antd';
 
 const PersonelDetails = ({control}) => {
-    const[source,setSource]=useState()
+   // const[source,setSource]=useState()
+   const source=useWatch({control,name:"source"})
     const prostatus =[
         {
           value: 'agence',
@@ -108,7 +109,7 @@ const PersonelDetails = ({control}) => {
             
             name='source'
             control={control}
-            render={({field})=>(<Select {...field} options={prostatus} className='h-12 w-full' onChange={(value)=>{field.onChange(value);setSource(value)}}/>)}
+            render={({field})=>(<Select {...field} options={prostatus} className='h-12 w-full' /*onChange={(value)=>{field.onChange(value);setSource(value)}}*//>)}
             />
         </div>
         {source ==="agence" && <div className='flex flex-col px-6 gap-1'> 

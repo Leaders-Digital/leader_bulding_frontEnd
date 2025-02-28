@@ -21,6 +21,15 @@ useEffect(()=>{
 
 },[forceReset])
 
+useEffect(()=>{
+    if(control._formValues.service) {
+        setTypeService(control._formValues.service);
+    }
+    if(control._formValues.projet) {
+        setTypeProjets(control._formValues.projet);
+    }
+},[control._formValues])
+
     const serviceprop=[{
         value: 'Etude de projet',
         label: 'Etude de projet',},{
@@ -82,7 +91,7 @@ useEffect(()=>{
             {typeService==="Autre" && (
                 <div className='px-6 mt-3'>
                 <Controller
-                name='service'
+                name='serviceInput'
                 control={control}
                 render={({field})=>(
                     <InputField  

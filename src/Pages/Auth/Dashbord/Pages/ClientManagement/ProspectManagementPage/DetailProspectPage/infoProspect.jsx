@@ -31,16 +31,22 @@ const InfoProspect = ({prospect}) => {
    <div className='w-full h-[3.5rem] border-b-2 border-gray p-3'>
         <span className='font-jakarta text-lg font-bold text-[#3A3541]'>Evolution Prospect</span>
     </div>  
-    <div className='flex flex-col p-4'>
+    <div className='flex flex-col p-4 gap-3'>
         <span  className="font-jakarta text-sm font-bold size-6 text-[#3A3541] ">Situation</span>
-        <Tag bordered={false} color="processing" className='w-20 font-semibold text-[1rem]'>
+        <Tag bordered={false} color="processing" className='w-fit font-semibold text-[1rem]'>
        {prospect?.data?.stage}
       </Tag>
         </div>
-        <div className='flex flex-col p-4'>
+        <div className='flex flex-col p-4 gap-3'>
         <span  className="font-jakarta text-sm font-bold size-6 text-[#3A3541] ">Statut</span>
-        <Tag bordered={false} color="purple" className='w-44 font-semibold text-[1rem]'>
+        <Tag bordered={false} color="purple" className='w-fit font-semibold text-[1rem]'>
        {prospect?.data?.status}
+      </Tag>
+        </div>
+        <div className='flex flex-col p-4 gap-3'>
+        <span  className="font-jakarta text-sm font-bold size-6 text-[#3A3541] ">Pourcentage</span>
+        <Tag bordered={false} color="warning" className='w-fit font-semibold text-[1rem]'>
+       {prospect?.data?.percent} %
       </Tag>
         </div>
    </div>

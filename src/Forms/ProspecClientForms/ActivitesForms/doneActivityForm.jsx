@@ -5,7 +5,7 @@ import InputField from '../../../Components/InputForm/InputField'
 import useMarkasdone from '../../../Hooks/ActivitiesHooks/useMarkasdone'
 import { toast } from 'react-toastify'
 
-const DoneActivityForm = ({id,setModal,onSuccess}) => {
+const DoneActivityForm = ({id,setModal,onSuccess,openAddModal}) => {
     const methods= useForm()
     const {handleSubmit,control,reset}=methods
     const{markAsdone,error,isMutating}=useMarkasdone()
@@ -45,7 +45,7 @@ const DoneActivityForm = ({id,setModal,onSuccess}) => {
       terminée </span>
   <div className='flex flex-row gap-2 ml-12 m-4'>
 
-    <button className='  border-2 border-[#3A3541] rounded-lg p-2 font-jakarta font-semibold text-[#3A3541] w-[14rem] h-12 '>Terminer et Planifier une autre</button>
+    <button className='  border-2 border-[#3A3541] rounded-lg p-2 font-jakarta font-semibold text-[#3A3541] w-[14rem] h-12 ' type='submit' onClick={()=>{openAddModal(true)}}>Terminer et Planifier une autre</button>
     <button className=' bg-[#17A937] text-white font-jakarta font-semibold p-2 rounded-lg w-32 h-12' type='submit'>Terminer</button>
   </div>
 

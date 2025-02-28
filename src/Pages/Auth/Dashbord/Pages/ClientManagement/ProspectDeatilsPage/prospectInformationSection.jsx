@@ -47,7 +47,7 @@ const ProspectInformationSection = () => {
       <div className='h-20 w-full flex flex-row justify-between' >
         <div className='flex flex-col w-1/2 gap-2'>
         <span className=' font-jakarta text-2xl  font-bold size-6   text-[#3A3541] w-full'>Sleh dine bouchoucha</span>
-        {(prospect?.data?.type==="prospect")?<Tag bordered={false} color='error' className=' w-24'>Prospect</Tag>:<Tag bordered={false} color='success' className=' w-24'>Client</Tag>}
+        {(prospect?.data?.type==="prospect")?<Tag bordered={false} color='error' className=' w-fit'>Prospect</Tag>:<Tag bordered={false} color='success' className='w-fit'>Client</Tag>}
         </div>
         <div className='flex flex-row gap-3'>
             <button className='h-12 w-12 bg-[#BC983E] rounded-lg' onClick={()=>setContactModal(true)}><span className='flex flex-row justify-center justify-items-center'><Icon icon="hugeicons:message-02" width="24" height="24"  style={{color: "#fff"}} /></span></button>

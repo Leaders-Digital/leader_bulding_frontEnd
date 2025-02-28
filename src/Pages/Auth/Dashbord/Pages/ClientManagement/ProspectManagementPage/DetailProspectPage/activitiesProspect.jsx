@@ -34,6 +34,7 @@ const ActivitiesProspect = ({id}) => {
                 refreshTrigger={refreshTrigger} 
                 onSuccess={handleActivityStatusChange}
                 revalidate={revalidate}
+                openAddModal={setOpenModal}
             />
             
             <div className='flex flex-row items-center justify-center border-b-2 mb-3 mt-5 border-[#BC983E]'>

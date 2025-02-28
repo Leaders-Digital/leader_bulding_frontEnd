@@ -12,7 +12,7 @@ import { Icon } from '@iconify/react/dist/iconify.js';
 import PersonelDetails from './personelDetails';
 import DetaileProjet from './detaileProjet';
 import LocationProject from './locationProject';
-const CreateProspectForm = ({onSubmitForm}) => {
+const CreateProspectForm = ({onSubmitForm,prospect}) => {
     const methods=useForm()
     const[forceReset,SetforceReset]=useState()
     const{handleSubmit,reset,control,formState:{isValid}}=methods
@@ -30,10 +30,7 @@ const CreateProspectForm = ({onSubmitForm}) => {
               value: 'Autre',
               label: 'Autre',}
       ]
-    const owner=[
-      {value:"Particulier",label:"Particulier"},{value:"Lotissement",label:"Lotissement"}
-    ]
-    
+ 
     const refreshData = (newSearch, newSelect) => {
       const key = `prospect/getAll?page=1&limit=10&search=${newSearch || ""}&select=${newSelect || ""}`;
       mutate(key);  
@@ -74,6 +71,45 @@ const resetFloors=()=>{
   setRooms({1:1})
   setBien("")
 }
+useEffect(()=>{
+if(prospect){
+ 
+  reset({
+    name:prospect?.name ||"",
+    lastName:prospect?.lastName||"",
+    telephone:prospect?.telephone ||"",
+    email:prospect?.email ||"",
+    adress:prospect?.adress,
+    source:prospect?.source  ||"",
+    agence:(prospect?.source==="agence")?prospect?.agence?.name:null,
+    agent:(prospect?.source ==="agence")?prospect?.agence?.agent:null,
+    adress:prospect?.adresse,
+    platform:(prospect?.source==="rs")?prospect?.socialMedia.platform:null,
+    link:(prospect?.source==='rs')?prospect?.socialMedia.link:null,
+    service:prospect?.service,
+    projet:prospect?.projectType,
+    bien:prospect?.propertyType,
+    rdcRooms: prospect?.propertyType === "RDC" ? prospect?.propertyDetails?.rooms["1"] : null,
+    location:prospect?.lotissement,
+    adressParticulier:(prospect?.lotissement==="Particulier")?  prospect?.adressParticulier:null,
+    nomLotiss:(prospect?.lotissement==="Lotissement")?prospect?.lotissementCords?.nom:null,
+    numeroLotiss:(prospect?.lotissement==="Lotissement")?prospect?.lotissementCords?.numLot:null,
+    percent:prospect?.percent
+  })
+
+
+  setBien(prospect?.propertyType);
+
+    if (prospect?.propertyType === "R+N") {
+    
+      const roomsData = prospect?.propertyDetails?.rooms || { 1: 1 };
+      const floorCount = Object.keys(roomsData).length;
+      
+      setFloor(floorCount);
+      setRooms(roomsData);
+    }
+}
+},[prospect,reset])
     const onSubmit=async(data)=>{
       console.log("Submitted Data:", data);
   console.log("Fields with Errors:", methods.formState.errors);
@@ -84,6 +120,7 @@ const resetFloors=()=>{
           rooms: roomsRef.current[i + 1] || 1, 
         })),
       };
+      
       const prospectData = {
         name: data.name,
         lastName: data.lastName,
@@ -96,7 +133,7 @@ const resetFloors=()=>{
         projectType: data.projet,
         source: data.source,
         agence: data.source === "agence" ? { name: data.agence, agent: data.agent } : {},
-        socialMedia: data.source === "Social Media" ? { platform: data.platform, link: data.link } : {},
+        socialMedia: data.source === "rs" ? { platform: data.platform, link: data.link } : {},
         otherSourceDescription: data.source === "Other" ? data.autre : null,
         service: data.service,
         profilePicId: data.profilePicId,
