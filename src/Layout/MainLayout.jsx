@@ -10,6 +10,7 @@ import { HomeIcon, ProfileIcon } from "../Components/SideBar/icons";
 import routes from "../Routes/DashboardRoutes"
 import { UseAuth } from "../Contexts/AuthContext";
 import { ToastContainer } from "react-toastify";
+import ProspectHeader from "../Components/Headers/prospectHeader";
 
 const { Header, Content } = Layout;
 
@@ -27,20 +28,20 @@ const MainLayout = () => {
       />
 
       <Layout className=" flex-1 ">
-        <Header className="p-0 bg-[#F4F5F9] flex justify-between items-center shadow-md lg:block hidden h-16">
-          <div className="text-lg">My Application</div>
+        <Header className="p-0 bg-transparent w-[93rem] mt-3 flex justify-between items-center shadow-md lg:block hidden h-16">
+        <ProspectHeader/>
         </Header>
  
         <Content className=" px-6 flex-1  bg-[#F4F5F9] rounded-lg mt-0 mb-4 mr-5 mt-5 ">
 
           <Outlet />
         </Content>
+
       </Layout>
       <ToastContainer
        position="top-right" 
        autoClose={3000} 
-        
-       newestOnTop 
+       newestOnTop  
        closeOnClick 
        rtl={false} 
        pauseOnFocusLoss 

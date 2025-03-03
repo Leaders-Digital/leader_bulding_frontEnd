@@ -39,7 +39,7 @@ const StageModalForm = ({statusConfig,onConfirm,prospect,targetStage}) => {
          <div className='flex flex-row gap-5 justify-end'>
 
 <button className='font-jakarta text-[#3A3541] font-semibold'>Annuler</button>
-<button className=' bg-[#F7D47A] rounded-lg font-jakarta text-[#3A3541] w-28 h-12 font-bold ' type='submit'>Ajouter</button>
+<button className=' bg-[#F7D47A] rounded-lg font-jakarta text-[#3A3541] w-28 h-12 font-bold ' type='submit' disabled={isMutating}>Ajouter</button>
 </div>
          </div>
 
