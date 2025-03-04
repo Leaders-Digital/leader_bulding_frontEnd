@@ -10,7 +10,7 @@ const Prospect = ({prospect,isOverlay,mutate}) => {
     const[openModal,setIsOpenModal]=useState()
     const navigate=useNavigate()
     const showmsg=()=>{
-        console.log("dddddddd")
+        console.log("dddddddddd")
         console.log('ff',prospect._id)
     }
     const viewDetails=()=>{
