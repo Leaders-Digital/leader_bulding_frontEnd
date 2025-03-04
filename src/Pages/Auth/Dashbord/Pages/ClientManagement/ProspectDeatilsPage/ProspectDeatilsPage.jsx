@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import ProspectInformationSection from './prospectInformationSection'
-import MeetingsInfinityScroll from './MeetingsInfinityScroll'
+import MeetingsInfinityScroll from './meetingsInfinityScroll'
 import { useParams } from 'react-router-dom'
 
 const ProspectDeatilsPage = () => {
