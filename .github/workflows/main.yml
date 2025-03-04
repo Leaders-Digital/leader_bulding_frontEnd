@@ -1,0 +1,34 @@
+name: Build Building
+
+on:
+  push:
+    branches:
+      - master  # Trigger the action when code is pushed to the main branch
+  pull_request:
+    branches:
+      - master  # Trigger the action on pull requests targeting the main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Runs the build on the latest Ubuntu runner
+
+    steps:
+      # Checkout the code from your repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up Node.js (specify the version you need, e.g., 16.x)
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22.x'
+
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Run build
+      - name: Run build
+        run: npm run build
+
+      # Optionally, add a step to upload build artifacts or deploy
