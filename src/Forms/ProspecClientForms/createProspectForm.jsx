@@ -84,7 +84,7 @@ if(prospect){
     agence:(prospect?.source==="agence")?prospect?.agence?.name:null,
     agent:(prospect?.source ==="agence")?prospect?.agence?.agent:null,
     adress:prospect?.adresse,
-    platform:(prospect?.source==="rs")?prospect?.socialMedia.platform:null,
+    platform:(prospect?.source==="rs")?prospect?.socialMedia?.platform:null,
     link:(prospect?.source==='rs')?prospect?.socialMedia.link:null,
     service:prospect?.service,
     projet:prospect?.projectType,
@@ -139,8 +139,8 @@ if(prospect){
         profilePicId: data.profilePicId,
         percent:data.percent,
         lotissement:data.location,
-        lotissementCords:data.location ==="Lotissement"?{nom:data?.nomLotiss,numLot:data?.numeroLotiss}:{},
-        adressParticulier:data.adressParticulier
+        lotissementCords:data?.location ==="Lotissement"?{nom:data?.nomLotiss,numLot:data?.numeroLotiss}:{},
+        adressParticulier:data?.adressParticulier
       };
         console.log("the data of prospect",prospectData)
       const result =  await createProspect(prospectData)

@@ -3,14 +3,14 @@ name: Build Building
 on:
   push:
     branches:
-      - master  # Trigger the action when code is pushed to the main branch
+      - master # Trigger the action when code is pushed to the main branch
   pull_request:
     branches:
-      - master  # Trigger the action on pull requests targeting the main branch
+      - master # Trigger the action on pull requests targeting the main branch
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # Runs the build on the latest Ubuntu runner
+    runs-on: ubuntu-latest # Runs the build on the latest Ubuntu runner
 
     steps:
       # Checkout the code from your repository
@@ -21,11 +21,14 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '22.x'
+          node-version: "22.x"
 
       # Install dependencies
       - name: Install dependencies
         run: npm install
+      #Run project
+      - name: Run Project
+        run: npm run dev
 
       # Run build
       - name: Run build
