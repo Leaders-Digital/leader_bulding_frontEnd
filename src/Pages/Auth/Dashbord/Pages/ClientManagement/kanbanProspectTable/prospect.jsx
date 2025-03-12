@@ -9,10 +9,7 @@ const Prospect = ({prospect,isOverlay,mutate}) => {
     const{attributes,listeners,setNodeRef,transform,isDragging}=useDraggable({id:prospect._id ,data:prospect})
     const[openModal,setIsOpenModal]=useState()
     const navigate=useNavigate()
-    const showmsg=()=>{
-        console.log("dddddddddd")
-        console.log('ff',prospect._id)
-    }
+ 
     const viewDetails=()=>{
       navigate(`/gestionClient/prospect/${prospect._id}`)
     }

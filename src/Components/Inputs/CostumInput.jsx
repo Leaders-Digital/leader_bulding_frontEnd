@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-/* eslint-disable react/prop-types */
+ 
 import React from "react";
 import { Input as AntInput } from "antd";
 import "../../Styles/Costum_hover_input.css";

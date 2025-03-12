@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
+ 
 import React, { createContext, useContext, useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +12,7 @@ export const UseAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
-  //const [isLoading,setIsloading]=useState(true)
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   const { data, error } = useCurrentUser()
@@ -22,25 +22,25 @@ export const AuthProvider = ({ children }) => {
   
       setIsAuthenticated(true);
       setUser(data);
-     // isLoading(false)
+      setIsLoading(false);
     }
     if (error) {
       
       if (error.response && error.response.status === 401) {
         setIsAuthenticated(false);
         setUser(null);
-       // setIsloading(false)
-        //navigate("/login");
+        setIsLoading(false);
+        navigate("/login");
       }
     }
-  }, [error, navigate,data]);
+  }, [error, navigate, data]);
 
 
 
   const login = async () => {
     setIsAuthenticated(true);
     await mutate("/user/me");
-    navigate("/home");
+    navigate("/");
   };
   const logout = async () => {
     setIsAuthenticated(false);
@@ -50,16 +50,10 @@ export const AuthProvider = ({ children }) => {
   const value = {
     user,
     isAuthenticated,
+    isLoading,
     login,
     logout,
   };
- 
-  /*if(isLoading){
-  
-    return null
-
-  }*/
-
  
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

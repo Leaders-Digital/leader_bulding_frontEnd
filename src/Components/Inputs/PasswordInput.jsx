@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 /* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
+ 
 import React, { useState } from "react";
 import { Input } from "antd";
 import { Icon } from "@iconify/react";

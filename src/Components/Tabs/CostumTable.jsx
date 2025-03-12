@@ -1,5 +1,5 @@
 import { Pagination, Table } from 'antd'
-import React from 'react'
+
 import "../../Styles/Table.css"
 const CostumTable = ({
     columns,

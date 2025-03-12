@@ -28,7 +28,7 @@ const MainLayout = () => {
       />
 
       <Layout className=" flex-1 ">
-        <Header className="p-0 bg-transparent w-[93rem] mt-3 flex justify-between items-center shadow-md lg:block hidden h-16">
+        <Header className={`p-0 bg-transparent w-[93rem] mt-3 flex justify-between items-center shadow-md lg:block hidden transition-all duration-300 h-16 ${collapsed?`ml-7`:``}`}>
         <ProspectHeader/>
         </Header>
  

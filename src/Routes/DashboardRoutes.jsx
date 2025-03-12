@@ -12,7 +12,8 @@ const dashboardRoutes = [
   {   
     path: "/",
     element: <MainLayout />,
-    //protected:true,
+    protected:true,
+    roles:['user',"admin"],
     children: [
       {
         path: "users",
