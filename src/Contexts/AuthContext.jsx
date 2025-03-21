@@ -38,8 +38,9 @@ export const AuthProvider = ({ children }) => {
 
 
   const login = async () => {
-    setIsAuthenticated(true);
     await mutate("/user/me");
+    setIsAuthenticated(true);
+    setUser(data);
     navigate("/");
   };
   const logout = async () => {

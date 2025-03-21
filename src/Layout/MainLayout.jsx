@@ -17,7 +17,7 @@ const { Header, Content } = Layout;
 const MainLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
 
-  const{isAuthenticated}=UseAuth()
+
 
   return (
     <Layout className="h-screen  bg-[#F4F5F9] overflow-y-auto">

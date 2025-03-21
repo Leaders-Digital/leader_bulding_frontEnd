@@ -6,6 +6,7 @@ import KanbanPropspectTable from "../Pages/Auth/Dashbord/Pages/ClientManagement/
 import ProspectDeatilsPage from "../Pages/Auth/Dashbord/Pages/ClientManagement/ProspectDeatilsPage/ProspectDeatilsPage";
 import DetailProspectPgae from "../Pages/Auth/Dashbord/Pages/ClientManagement/ProspectManagementPage/DetailProspectPage/DetailProspectPgae";
 import ProspectPage from "../Pages/Auth/Dashbord/Pages/ClientManagement/ProspectManagementPage/ProspectPage";
+import UserProfilePage from "../Pages/Auth/Dashbord/Pages/UserManagementPage/userProfile/userProfilePage";
 
 const clientManagementRoutes=[
 

@@ -5,6 +5,7 @@ import clientManagementRoutes from "./clientsManagement";
 import UsersTable from "../Pages/Auth/Dashbord/Pages/UserManagementPage/usersTable";
 import UserManagementPage from "../Pages/Auth/Dashbord/Pages/UserManagementPage/userManagementPage";
 import ArchivedUserPage from "../Pages/Auth/Dashbord/Pages/ArchivedUsers/ArchivedUserPage";
+import UserProfilePage from "../Pages/Auth/Dashbord/Pages/UserManagementPage/userProfile/userProfilePage";
 
 
 
@@ -12,22 +13,26 @@ const dashboardRoutes = [
   {   
     path: "/",
     element: <MainLayout />,
-    protected:true,
+   // protected:true,
     roles:['user',"admin"],
     children: [
       {
         path: "users",
         name:"Gestion Utilisateurs",
         element: <UserManagementPage/>   ,
-        protected: true,
-        icon: <Icon icon="hugeicons:edit-user-02" width="24" height="24"  />,
-        
+        //protected: true,
+        icon: <Icon icon="hugeicons:edit-user-02" width="24" height="24"  />,        
       },
+      {
+        path:"profil",
+        element:<UserProfilePage/>
+      }
+      ,
       {
         path: "archive",
         name:"Archivé",
         element: <ArchivedUserPage/>,
-        protected: true,
+        //protected: true,
         icon: <Icon icon="hugeicons:archive-01" width="24" height="24"   />,
         
       },
@@ -35,7 +40,7 @@ const dashboardRoutes = [
         path: "Dashboard",
         name:"Dashboard",
         element: <Home />,
-        protected: true,
+        //protected: true,
         icon: <Icon icon="hugeicons:dashboard-square-02" width="24" height="24"   />,
         
       },
@@ -43,7 +48,7 @@ const dashboardRoutes = [
         path: "gestionClient",
         name:"Gestion Client et RDV",
        // element: <Home />,
-        protected: true,
+        //protected: true,
         icon: <Icon icon="hugeicons:user-square" width="24" height="24"  style="color: #000" />,
         children:[...clientManagementRoutes]
         

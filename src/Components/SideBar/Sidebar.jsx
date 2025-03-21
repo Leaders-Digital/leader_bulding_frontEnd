@@ -95,53 +95,61 @@ const getIconColor = (routePath)=>{
           
         >
 
-{routes[0].children.map((route) => (
-  route.children && route.children.length>0 ?(<Menu.SubMenu 
-           key={route.path}
-           title={
-            <div className="flex flex-row items-center space-x-2 "  onMouseEnter={()=>handleHover(route.path)} onMouseLeave={handleLeave}>
-              <div className="h-6 w-6"> <SystemIcon
-               icon={route.icon}
-               color={getIconColor(route.path)}
-               
-               /></div>
-              
+{routes[0].children.map((route) => {
+  // Only render if route has both name and icon
+  if (!route.name || !route.icon) return null;
 
-{collapsed ? null : <span className="mr-2">{route.name}</span>} 
+  // For submenu items with children
+  if (route.children && route.children.length > 0) {
+    return (
+      <Menu.SubMenu 
+        key={route.path}
+        title={
+          <div className="flex flex-row items-center space-x-2" onMouseEnter={()=>handleHover(route.path)} onMouseLeave={handleLeave}>
+            <div className="h-6 w-6">
+              <SystemIcon
+                icon={route.icon}
+                color={getIconColor(route.path)}
+              />
             </div>
-           }
-           >
-           {route.children.map((child)=>(
-             child.name&&
+            {!collapsed && <span className="mr-2">{route.name}</span>}
+          </div>
+        }
+      >
+        {route.children.map((child) => (
+          child.name && (
             <Menu.Item key={child.path} title={child.name}>
-              <div className=" flex flex-row items-center space-x-2"> <span className="text-black">•</span><SidebarItem route={child} collapsed={collapsed} /> </div>
-           
-
+              <div className="flex flex-row items-center space-x-2">
+                <span className="text-black">•</span>
+                <SidebarItem route={child} collapsed={collapsed} />
+              </div>
             </Menu.Item>
-           ))}
-           </Menu.SubMenu>):
-           <Menu.Item
-           key={route.path}
-           onMouseEnter={() => handleHover(route.path)}
-           onMouseLeave={handleLeave}
-           className="flex flex-row items-center"
-         >
-           <div className="flex flex-row items-center space-x-3 ">
-             <div className="h-6 w-6" >
-           <SystemIcon
-             icon={route.icon}
-             color={getIconColor(route.path)
-             }
-             
-           /></div>
-           <SidebarItem route={route} collapsed={collapsed} /></div>
+          )
+        ))}
+      </Menu.SubMenu>
+    );
+  }
 
-        
-           
-         </Menu.Item>
-          
-           
-          ))}
+  // For regular menu items
+  return (
+    <Menu.Item
+      key={route.path}
+      onMouseEnter={() => handleHover(route.path)}
+      onMouseLeave={handleLeave}
+      className="flex flex-row items-center"
+    >
+      <div className="flex flex-row items-center space-x-3">
+        <div className="h-6 w-6">
+          <SystemIcon
+            icon={route.icon}
+            color={getIconColor(route.path)}
+          />
+        </div>
+        <SidebarItem route={route} collapsed={collapsed} />
+      </div>
+    </Menu.Item>
+  );
+})}
         </Menu>
          
       </Sider>

@@ -25,7 +25,7 @@ const LoginPage = () => {
     try {
       const response = await Login(data.email, data.password);
       if (response) {
-        login();
+        await login();
       }
     } catch (e) {
       console.log("failed");

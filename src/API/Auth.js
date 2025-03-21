@@ -4,6 +4,7 @@ export const login = async (email, password) => {
   try {
     const response = await Axios.post("/user/login", { email, password });
     console.log("login from axios ");
+    console.log("data", response);
     return response.data;
   } catch (e) {
     throw new Error(e.response.data?.message || "login failed");
