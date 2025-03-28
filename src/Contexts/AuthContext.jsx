@@ -15,39 +15,49 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
-  const { data, error } = useCurrentUser()
+  const { data, error } = useCurrentUser();
   
   useEffect(() => {
     if (data) {
-  
       setIsAuthenticated(true);
       setUser(data);
       setIsLoading(false);
+      // If we're on the login page and we're authenticated, redirect to dashboard
+      if (window.location.pathname === '/login') {
+        navigate('/Dashboard', { replace: true });
+      }
     }
     if (error) {
-      
       if (error.response && error.response.status === 401) {
         setIsAuthenticated(false);
         setUser(null);
         setIsLoading(false);
-        navigate("/login");
+        navigate("/login", { replace: true });
       }
     }
   }, [error, navigate, data]);
 
-
-
   const login = async () => {
-    await mutate("/user/me");
-    setIsAuthenticated(true);
-    setUser(data);
-    navigate("/");
+    try {
+      // Manually trigger a revalidation of the user data
+      await mutate("user/getCurrentUser");
+      const userData = await getCurrentUser();
+      setIsAuthenticated(true);
+      setUser(userData);
+      navigate('/Dashboard', { replace: true });
+    } catch (error) {
+      console.error("Login failed:", error);
+      setIsAuthenticated(false);
+      setUser(null);
+    }
   };
+
   const logout = async () => {
     setIsAuthenticated(false);
     setUser(null);
-    navigate("/login");
+    navigate("/login", { replace: true });
   };
+
   const value = {
     user,
     isAuthenticated,

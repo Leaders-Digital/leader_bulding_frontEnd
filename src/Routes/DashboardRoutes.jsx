@@ -13,43 +13,44 @@ const dashboardRoutes = [
   {   
     path: "/",
     element: <MainLayout />,
-   // protected:true,
+    protected: true,
     roles:['user',"admin"],
     children: [
+      {
+        path: "Dashboard",
+        name:"Dashboard",
+        element: <Home />,
+        protected: true,
+        icon: <Icon icon="hugeicons:dashboard-square-02" width="24" height="24" />,
+        
+      },
       {
         path: "users",
         name:"Gestion Utilisateurs",
         element: <UserManagementPage/>   ,
-        //protected: true,
-        icon: <Icon icon="hugeicons:edit-user-02" width="24" height="24"  />,        
+        protected: true,
+        icon: <Icon icon="hugeicons:edit-user-02" width="24" height="24" />,        
       },
       {
         path:"profil",
-        element:<UserProfilePage/>
+        element:<UserProfilePage/>,
+        protected: true
       }
       ,
       {
         path: "archive",
         name:"Archivé",
         element: <ArchivedUserPage/>,
-        //protected: true,
-        icon: <Icon icon="hugeicons:archive-01" width="24" height="24"   />,
-        
-      },
-      {
-        path: "Dashboard",
-        name:"Dashboard",
-        element: <Home />,
-        //protected: true,
-        icon: <Icon icon="hugeicons:dashboard-square-02" width="24" height="24"   />,
+        protected: true,
+        icon: <Icon icon="hugeicons:archive-01" width="24" height="24" />,
         
       },
       {
         path: "gestionClient",
         name:"Gestion Client et RDV",
        // element: <Home />,
-        //protected: true,
-        icon: <Icon icon="hugeicons:user-square" width="24" height="24"  style="color: #000" />,
+        protected: true,
+        icon: <Icon icon="hugeicons:user-square" width="24" height="24" style={{color: "#000"}} />,
         children:[...clientManagementRoutes]
         
       },

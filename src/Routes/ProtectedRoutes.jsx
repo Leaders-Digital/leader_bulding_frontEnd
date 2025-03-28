@@ -13,17 +13,20 @@ const ProtectedRoutes = ({ children, roles }) => {
     if (isLoading) return;
 
     if (!isAuthenticated) {
-      navigate("/login");
+      navigate("/login", { replace: true });
       return;
     }
 
     if (roles && !roles.includes(user?.data?.role)) {
-      navigate("/unauthorized");
+      navigate("/unauthorized", { replace: true });
     }
   }, [isAuthenticated, user, roles, navigate, isLoading]);
  
   // Show nothing while checking auth
   if (isLoading) return null;
+
+  // Don't render children if not authenticated
+  if (!isAuthenticated) return null;
 
   return children;
 };

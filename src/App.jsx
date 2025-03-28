@@ -5,13 +5,19 @@ import ProtectedRoutes from "./Routes/ProtectedRoutes";
 import { AuthProvider } from "./Contexts/AuthContext";
 
 function App() {
-  
+  // Create routes with protection for authenticated routes
   const routing = useRoutes(
     routes.map((route) => {
+      // If the route is protected, wrap it with ProtectedRoutes
       if (route.protected) {
-        route.element = (
-          <ProtectedRoutes roles={route.roles}>{route.element}</ProtectedRoutes>
-        );
+        return {
+          ...route,
+          element: (
+            <ProtectedRoutes roles={route.roles}>
+              {route.element}
+            </ProtectedRoutes>
+          )
+        };
       }
       return route;
     })
