@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }) => {
     try {
       // Manually trigger a revalidation of the user data
       await mutate("user/getCurrentUser");
-      const userData = await getCurrentUser();
+      const userData = await getCurrentUser();     
       setIsAuthenticated(true);
       setUser(userData);
       navigate('/Dashboard', { replace: true });
@@ -51,12 +51,12 @@ export const AuthProvider = ({ children }) => {
       setUser(null);
     }
   };
-
+        
   const logout = async () => {
     setIsAuthenticated(false);
     setUser(null);
     navigate("/login", { replace: true });
-  };
+  };  
 
   const value = {
     user,
