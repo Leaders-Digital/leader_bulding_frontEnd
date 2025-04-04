@@ -1,3 +1,4 @@
+import InvoiceDownload from "../Pages/Auth/Dashbord/Home";
 import Home from "../Pages/Auth/Dashbord/Home";
 import AddPropspectPage from "../Pages/Auth/Dashbord/Pages/ClientManagement/AddProspectPage/AddPropspectPage";
 import ClientPage from "../Pages/Auth/Dashbord/Pages/ClientManagement/ClientManagementPage/ClientPage";
@@ -45,7 +46,7 @@ const clientManagementRoutes=[
     {
         path:"/gestionClient/rdv",
         name:"Gestion RDV Client",
-        element:<Home/>
+        element:<InvoiceDownload/>
     }
 ]
 export default clientManagementRoutes

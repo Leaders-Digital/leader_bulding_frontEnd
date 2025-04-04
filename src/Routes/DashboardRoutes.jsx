@@ -1,11 +1,11 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import MainLayout from "../Layout/MainLayout";
-import Home from "../Pages/Auth/Dashbord/Home";
 import clientManagementRoutes from "./clientsManagement";
 import UsersTable from "../Pages/Auth/Dashbord/Pages/UserManagementPage/usersTable";
 import UserManagementPage from "../Pages/Auth/Dashbord/Pages/UserManagementPage/userManagementPage";
 import ArchivedUserPage from "../Pages/Auth/Dashbord/Pages/ArchivedUsers/ArchivedUserPage";
-import UserProfilePage from "../Pages/Auth/Dashbord/Pages/UserManagementPage/userProfile/userProfilePage";
+import UserProfilePage from "../Pages/Auth/Dashbord/Pages/UserManagementPage/userProfile/UserProfilePage";
+import InvoiceDownload from "../Pages/Auth/Dashbord/InvoiceDownload";
 
 
 
@@ -19,7 +19,7 @@ const dashboardRoutes = [
       {
         path: "Dashboard",
         name:"Dashboard",
-        element: <Home />,
+        element: <InvoiceDownload />,
         protected: true,
         icon: <Icon icon="hugeicons:dashboard-square-02" width="24" height="24" />,
         
