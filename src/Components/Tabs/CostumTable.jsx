@@ -32,6 +32,7 @@ const CostumTable = ({
       rowClassName={()=>'custom-table-row'}
       className='w-full '
       size='middle'
+      rowKey="_id"
       
     /></div>
 

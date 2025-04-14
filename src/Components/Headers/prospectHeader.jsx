@@ -35,7 +35,7 @@ const items=[{key:"1",label:"Profil",icon:<Icon icon="hugeicons:user-circle" wid
             </button> <button>
                 <div className='flex flex-row gap-1 '>
                 <Icon icon="hugeicons:muslim" width="24" height="24" />
-                <span className='font-jakarta font-bold text-base text-[#3A3541]'>Equipe</span>
+                <span className='font-jakarta font-bold text-base text-[#3A3541]'>Équipe</span>
                 </div>
             </button>
         </div>

@@ -6,6 +6,7 @@ import UserManagementPage from "../Pages/Auth/Dashbord/Pages/UserManagementPage/
 import ArchivedUserPage from "../Pages/Auth/Dashbord/Pages/ArchivedUsers/ArchivedUserPage";
 import UserProfilePage from "../Pages/Auth/Dashbord/Pages/UserManagementPage/userProfile/UserProfilePage";
 import InvoiceDownload from "../Pages/Auth/Dashbord/InvoiceDownload";
+import ProjectManagement from "./ProjectManagement";
 
 
 
@@ -53,7 +54,12 @@ const dashboardRoutes = [
         icon: <Icon icon="hugeicons:user-square" width="24" height="24" style={{color: "#000"}} />,
         children:[...clientManagementRoutes]
         
-      },
+      },{
+        path:"gestionProject",
+        name:"Gestion des projets",
+        icon:<Icon icon="hugeicons:building-03" width="24" height="24"  style={{color: "#000"}} />,
+        children:[...ProjectManagement]
+      }
 
     ],
   },
