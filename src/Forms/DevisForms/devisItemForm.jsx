@@ -8,7 +8,7 @@ const DevisItemForm = ({section,openModal,index}) => {
     const methods=useForm()
     const{handleSubmit,control,reset}=methods
 
-    const onSubmit=async(data)=>{
+    const onSubmit=(data)=>{
     }
     const unites = [
         { value: "M²", label: "M²" },
@@ -21,7 +21,7 @@ const DevisItemForm = ({section,openModal,index}) => {
 <div className='flex flex-col gap-1'>
  <InputField
  name="title"
- label="Nom de l’article"
+ label={`Nom de l’article ${index+1}`}
  placeholder="Nom"
  required="Nom de l'article est obligatoir"
   className="h-9 w-full rounded-lg bg-[#F4F5F9] p-2"
@@ -35,7 +35,7 @@ Description de l’article
                         control={control}
                         render={({field})=>(
                             <TextArea {...field} 
-                            rows={1}
+                            rows={3}
                               className='h-9 w-full'
                             />
                         )}
