@@ -19,7 +19,9 @@ const DevisItemForm = ({ sectionIndex, itemIndex, removeItem }) => {
   // Register the ptHT field with react-hook-form
   useEffect(() => {
     register(ptHTFieldName);
-  }, [register, ptHTFieldName]);
+    // Initialize with 0 to avoid NaN
+    setValue(ptHTFieldName, 0);
+  }, [register, setValue, ptHTFieldName]);
   
   // Watch for changes in quantity and price
   const qteValue = watch(qteFieldName) || 0;
@@ -27,10 +29,11 @@ const DevisItemForm = ({ sectionIndex, itemIndex, removeItem }) => {
   
   // Calculate total price whenever quantity or unit price changes
   useEffect(() => {
-    const calculatedTotal = Number(qteValue) * Number(puHTValue);
+    const qte = Number(qteValue || 0);
+    const puHT = Number(puHTValue || 0);
+    const calculatedTotal = qte * puHT;
     setValue(ptHTFieldName, calculatedTotal);
   }, [qteValue, puHTValue, setValue, ptHTFieldName]);
-
   return (
     <div className='w-full border border-solid border-[#E5E7EB] rounded-lg p-3'>
       <div className='flex flex-col gap-1'>
@@ -82,7 +85,7 @@ const DevisItemForm = ({ sectionIndex, itemIndex, removeItem }) => {
                   min={0} 
                   className='w-60 h-10'
                   onChange={(value) => {
-                    field.onChange(value);
+                    field.onChange(value === null ? 0 : value);
                   }}
                 />
               )}
@@ -102,7 +105,7 @@ const DevisItemForm = ({ sectionIndex, itemIndex, removeItem }) => {
                   min={0} 
                   className='w-60 h-10'
                   onChange={(value) => {
-                    field.onChange(value);
+                    field.onChange(value === null ? 0 : value);
                   }}
                 />
               )}
@@ -115,12 +118,13 @@ const DevisItemForm = ({ sectionIndex, itemIndex, removeItem }) => {
             <Controller
               name={ptHTFieldName}
               control={control}
+              defaultValue={0}
               render={({field}) => (
                 <InputNumber 
                   {...field} 
                   disabled={true}
                   className='w-60 h-10'
-                  value={Number(qteValue) * Number(puHTValue)}
+                
                 />
               )}
             />

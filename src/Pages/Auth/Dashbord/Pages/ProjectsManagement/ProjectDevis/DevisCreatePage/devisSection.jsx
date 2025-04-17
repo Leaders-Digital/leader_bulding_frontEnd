@@ -7,16 +7,45 @@ import DevisItemForm from '../../../../../../../Forms/DevisForms/DevisItemForm';
 import { InputNumber } from 'antd';
 
 const DevisSection = ({ sectionIndex, removeSection }) => {
-  const { control,setValue } = useFormContext();
+  const { control, setValue, register, watch } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     control,
     name: `sections.${sectionIndex}.items`
   });
-useEffect(()=>{
-const total=fields.reduce((acc, item) => acc + item.ptHT, 0);
-setValue(`sections.${sectionIndex}.ptHT`, total);
 
-},[fields,sectionIndex,setValue])
+ 
+
+  useEffect(() => {
+    register(`sections.${sectionIndex}.ptHT`);
+    
+    setValue(`sections.${sectionIndex}.ptHT`, 0);
+  }, [register, setValue, sectionIndex]);
+
+  const items = watch(`sections.${sectionIndex}.items`) || [];
+  const qteList = items.map(item => item.qte);
+  const puHTList = items.map(item => item.puHT);
+  
+
+  useEffect(() => {
+    const total = items.reduce((acc, item) => {
+      const qte = Number(item.qte) || 0;
+      const puHT = Number(item.puHT) || 0;
+      return acc + (qte * puHT);
+    }, 0);
+    setValue(`sections.${sectionIndex}.ptHT`, total);
+  }, [items, qteList, puHTList, setValue, sectionIndex]);
+
+  const handleAddItem = () => {
+    append({
+      title: '',
+      description: '',
+      unite: '',
+      qte: 0,
+      puHT: 0,
+      ptHT: 0
+    });
+  };
+
   return (
     <div className='w-full p-4 border border-solid border-[#E5E7EB] rounded-lg'>
       <DevisSectionForm sectionIndex={sectionIndex} />
@@ -24,7 +53,7 @@ setValue(`sections.${sectionIndex}.ptHT`, total);
       <div className='flex flex-row gap-2 justify-start'>
         <button 
           type='button' 
-          onClick={() => append({})}
+          onClick={handleAddItem}
           className='h-9 w-40 bg-black rounded-lg my-3'
         >
           <div className='flex flex-row gap-1 p-1 items-center justify-center'>
@@ -53,20 +82,22 @@ setValue(`sections.${sectionIndex}.ptHT`, total);
           />
         ))}
         <div className='flex flex-col gap-1'>
-        <label htmlFor="" className='font-jakarta font-bold size-1 my-5 text-[#3A3541] w-full'>
-              Prix Total Hors Taxe
-            </label>
-            <Controller
-              name={`sections.${sectionIndex}.ptHT`}
-              control={control}
-              render={({field}) => (
-                <InputNumber 
-                  {...field} 
-                  disabled={true}
-                  className='w-60 h-10'
-                   />
-              )}
-            />
+          <label htmlFor="" className='font-jakarta font-bold size-1 my-5 text-[#3A3541] w-full'>
+            Prix Total Hors Taxe (Section)
+          </label>
+          <Controller
+            name={`sections.${sectionIndex}.ptHT`}
+            control={control}
+            defaultValue={0}
+            render={({field}) => (
+              <InputNumber 
+                {...field} 
+                disabled={true}
+                className='w-60 h-10'
+              
+              />
+            )}
+          />
         </div>
       </div>
     </div>

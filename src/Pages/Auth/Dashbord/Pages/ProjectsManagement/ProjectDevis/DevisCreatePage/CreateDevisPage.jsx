@@ -1,15 +1,20 @@
 // CreateDevisPage.jsx
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm, FormProvider, useFieldArray } from 'react-hook-form';
 import DevisSection from './DevisSection';
 import { Icon } from '@iconify/react/dist/iconify.js';
+import { InputNumber } from 'antd';
+import PDFGenerator from '../../../../../../../Components/PDFGenerator ';
 
 const CreateDevisPage = () => {
+  const [grandTotal, setGrandTotal] = useState(0);
+const[pdfData,setPdfData]=useState()
   const methods = useForm({
     defaultValues: {
       sections: [{
         title: '',
         description: '',
+        ptHT: 0,
         items: [{
           title: '',
           description: '',
@@ -22,15 +27,46 @@ const CreateDevisPage = () => {
     }
   });
 
-  const { control, handleSubmit,reset } = methods;
+  const { control, handleSubmit, reset, watch } = methods;
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'sections'
   });
+  
+  // Watch all sections to calculate the grand total
+  const sections = watch('sections') || [];
+  
+  // Calculate grand total whenever sections change
+  useEffect(() => {
+    if (sections && sections.length > 0) {
+      const total = sections.reduce((acc, section) => {
+        return acc + (Number(section.ptHT) || 0);
+      }, 0);
+      setGrandTotal(total);
+    } else {
+      setGrandTotal(0);
+    }
+  }, [sections]);
 
   const onSubmit = (data) => {
-    console.log('Form data:', data);
-    reset()
+  
+    const processedData = {
+      ...data,
+      sections: data.sections.map(section => ({
+        ...section,
+        ptHT: Number(section.ptHT) || 0,
+        items: section.items.map(item => ({
+          ...item,
+          qte: Number(item.qte) || 0,
+          puHT: Number(item.puHT) || 0,
+          ptHT: Number(item.ptHT) || 0
+        }))
+      }))
+    };
+    setPdfData(processedData);
+    console.log('Form data:', processedData);
+    console.log('Grand Total:', grandTotal);
+    reset();
   };
 
   return (
@@ -42,7 +78,15 @@ const CreateDevisPage = () => {
             onClick={() => append({
               title: '',
               description: '',
-              items: [{}]
+              ptHT: 0,
+              items: [{
+                title: '',
+                description: '',
+                unite: '',
+                qte: 0,
+                puHT: 0,
+                ptHT: 0
+              }]
             })}
             className='h-9 w-52 bg-black rounded-lg my-3'
           >
@@ -81,7 +125,20 @@ const CreateDevisPage = () => {
             />
           ))}
         </div>
+        
+        <div className='flex flex-col gap-1 mt-4 border-t pt-4'>
+          <label className='font-jakarta font-bold text-lg text-[#3A3541] w-full'>
+            Prix Total Hors Taxe (Toutes Sections)
+          </label>
+          <InputNumber 
+            value={grandTotal}
+            disabled={true}
+            className='w-60 h-10 text-lg'
+            formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+          />
+        </div>
       </FormProvider>
+   <PDFGenerator formData={pdfData} />
     </div>
   );
 };
