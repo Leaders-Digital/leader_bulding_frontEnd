@@ -78,15 +78,13 @@ const DevisItemForm = ({ sectionIndex, itemIndex, removeItem }) => {
             <Controller
               name={qteFieldName}
               control={control}
-              defaultValue={0}
               render={({field}) => (
-                <InputNumber 
-                  {...field} 
-                  min={0} 
+                <InputNumber
+                  {...field}
                   className='w-60 h-10'
-                  onChange={(value) => {
-                    field.onChange(value === null ? 0 : value);
-                  }}
+                  formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                  parser={value => value.replace(/,/g, '')}
+                  onChange={value => field.onChange(value === null ? 0 : value)}
                 />
               )}
             />
@@ -98,15 +96,15 @@ const DevisItemForm = ({ sectionIndex, itemIndex, removeItem }) => {
             <Controller
               name={puHTFieldName}
               control={control}
-              defaultValue={0}
+           
               render={({field}) => (
-                <InputNumber 
-                  {...field} 
-                  min={0} 
+                <InputNumber
+                  {...field}
+                 
                   className='w-60 h-10'
-                  onChange={(value) => {
-                    field.onChange(value === null ? 0 : value);
-                  }}
+                  formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                  parser={value => value.replace(/,/g, '')}
+                  onChange={value => field.onChange(value === null ? 0 : value)}
                 />
               )}
             />
@@ -118,13 +116,14 @@ const DevisItemForm = ({ sectionIndex, itemIndex, removeItem }) => {
             <Controller
               name={ptHTFieldName}
               control={control}
-              defaultValue={0}
+             
               render={({field}) => (
-                <InputNumber 
-                  {...field} 
+                <InputNumber
+                  {...field}
                   disabled={true}
                   className='w-60 h-10'
-                
+                  formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                  parser={value => value.replace(/,/g, '')}
                 />
               )}
             />

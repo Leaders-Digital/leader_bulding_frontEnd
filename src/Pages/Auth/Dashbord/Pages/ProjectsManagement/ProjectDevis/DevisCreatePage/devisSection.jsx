@@ -1,39 +1,53 @@
 // DevisSection.jsx
 import React, { useEffect } from 'react';
-import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
+import { Controller, useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import DevisSectionForm from '../../../../../../../Forms/DevisForms/devisSectionForm';
 import DevisItemForm from '../../../../../../../Forms/DevisForms/DevisItemForm';
 import { InputNumber } from 'antd';
 
 const DevisSection = ({ sectionIndex, removeSection }) => {
-  const { control, setValue, register, watch } = useFormContext();
+  const { control, setValue, register, watch, getValues } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     control,
     name: `sections.${sectionIndex}.items`
   });
 
- 
-
+  
   useEffect(() => {
-    register(`sections.${sectionIndex}.ptHT`);
-    
-    setValue(`sections.${sectionIndex}.ptHT`, 0);
-  }, [register, setValue, sectionIndex]);
-
-  const items = watch(`sections.${sectionIndex}.items`) || [];
-  const qteList = items.map(item => item.qte);
-  const puHTList = items.map(item => item.puHT);
   
 
+    register(`sections.${sectionIndex}.ptHT`);
+    
+    
+    setValue(`sections.${sectionIndex}.ptHT`, 0);
+    
+    // Clean up function
+    return () => {
+      // Force reset to avoid memory leaks
+      console.log(`Unmounting DevisSection ${sectionIndex}`);
+    };
+  }, [register, setValue, sectionIndex]);
+
+  // Use useWatch for more granular reactivity
+  const items = useWatch({ control, name: `sections.${sectionIndex}.items` }) || [];
+
+  // Calculate section total whenever items change
   useEffect(() => {
     const total = items.reduce((acc, item) => {
       const qte = Number(item.qte) || 0;
       const puHT = Number(item.puHT) || 0;
       return acc + (qte * puHT);
     }, 0);
+    
     setValue(`sections.${sectionIndex}.ptHT`, total);
-  }, [items, qteList, puHTList, setValue, sectionIndex]);
+    
+    // Clean up function
+    return () => {
+      // Reset to avoid memory leaks
+      console.log(`Cleanup total calculation for section ${sectionIndex}`);
+    };
+  }, [items, setValue, sectionIndex]);
 
   const handleAddItem = () => {
     append({
@@ -90,11 +104,12 @@ const DevisSection = ({ sectionIndex, removeSection }) => {
             control={control}
             defaultValue={0}
             render={({field}) => (
-              <InputNumber 
-                {...field} 
+              <InputNumber
+                {...field}
                 disabled={true}
                 className='w-60 h-10'
-              
+                formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                parser={value => value.replace(/,/g, '')}
               />
             )}
           />

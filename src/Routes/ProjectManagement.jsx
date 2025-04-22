@@ -1,3 +1,4 @@
+import ProjectDetailPage from "../Pages/Auth/Dashbord/Pages/ProjectsManagement/ProjectDetailPage/ProjectDetailPage";
 import CreateDevisPage from "../Pages/Auth/Dashbord/Pages/ProjectsManagement/ProjectDevis/DevisCreatePage/CreateDevisPage";
 import ProjectsPage from "../Pages/Auth/Dashbord/Pages/ProjectsManagement/ProjectsTable/ProjectsPage";
 
@@ -12,7 +13,12 @@ const ProjectManagement= [
     {
         path:"/gestionProject/devis",
         name:"Gestion devis",
-        element:<CreateDevisPage/>
+        element:<CreateDevisPage />
+    },
+    {
+        path:"/gestionProject/project/:id",
+
+        element:<ProjectDetailPage />
     }
 ]
 export default ProjectManagement

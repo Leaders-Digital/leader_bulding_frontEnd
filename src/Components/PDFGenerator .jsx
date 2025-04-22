@@ -4,10 +4,10 @@ import "jspdf-autotable";
 import autoTable from "jspdf-autotable";
 
 const PDFGenerator = ({ formData }) => {
-  const generatePDF = () => {
+  const generatePDF = (preview = false) => {
     const img = new Image();
     img.crossOrigin = "anonymous";
-    img.src = "/logo_building.png"; // Must be in the public folder (public/logo_building.png)
+    img.src = "/buildingPDF.png"; // Must be in the public folder (public/logo_building.png)
     img.onload = function () {
       const doc = new jsPDF({ format: "a4", orientation: "portrait" });
 
@@ -20,8 +20,8 @@ const PDFGenerator = ({ formData }) => {
       doc.text("DEVIS ESTIMATIF DES TRAVEAUX GROS & SECONDE ŒUVRE", 13, lastY);
 
       // Client info box
-      const clientBoxWidth = 90;
-      const clientBoxHeight = 28;
+      const clientBoxWidth = 120;
+      const clientBoxHeight = 38;
       const clientBoxX = 8;
       const clientBoxY = lastY + 4;
 
@@ -34,7 +34,10 @@ const PDFGenerator = ({ formData }) => {
       const clientInfoLines = [
         `Nom: ${""}`,
         `Prénom: ${""}`,
-        `Entreprise: ${""}`,
+        `Entreprise: ${"Leaders Building"}`,
+        `Adresse: ${"Cité des Pins, Les berges du lac 2 1053 Tunis, Tunisie"}`,
+        `Téléphone: ${"+216 27,246,345"}`,
+       
       ];
 
       clientInfoLines.forEach((line, i) => {
@@ -43,8 +46,8 @@ const PDFGenerator = ({ formData }) => {
 
       // Add the logo to the right of the client box
       // Maintain logo aspect ratio within max dimensions
-      const maxLogoWidth = 50;
-      const maxLogoHeight = 27.5;
+      const maxLogoWidth = 60;
+      const maxLogoHeight = 37.5;
       const naturalWidth = img.naturalWidth;
       const naturalHeight = img.naturalHeight;
       let logoWidth = maxLogoWidth;
@@ -69,7 +72,7 @@ const PDFGenerator = ({ formData }) => {
       // Generate table section-by-section
       formData.sections.forEach((section, idx) => {
         const sectionRows = [
-          [section.title, "", "", "", ""],
+          [{ content: section.title, styles: { fontStyle: "bold" } }, "", "", "", ""],
           ["MODES D'EVALUATION ET SPECIFICATIONS GENERALES", "", "", "", ""],
           [section.description, "", "", "", ""],
         ];
@@ -162,22 +165,51 @@ const PDFGenerator = ({ formData }) => {
         doc.text(`Total de ${section.title} HT: ${section.ptHT} TND`, pageWidth / 2, boxY + 7, {
           align: "center",
         });
-
+        
         lastY = boxY + boxHeight + 8;
       });
-
-      doc.save("devis.pdf");
+      const boxWidth = 180;
+      const boxHeight = 12;
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const boxX = (pageWidth - boxWidth) / 2;
+      const boxY = lastY + 8;
+  
+      doc.setFillColor(220, 220, 220);
+      doc.roundedRect(boxX, boxY, boxWidth, boxHeight, 3, 3, "F");
+  
+      doc.setFontSize(12);
+      doc.setFont("helvetica", "bold");
+      doc.setTextColor(0, 0, 0);
+      doc.text(`TOTAL GENERAL HT: ${formData?.devistotal} TND`, pageWidth / 2.3, boxY + 8, {
+        align: "right",
+      });
+    
+      if (preview) {
+        const blobUrl = doc.output("bloburl");
+        window.open(blobUrl, "_blank");
+      } else {
+        doc.save("devis.pdf");
+      }
     };
   };
 
   return (
-    <button
-      onClick={generatePDF}
-      className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-    >
-      Télécharger le Devis
-    </button>
+    <div className="flex gap-2">
+      <button
+        onClick={() => generatePDF(true)}
+        className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition"
+      >
+        Aperçu du Devis
+      </button>
+      <button
+        onClick={() => generatePDF(false)}
+        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+      >
+        Télécharger le Devis
+      </button>
+    </div>
   );
 };
 
 export default PDFGenerator;
+

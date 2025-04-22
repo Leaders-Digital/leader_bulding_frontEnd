@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 
-import React, { Children, useState } from "react";
+import React, { Children, useState, useEffect } from "react";
 import { Layout, Button } from "antd";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Sidebar from "../Components/SideBar/Sidebar";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { HomeIcon, ProfileIcon } from "../Components/SideBar/icons";
@@ -16,8 +16,20 @@ const { Header, Content } = Layout;
 
 const MainLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const [outletKey, setOutletKey] = useState(Date.now());
+  const location = useLocation();
 
-
+  // Force remount of child components when route changes
+  useEffect(() => {
+    // Setting a new key will force React to unmount and remount the component
+    setOutletKey(Date.now());
+    
+    // Trigger garbage collection explicitly (force unmount cleanup)
+    setTimeout(() => {
+      // This timeout gives React time to unmount previous components
+      console.log("🧹 Cleaning up after route change from", location.pathname);
+    }, 50);
+  }, [location.pathname]);
 
   return (
     <Layout className="h-screen  bg-[#F4F5F9] overflow-y-auto">
@@ -33,8 +45,8 @@ const MainLayout = () => {
         </Header>
  
         <Content className=" px-6 flex-1  bg-[#F4F5F9] rounded-lg mt-0 mb-4 mr-5 mt-5 ">
-
-          <Outlet />
+          {/* Using a dynamic key forces unmount/remount */}
+          <Outlet key={outletKey} />
         </Content>
 
       </Layout>

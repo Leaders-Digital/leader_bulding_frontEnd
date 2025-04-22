@@ -44,7 +44,7 @@ console.log('propjects',projects)
                       setModifyModal(false)
                     }
                     const onClickDetails=(id)=>{
-                      navigate(`/gestionClient/prospect/${id}`)
+                      navigate(`/gestionProject/project/${id}`)
                     }
   return (
     <div className='w-full h-4/5' >
