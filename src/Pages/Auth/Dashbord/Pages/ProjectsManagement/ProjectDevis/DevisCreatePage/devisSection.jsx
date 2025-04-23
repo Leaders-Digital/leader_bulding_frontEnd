@@ -23,10 +23,7 @@ const DevisSection = ({ sectionIndex, removeSection }) => {
     setValue(`sections.${sectionIndex}.ptHT`, 0);
     
     // Clean up function
-    return () => {
-      // Force reset to avoid memory leaks
-      console.log(`Unmounting DevisSection ${sectionIndex}`);
-    };
+    
   }, [register, setValue, sectionIndex]);
 
   // Use useWatch for more granular reactivity

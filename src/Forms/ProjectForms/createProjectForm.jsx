@@ -96,7 +96,7 @@ setAddress({...res?.data?.address,lat:lat,lon:lon})
    lon:address?address.lon:""
    
  }
-  console.log("data",projectData)
+ 
   const result = await createProject(projectData)
   if(result?.data){
  toast.success("Project craeted")

@@ -36,7 +36,7 @@ useEffect(()=>{
           value: 'Construction',
           label: 'Construction',},{
             value: 'Reamingement-Renovation-Extention',
-            label: 'Reamingement-Renovation-Extention',},
+            label: 'Réaménagement-Renovation-Extention',},
             {
               value: 'Clotue',
               label: 'Clotue',},

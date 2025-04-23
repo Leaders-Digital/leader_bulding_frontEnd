@@ -2,6 +2,7 @@ import useSWR from "swr";
 import { fetcher } from "../../Config/SwrConfig";
 
 const useDevis = (filter = {}, pagination = { current: 1, pageSize: 10 }) => {
+  console.log("filter from the hook", filter);
   const { data, isLoading, error, mutate } = useSWR(
     `devis/getall?page=${pagination.current}&limit=${
       pagination.pageSize

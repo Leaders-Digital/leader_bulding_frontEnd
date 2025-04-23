@@ -111,8 +111,7 @@ if(prospect){
 }
 },[prospect,reset])
     const onSubmit=async(data)=>{
-      console.log("Submitted Data:", data);
-  console.log("Fields with Errors:", methods.formState.errors);
+ 
       const propertyDetails = {
         rooms: roomsRef.current,  
         floors: Array.from({ length: floor }, (_, i) => ({
@@ -147,7 +146,7 @@ if(prospect){
         if(result.data){
            
             toast.success(result.message)
-            console.log("isvalid",isValid)
+           
             resetFloors()
             reset()
             SetforceReset(true)

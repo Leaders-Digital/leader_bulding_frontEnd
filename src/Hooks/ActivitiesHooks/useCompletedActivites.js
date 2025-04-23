@@ -9,7 +9,7 @@ const useCompletedActivites = (
     `activity/getAll?page=${pagination.current}&limit=${pagination.pageSize}&id=${id}&dateFilter=completed`,
     fetcher
   );
-  console.log("data of completed activities", data);
+
   return {
     activities: data?.data,
     error,

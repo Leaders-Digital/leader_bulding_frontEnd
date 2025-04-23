@@ -8,6 +8,7 @@ import PDFGenerator from '../../../../../../../Components/PDFGenerator ';
 import { useLocation } from 'react-router-dom';
 import useCreateDevis from '../../../../../../../Hooks/DevisHooks/useCreateDevis';
 import { toast } from 'react-toastify';
+import InputField from '../../../../../../../Components/InputForm/InputField';
 
 const CreateDevisPage = () => {
   const [grandTotal, setGrandTotal] = useState(0);
@@ -39,12 +40,7 @@ const CreateDevisPage = () => {
     control,
     name: 'sections'
   });
-  useEffect(() => {
-    console.log("🟢 CreateDevisPage Mounted");
-    return () => {
-      console.log("🔴 CreateDevisPage Unmounted");
-    };
-  }, []);
+
 
   // Use useWatch for better reactivity
   const sections = useWatch({ control, name: 'sections' }) || [];
@@ -83,7 +79,9 @@ const CreateDevisPage = () => {
       ...processedData,
       devistotal: devistotal.toLocaleString('en-US'),
       projectId: state?.projectId,
-      prospectId: state?.clientId
+      prospectId: state?.clientId,
+      name: state?.name,
+      lastName: state?.lastName
     };
     setPdfData(finalData);
     console.log('Form data:', finalData);
@@ -106,7 +104,26 @@ const CreateDevisPage = () => {
   return (
     <div className='h-full w-full bg-white p-4 rounded-lg flex flex-col gap-4 overflow-y-auto'>
       <FormProvider {...methods}>
-        <div className='sticky top-0 z-[5] bg-white pb-2 flex flex-row gap-2'>
+      <div className='flex flex-row  justify-between items-end w-full bg-[#F7D47A] bg-opacity-40 px-3 rounded-lg'>
+           
+           <span className='font-jakarta font-bold text-2xl text-[#3A3541] w-full mb-5'>Ajouter un devis</span>
+            <button
+              type='button'
+              onClick={handleSubmit(onSubmit)}
+              className='h-12 w-52 bg-Golden rounded-lg my-3 flex items-center justify-center'
+            >
+              <span className='font-jakarta font-bold text-black'>Sauvegarder</span>
+            </button>
+          </div>
+        <div className='sticky top-0 z-[5] bg-white pb-2 flex flex-row gap-2 justify-end'>
+        <button
+            type='button'
+            onClick={() => remove(fields.length - 1)}
+            className='h-9 w-9 bg-black rounded-lg my-3 flex items-center justify-center'
+            disabled={fields.length <= 1}
+          >
+            <Icon icon="hugeicons:minus-sign-square" width="24" height="24" style={{ color: "#fdfbf5" }} />
+          </button>
           <button
             type='button'
             onClick={() => append({
@@ -130,26 +147,15 @@ const CreateDevisPage = () => {
             </div>
           </button>
 
-          <button
-            type='button'
-            onClick={() => remove(fields.length - 1)}
-            className='h-9 w-9 bg-black rounded-lg my-3 flex items-center justify-center'
-            disabled={fields.length <= 1}
-          >
-            <Icon icon="hugeicons:minus-sign-square" width="24" height="24" style={{ color: "#fdfbf5" }} />
-          </button>
+       
 
-          <div className='flex flex-row justify-end items-end w-full'>
-            <button
-              type='button'
-              onClick={handleSubmit(onSubmit)}
-              className='h-12 w-52 bg-Golden rounded-lg my-3 flex items-center justify-center'
-            >
-              <span className='font-jakarta font-bold text-black'>Sauvegarder</span>
-            </button>
-          </div>
+          
         </div>
-
+     <InputField
+     label="Titre du Devis"
+     name="title"
+     className='h-12 w-full rounded-lg bg-[#F4F5F9] p-4'
+     />
         <div className='flex flex-col gap-6 pb-4'>
           {fields.map((section, sectionIndex) => (
             <DevisSection

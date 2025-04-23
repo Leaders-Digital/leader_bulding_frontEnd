@@ -19,16 +19,13 @@ const MainLayout = () => {
   const [outletKey, setOutletKey] = useState(Date.now());
   const location = useLocation();
 
-  // Force remount of child components when route changes
+  
   useEffect(() => {
-    // Setting a new key will force React to unmount and remount the component
+    
     setOutletKey(Date.now());
     
-    // Trigger garbage collection explicitly (force unmount cleanup)
-    setTimeout(() => {
-      // This timeout gives React time to unmount previous components
-      console.log("🧹 Cleaning up after route change from", location.pathname);
-    }, 50);
+    
+   
   }, [location.pathname]);
 
   return (

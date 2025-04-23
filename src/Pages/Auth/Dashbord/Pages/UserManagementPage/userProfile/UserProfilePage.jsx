@@ -30,7 +30,7 @@ const UserProfilePage = () => {
     if (file?.data && file.data.length > 0) {
       const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
       const baseUrl = apiUrl.split('/api')[0]
-      console.log(file.data[7])
+    
       const lastFile= file?.data[file?.data.length-1]
       setImageUrl(`${baseUrl}/${lastFile.FilePath}`)
     }

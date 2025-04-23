@@ -32,8 +32,8 @@ const PDFGenerator = ({ formData }) => {
       doc.setFont("helvetica", "normal");
 
       const clientInfoLines = [
-        `Nom: ${""}`,
-        `Prénom: ${""}`,
+        `Nom: ${formData?.name}`,
+        `Prénom: ${formData?.lastName}`,
         `Entreprise: ${"Leaders Building"}`,
         `Adresse: ${"Cité des Pins, Les berges du lac 2 1053 Tunis, Tunisie"}`,
         `Téléphone: ${"+216 27,246,345"}`,

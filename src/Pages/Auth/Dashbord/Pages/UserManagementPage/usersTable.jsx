@@ -24,7 +24,7 @@ const UsersTable = ({filter}) => {
       setPagination(updatedPagination);
     }
     const currentPage = pagination.current>totalPages?totalPages:pagination.current
-if(!isLoading)console.log("from table page ",users)
+
   
   const onActionClick=(action,record)=>{
  if(action ==="edit"){
