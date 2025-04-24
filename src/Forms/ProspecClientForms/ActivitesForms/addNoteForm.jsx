@@ -13,10 +13,10 @@ const AddNoteForm = ({id,openModal}) => {
     const onSubmit=async(data)=>{
         try{  
        
-console.log("id",id)
+
 data={...data,id:id}
 const res= await addNote(data)
-console.log("res",res)
+
 if(res.data){
     toast.success("Note added")
     openModal(false)

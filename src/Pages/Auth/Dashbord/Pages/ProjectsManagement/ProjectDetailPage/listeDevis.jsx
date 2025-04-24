@@ -19,7 +19,7 @@ const ListeDevis = ({filter}) => {
         }
     }, [devis]);
 
-    if(devis) console.log("devis",devis);
+  
 
     return (
         <div className='h-full w-full'>
