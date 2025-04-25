@@ -5,7 +5,7 @@ import useProject from '../../../../../../Hooks/ProjectHooks/useProject'
 import AddProjectFile from './addProjectFile'
 import useFile from '../../../../../../Hooks/FileHooks/useFile'
 import { Button, Drawer } from 'antd'
-import { FileExcelOutlined, FileImageOutlined, FilePdfOutlined, FileUnknownOutlined } from '@ant-design/icons'
+import { EyeOutlined, FileExcelOutlined, FileImageOutlined, FilePdfOutlined, FileUnknownOutlined } from '@ant-design/icons'
 
 const ProjectDetailPage = () => {
     const [filter, setFilter] = useState()
@@ -19,11 +19,11 @@ const ProjectDetailPage = () => {
 
     const getFileIcon=(fileType)=>{
         if(fileType?.includes('pdf')){
-            return <FilePdfOutlined style={{ fontSize: 20 }}/>
+            return <FilePdfOutlined style={{ fontSize: 20 ,marginRight:3}}/>
         }else if(fileType?.includes('image')){
-    return <FileImageOutlined style={{ fontSize: 20 }}/>
-        }else if(fileType?.includes('excel')){
-    return <FileExcelOutlined style={{ fontSize: 20 }}/>
+    return <FileImageOutlined style={{ fontSize: 20,marginRight:3 }}/>
+        }else if(fileType?.includes('sheet')){
+    return <FileExcelOutlined style={{ fontSize: 20 ,marginRight:3}}/>
         }else {
 
             return <FileUnknownOutlined style={{ fontSize: 20, color: 'red' }}/>
@@ -72,7 +72,7 @@ const ProjectDetailPage = () => {
                             <span className="min-w-[110px] font-bold text-gray-700">Budget :</span>
                             <span className="flex-1 break-words">{project.data.budget}</span>
                         </div>
-                        {/* Second Row */}
+                        
                         <div className="flex flex-col">
                             <span className="min-w-[110px] font-bold text-gray-700">Status :</span>
                             <span className="flex-1 break-words">{project.data.status}</span>
@@ -88,11 +88,20 @@ const ProjectDetailPage = () => {
                     </div>
                 )}
             </div>
+            <div className=' flex flex-row items-center justify-center border-b-2 mb-3 border-[#BC983E] mt-5'>
+                <span className=' font-jakarta text-xl w-56  font-bold size-6  text-[#BC983E] mb-1 ml-1'>Fichiers du projet </span>
+            </div>
+            <div className='flex flex-row gap-3  '>
+         <AddProjectFile id={id} />
+            <Button onClick={showDrawer} className='w-32'> <div className='flex flex-row gap-1 justify-center'>
+                <EyeOutlined />
+                <span className='font-jakarta font-semibold  text-[#3A3541]'> Voir fichiers</span>
+                </div> </Button></div>
+           
             <div className="flex w-full justify-end mt-4">
                 <button className="bg-Golden text-[#3A3541] font-jakarta font-bold px-4 py-2 rounded-lg w-36 h-12" onClick={() => handleCreateDevis()}>Ajouter Devis</button>
             </div>
-            <AddProjectFile id={id} />
-            <Button onClick={showDrawer} className='w-28'>  <var>voir fichiers</var></Button>
+           
             <div className=' flex flex-row items-center justify-center border-b-2 mb-3 border-[#BC983E] mt-5'>
                 <span className=' font-jakarta text-xl w-56  font-bold size-6  text-[#BC983E] mb-1 ml-1'>Détails du Devis </span>
             </div>
