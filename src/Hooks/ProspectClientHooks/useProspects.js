@@ -15,7 +15,7 @@ const useProspects = (
       revalidateOnReconnect: true,
     }
   );
-  //console.log("prospects from the hook ", data);
+//console.log("prospects from the hook ", data);
   return {
     prospects: data?.data,
     totalItems: data?.totalItems,

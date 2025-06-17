@@ -4,8 +4,7 @@ import { PutFetcher } from "../Config/SwrConfig";
 const ModifyUser = async (url, { arg }) => {
   try {
     const { id, data } = arg;
-
-    const res = await PutFetcher(`admin/updateUser/${id}`, arg);
+    const res = await PutFetcher(`admin/updateUser/${id}`, data);
 
     return res;
   } catch (e) {
@@ -26,4 +25,9 @@ const useModifyUser = () => {
     isMutating,
   };
 };
+
 export default useModifyUser;
+
+
+
+

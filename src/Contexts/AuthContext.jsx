@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import useSWR, { mutate } from "swr";
 import { getCurrentUser } from "../API/Auth";
 import useCurrentUser from "../Hooks/useUser";
+import {toast} from "react-toastify";
 
 const AuthContext = createContext();
 export const UseAuth = () => useContext(AuthContext);
@@ -41,10 +42,12 @@ export const AuthProvider = ({ children }) => {
     try {
       // Manually trigger a revalidation of the user data
       await mutate("user/getCurrentUser");
-      const userData = await getCurrentUser();     
+      const userData = await getCurrentUser();
+      toast.success("User logged in successfully!")
       setIsAuthenticated(true);
       setUser(userData);
       navigate('/Dashboard', { replace: true });
+
     } catch (error) {
       console.error("Login failed:", error);
       setIsAuthenticated(false);

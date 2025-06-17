@@ -68,8 +68,7 @@ const ProspectPageHeader = ({onFilterChange}) => {
             <div className='flex flex-row gap-2 mt-6 '>  <button className=' h-12 w-40  bg-transparent border-2 border-[#BC983E] rounded-lg hover:border-black hover:text-black'>
                <div className='flex flex-row gap-1 ml-3 w-full h-full  items-center'><Icon icon="hugeicons:square-arrow-down-02" width="24" height="24"  style={{color:"#BC983E"}} />
             <span className=' font-jakarta font-bold text-base text-[#BC983E] hover:text-black'>  Export excel</span></div>  </button>
-            <button className='h-12 w-58 bg-black  rounded-lg border-2 border-black px-4 hover:bg-transparent  hover:text-black  ' onClick={handleCreateModal}> <div className='flex flex-row gap-1 justify-center'><Icon icon="hugeicons:add-square" width="24" height="24"  style={{color:"#fff"}}/> <span className='font-jakarta font-bold text-base text-white hover:text-black'>Ajouter un prospect</span></div> </button>
-           
+
                          
             </div>
           

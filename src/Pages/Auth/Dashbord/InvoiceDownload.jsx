@@ -1,4 +1,4 @@
-import React from "react";
+/*import React from "react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { Home as InvoicePDF } from "./Home";
 
@@ -15,4 +15,4 @@ const InvoiceDownload = () => {
   );
 };
 
-export default InvoiceDownload;
+export default InvoiceDownload;*/

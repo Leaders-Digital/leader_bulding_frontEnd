@@ -14,6 +14,7 @@ import { UseAuth } from "../../Contexts/AuthContext";
 const LoginPage = () => {
  
   const { login } = UseAuth();
+  const [isLoading, setIsLoading] = useState(false);
   const {
     control,
     handleSubmit,
@@ -23,11 +24,15 @@ const LoginPage = () => {
 
   const OnSubmit = async (data) => {
     try {
+      setIsLoading(true)
       const response = await Login(data.email, data.password);
       if (response) {
         await login();
       }
+      setIsLoading(false)
+
     } catch (e) {
+      setIsLoading(false)
       console.log("failed");
     }
   };
@@ -88,9 +93,10 @@ const LoginPage = () => {
             <div className="flex flex-row justify-center items-center mt-20 pr-8">
               {" "}
               <CostumButton
-                height="56px"
+                  isLoading={isLoading}
+               height="56px"
                 width="418px"
-                text=" Se connecter"
+                text="Se connecter"
                 type="submit"
                 className={"mr-3"}
               />

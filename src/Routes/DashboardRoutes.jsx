@@ -5,8 +5,9 @@ import UsersTable from "../Pages/Auth/Dashbord/Pages/UserManagementPage/usersTab
 import UserManagementPage from "../Pages/Auth/Dashbord/Pages/UserManagementPage/userManagementPage";
 import ArchivedUserPage from "../Pages/Auth/Dashbord/Pages/ArchivedUsers/ArchivedUserPage";
 import UserProfilePage from "../Pages/Auth/Dashbord/Pages/UserManagementPage/userProfile/UserProfilePage";
-import InvoiceDownload from "../Pages/Auth/Dashbord/InvoiceDownload";
+
 import ProjectManagement from "./ProjectManagement";
+import Home from "../Pages/Auth/Dashbord/Home";
 
 
 
@@ -20,7 +21,7 @@ const dashboardRoutes = [
       {
         path: "Dashboard",
         name:"Dashboard",
-        element: <InvoiceDownload />,
+        element: <Home />,
         protected: true,
         icon: <Icon icon="hugeicons:dashboard-square-02" width="24" height="24" />,
         

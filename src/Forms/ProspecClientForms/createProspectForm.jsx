@@ -1,19 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useForm,Controller,FormProvider } from 'react-hook-form'
 import { DatePicker, Input, InputNumber, Select } from 'antd';
-import InputField from '../../Components/InputForm/InputField';
 import useCreateProspect from '../../Hooks/ProspectClientHooks/useCreateProspect';
 import 'react-phone-input-2/lib/style.css';
 import { toast } from 'react-toastify';
 import { mutate } from 'swr';
-import PhoneInput from 'react-phone-input-2';
 
 import { Icon } from '@iconify/react/dist/iconify.js';
 import PersonelDetails from './personelDetails';
 import DetaileProjet from './detaileProjet';
 import LocationProject from './locationProject';
 const CreateProspectForm = ({onSubmitForm,prospect}) => {
-    const methods=useForm()
+    const methods=useForm({
+      defaultValues:{
+        telephone:[{number:''}]
+      }
+    })
     const[forceReset,SetforceReset]=useState()
     const{handleSubmit,reset,control,formState:{isValid}}=methods
     const{resposne,createProspect,error,isMutating}=useCreateProspect()
@@ -123,8 +125,8 @@ if(prospect){
       const prospectData = {
         name: data.name,
         lastName: data.lastName,
-        telephone: data.telephone,
-        email: data.email,
+          telephone: data.telephone.map(t => t.number),
+          email: data.email,
         adress: data.adress,
         status: "prospection",
         propertyType: data.bien,

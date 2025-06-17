@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import InputField from '../../Components/InputForm/InputField';
-import { Controller, useForm, useWatch } from 'react-hook-form';
+import { Controller, useFieldArray, useForm, useWatch } from 'react-hook-form';
 import PhoneInput from 'react-phone-input-2';
 import { Select } from 'antd';
 
 const PersonelDetails = ({control}) => {
    // const[source,setSource]=useState()
    const source=useWatch({control,name:"source"})
+   const{fields,append,remove}=useFieldArray({control,name:"telephone"})
     const prostatus =[
         {
           value: 'agence',
@@ -86,12 +87,28 @@ const PersonelDetails = ({control}) => {
      
      <div className='flex flex-col gap-2 px-6'>
      <label htmlFor="" className=' font-jakarta   font-bold size-1  my-5 text-[#3A3541] w-full '>Telephone</label>
+
+      {fields.map((field, index) => {return(
+        
+        <div className='flex flex-col gap-2' key={field.id}>
      <Controller
-     name='telephone'
+     name={`telephone.${index}.number`}
     control={control}
     rules={{ required: 'Phone number is required' }}
-    render={({field})=>(<PhoneInput {...field} country={'tn'} inputStyle={{ width: '100%', padding: '10px' ,paddingLeft:'50px'}} />)}
+    render={({field})=>(
+      <PhoneInput
+        country={'tn'}
+        inputStyle={{ width: '100%', padding: '10px' ,paddingLeft:'50px'}}
+        inputRef={field.ref} 
+        value={field.value}  
+        onChange={field.onChange} 
+      />
+    )}
      />
+     {fields.length>1 &&(<button type='button' onClick={()=>remove(index)}>supprimer</button>)}
+
+        </div>)})}
+<button type='button' onClick={()=>append({number:''})}>Ajouter input</button>
      </div>
 
      <div className='px-6  flex flex-col gap-1'>
@@ -99,7 +116,7 @@ const PersonelDetails = ({control}) => {
      <Controller
      name='status'
      control={control}
-     render={({field})=>(<Select {...field} options={status} className='h-12 w-full'  />)}
+     render={({field})=>(<Select {...field} options={status} className='h-12 w-full' />)}
      />
 
      </div>

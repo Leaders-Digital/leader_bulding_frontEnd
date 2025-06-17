@@ -15,6 +15,22 @@ export default {
       fontFamily: {
         jakarta: ['"Plus Jakarta Sans"', "sans-serif"],
       },
+      keyframes:{
+       'fade-slide':{
+        '0%':{
+          opacity: 0,
+          transform: 'translateX(0)'
+        },
+        '100%':{
+          opacity: 1,
+          transform: 'translateX(5px)'
+        }
+       }
+      },
+      animation:{
+        
+        fadeSlide: 'fade-slide 0.5s ease-in-out forwards'
+      }
     },
   },
   plugins: [],

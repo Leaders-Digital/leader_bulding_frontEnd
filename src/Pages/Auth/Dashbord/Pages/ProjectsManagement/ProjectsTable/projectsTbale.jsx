@@ -1,10 +1,13 @@
 
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useProjects from '../../../../../../Hooks/ProjectHooks/useProjects'
 import CostumTable from '../../../../../../Components/Tabs/CostumTable'
-import { Skeleton } from 'antd'
+import {Modal, Skeleton} from 'antd'
 import projectColumns from '../../../../../../Utils/projectColumns'
+import {Icon} from "@iconify/react";
+import ModifyProjectForm from "../../../../../../Forms/ProjectForms/modifyProjectForm.jsx";
+import DeleteProject from "./deleteProject.jsx";
 
 const ProjectsTbale = ({filter}) => {
    
@@ -13,7 +16,7 @@ const ProjectsTbale = ({filter}) => {
     const[deleteModal,setDeleteModal]=useState()
     const navigate=useNavigate()
      const[pagination,setPagination]=useState({current:1,pageSize:10})
-     const{projects,isLoading,totalItems,totalPages,mutate}=useProjects(filter,pagination)
+     const{projects,isLoading,totalItems,totalPages,mutate:refreshProjects}=useProjects(filter,pagination)
 
            useEffect(()=>{
        
@@ -43,6 +46,9 @@ const ProjectsTbale = ({filter}) => {
                     const handleCancelModify=()=>{
                       setModifyModal(false)
                     }
+    const handleCancelDelete=()=>{
+        setDeleteModal(false)
+    }
                     const onClickDetails=(id)=>{
                       navigate(`/gestionProject/project/${id}`)
                     }
@@ -63,6 +69,35 @@ pagination={{
 }}
 onChange={handleTbaleChange}
 />:<Skeleton active paragraph={{rows:15}} className='mt-5 bg-white'/>}
+        <Modal
+            title={<span className=' font-jakarta text-xl  font-bold size-6 ml-6  text-[#3A3541] '>Modifer un projet </span>}
+            open={modifyModal}
+            closeIcon={<Icon icon="hugeicons:cancel-circle" width="24" height="24"  style={{color:"#F7D47A"}} />}
+            footer={null}
+            width={"45rem"}
+            styles={{
+                body:{
+                    height: "47rem",
+                    overflowY:"auto",
+                    paddingBottom:"2rem"
+                }
+
+            }}
+            onCancel={handleCancelModify}
+        >
+
+            <ModifyProjectForm project={record} refreshProjects={refreshProjects} handleCancel={handleCancelModify}/>
+        </Modal>
+        <Modal
+            open={deleteModal}
+            closeIcon={<Icon icon="hugeicons:cancel-circle" width="24" height="24"  style={{color:"#FF2E2E"}} />}
+            footer={null}
+            width={"33rem"}
+            centered={true}
+            onCancel={handleCancelDelete}
+        >
+            <DeleteProject handleCancel={handleCancelDelete} project={record} refreshProjects={refreshProjects}/>
+        </Modal>
     </div>
   )
 }

@@ -44,8 +44,6 @@ const ArchivedPageHeader = ({onFilterChange}) => {
                   </div>
                 
               </div>
-            
-            
               <div></div>
           </div>
   

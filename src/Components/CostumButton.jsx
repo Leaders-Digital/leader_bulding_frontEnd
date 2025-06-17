@@ -1,8 +1,11 @@
 /* eslint-disable no-unused-vars */
  
 import React from "react";
+import { LoadingOutlined } from '@ant-design/icons';
+import { Spin } from 'antd'
 
 function CostumButton({
+    isLoading=false,
   className,
   onClick,
   children,
@@ -17,9 +20,11 @@ function CostumButton({
       <button
         type={type}
         onClick={onClick}
+        disabled={isLoading}
         className={`bg-Golden relative text-black text-[20px] rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-200 ease-in-out h-[56px] w-full`}
       >
-        {text}
+
+          {isLoading?    <Spin indicator={<LoadingOutlined spin />} size="small" />:      text}
       </button>
     </div>
   );

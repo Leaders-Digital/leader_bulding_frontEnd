@@ -3,7 +3,7 @@ import { fetcher } from "../../Config/SwrConfig";
 
 const useClients = (filter = "", pagination = { current: 1, pageSize: 10 }) => {
   const { data, isLoading, error, mutate } = useSWR(
-    `prospect/getAllClients?page=${pagination.current}&limit=${
+    `admin/getAllClients?page=${pagination.current}&limit=${
       pagination.pageSize
     }&search=${filter.search || ""}&select=${filter.status}`,
     fetcher,

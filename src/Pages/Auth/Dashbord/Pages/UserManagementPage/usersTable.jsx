@@ -76,7 +76,7 @@ const UsersTable = ({filter}) => {
       onCancel={hadnleCancel}
      >
 
-      <ModifyUserForm user={record}/>
+      <ModifyUserForm user={record} mutate={usersMutation} hadnleCancel={hadnleCancel}/>
      </Modal>
      <Modal
      open={isModalArchivedVisible}

@@ -16,7 +16,6 @@ const navigate=useNavigate()
   const[pagination,setPagination]=useState({current:1,pageSize:10})
  
     const{prospects,isLoading,totalItems,totalPages,error,mutate}=useProspects(filter,pagination)
-   
     useEffect(()=>{
 
    setPagination((prevstate)=>({...prevstate,current:1}))

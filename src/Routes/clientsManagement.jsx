@@ -8,6 +8,7 @@ import ProspectDeatilsPage from "../Pages/Auth/Dashbord/Pages/ClientManagement/P
 import DetailProspectPgae from "../Pages/Auth/Dashbord/Pages/ClientManagement/ProspectManagementPage/DetailProspectPage/DetailProspectPgae";
 import ProspectPage from "../Pages/Auth/Dashbord/Pages/ClientManagement/ProspectManagementPage/ProspectPage";
 import UserProfilePage from "../Pages/Auth/Dashbord/Pages/UserManagementPage/userProfile/userProfilePage";
+import AddClientPage from "../Pages/Auth/Dashbord/Pages/ClientManagement/AddClientPage/AddClientPage.jsx";
 
 const clientManagementRoutes=[
 
@@ -25,6 +26,10 @@ const clientManagementRoutes=[
     path:"/gestionClient/editProspect/:id",
      element:<EditProspectPage/>
 }
+,{
+        path:"/gestionClient/client/ajouter",
+        element:<AddClientPage/>
+    }
 
 ,
 {
@@ -32,21 +37,15 @@ const clientManagementRoutes=[
      element:<AddPropspectPage/>
 }
     ,
-    {
-        path:"/gestionClient/client",
-        name:"Gestion Client",
-        element:<ClientPage/>
-    },
+
     {
         path:"/gestionClient/prospects",
         name:"Tableau des prospects",
         element:<KanbanPropspectTable/>
-    }
-    ,
-    {
-        path:"/gestionClient/rdv",
-        name:"Gestion RDV Client",
-        element:<InvoiceDownload/>
-    }
+    } ,  {
+        path:"/gestionClient/client",
+        name:"Gestion Client",
+        element:<ClientPage/>
+    },
 ]
 export default clientManagementRoutes

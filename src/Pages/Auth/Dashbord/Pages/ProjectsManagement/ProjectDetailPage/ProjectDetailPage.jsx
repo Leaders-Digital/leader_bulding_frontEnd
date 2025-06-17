@@ -47,6 +47,9 @@ const ProjectDetailPage = () => {
     return (
         <div className='h-full w-full flex flex-col'>
             <div className=' mb-3'><span className=' font-jakarta text-3xl  font-bold size-6  text-[#3A3541]'>Gestion projets </span></div>
+
+
+            
             <div className=' flex flex-row items-center justify-center border-b-2 mb-3 border-[#BC983E]'>
                 <span className=' font-jakarta text-xl w-56  font-bold size-6  text-[#BC983E] mb-1'>Détails du projet </span>
             </div>
@@ -91,12 +94,27 @@ const ProjectDetailPage = () => {
             <div className=' flex flex-row items-center justify-center border-b-2 mb-3 border-[#BC983E] mt-5'>
                 <span className=' font-jakarta text-xl w-56  font-bold size-6  text-[#BC983E] mb-1 ml-1'>Fichiers du projet </span>
             </div>
-            <div className='flex flex-row gap-3  '>
+            <div className='flex flex-row gap-3 justify-between  '>
+                <div className={'flex flex-row gap-3'}>
+
          <AddProjectFile id={id} />
             <Button onClick={showDrawer} className='w-32'> <div className='flex flex-row gap-1 justify-center'>
                 <EyeOutlined />
                 <span className='font-jakarta font-semibold  text-[#3A3541]'> Voir fichiers</span>
-                </div> </Button></div>
+                </div> </Button>
+                </div>
+
+                <div className={'flex gap-3'}>
+                    <Button icon={<FileImageOutlined />}>
+                        <span className='font-jakarta font-semibold  text-[#3A3541]'> Ajouter une image</span>
+
+                    </Button>
+                    <Button icon={<FileImageOutlined />}>
+                        <span className='font-jakarta font-semibold  text-[#3A3541]'> Ajouter une image</span>
+
+                    </Button>
+                </div>
+            </div>
            
             <div className="flex w-full justify-end mt-4">
                 <button className="bg-Golden text-[#3A3541] font-jakarta font-bold px-4 py-2 rounded-lg w-36 h-12" onClick={() => handleCreateDevis()}>Ajouter Devis</button>
