@@ -1,9 +1,9 @@
 import React from 'react'
 
 const DevisItem = () => {
-  return (
-    <div>DevisItem</div>
-  )
+    return (
+        <div>DevisItemm</div>
+    )
 }
 
 export default devisItem
