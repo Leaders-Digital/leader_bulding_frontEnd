@@ -3,7 +3,7 @@ import React, {useEffect} from 'react';
 import {Controller, useFieldArray, useFormContext, useWatch} from 'react-hook-form';
 import {Icon} from '@iconify/react/dist/iconify.js';
 import DevisSectionForm from '../../../../../../../Forms/DevisForms/devisSectionForm.jsx';
-import DevisItemForm from '../../../../../../../Forms/DevisForms/DevisItemForm.jsx';
+import DevisItemForm from '../../../../../../../Forms/DevisForms/devisItemForm.jsx';
 import {InputNumber} from 'antd';
 
 const DevisSection = ({sectionIndex, removeSection}) => {

@@ -1,7 +1,6 @@
-// CreateDevisPage.jsx
 import React, {useEffect, useState} from 'react';
 import {FormProvider, useFieldArray, useForm, useWatch} from 'react-hook-form';
-import DevisSection from './devisSection.jsx';
+import DevisSection from './DevisSection.jsx';
 import {Icon} from '@iconify/react/dist/iconify.js';
 import {InputNumber} from 'antd';
 import PDFGenerator from '../../../../../../../Components/PDFGenerator ';
@@ -42,7 +41,6 @@ const CreateDevisPage = () => {
     });
 
 
-    // Use useWatch for better reactivity
     const sections = useWatch({control, name: 'sections'}) || [];
 
     useEffect(() => {

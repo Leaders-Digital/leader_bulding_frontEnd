@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { Upload, Image, message } from 'antd';
+import DevisItemForm from '../../../../../../../Forms/DevisForms/devisItemForm.jsx';
 
 const getBase64 = (file) =>
     new Promise((resolve, reject) => {
