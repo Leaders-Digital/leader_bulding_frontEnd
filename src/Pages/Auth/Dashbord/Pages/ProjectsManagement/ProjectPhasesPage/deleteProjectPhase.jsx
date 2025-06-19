@@ -19,7 +19,6 @@ const DeleteProjectPhase = ({ handleCancel, phase, phasesMutation }) => {
                 handleCancel()
             }
         } catch (e) {
-            console.log(e)
         }
     }
 

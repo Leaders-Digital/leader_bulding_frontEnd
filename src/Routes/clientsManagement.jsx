@@ -1,13 +1,9 @@
-import InvoiceDownload from "../Pages/Auth/Dashbord/Home";
-import Home from "../Pages/Auth/Dashbord/Home";
 import AddPropspectPage from "../Pages/Auth/Dashbord/Pages/ClientManagement/AddProspectPage/AddPropspectPage";
 import ClientPage from "../Pages/Auth/Dashbord/Pages/ClientManagement/ClientManagementPage/ClientPage";
 import EditProspectPage from "../Pages/Auth/Dashbord/Pages/ClientManagement/EditProspectPage/EditProspectPage";
 import KanbanPropspectTable from "../Pages/Auth/Dashbord/Pages/ClientManagement/kanbanProspectTable/KanbanPropspectTable";
-import ProspectDeatilsPage from "../Pages/Auth/Dashbord/Pages/ClientManagement/ProspectDeatilsPage/ProspectDeatilsPage";
 import DetailProspectPgae from "../Pages/Auth/Dashbord/Pages/ClientManagement/ProspectManagementPage/DetailProspectPage/DetailProspectPgae";
 import ProspectPage from "../Pages/Auth/Dashbord/Pages/ClientManagement/ProspectManagementPage/ProspectPage";
-import UserProfilePage from "../Pages/Auth/Dashbord/Pages/UserManagementPage/userProfile/userProfilePage";
 import AddClientPage from "../Pages/Auth/Dashbord/Pages/ClientManagement/AddClientPage/AddClientPage.jsx";
 
 const clientManagementRoutes=[

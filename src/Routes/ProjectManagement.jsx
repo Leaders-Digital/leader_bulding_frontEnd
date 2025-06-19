@@ -21,6 +21,7 @@ const ProjectManagement= [
 
         element:<ProjectDetailPage />
     },
+
     {
         path:"/gestionProject/projectPhases",
         name:"Phases Management",

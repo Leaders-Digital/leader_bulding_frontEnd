@@ -9,7 +9,6 @@ const ProtectedRoutes = ({ children, roles }) => {
   const { user, isAuthenticated, isLoading } = UseAuth();
 
   useEffect(() => {
-    // Don't redirect while checking authentication
     if (isLoading) return;
 
     if (!isAuthenticated) {
@@ -22,10 +21,8 @@ const ProtectedRoutes = ({ children, roles }) => {
     }
   }, [isAuthenticated, user, roles, navigate, isLoading]);
  
-  // Show nothing while checking auth
   if (isLoading) return null;
 
-  // Don't render children if not authenticated
   if (!isAuthenticated) return null;
 
   return children;

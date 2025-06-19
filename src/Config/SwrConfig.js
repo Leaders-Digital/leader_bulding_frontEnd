@@ -37,6 +37,16 @@ export const PutFetcher = async (url, arg) => {
   }
 };
 
+export const DeleteFetcher = async (url, arg) => {
+  try {
+    const res = await Axios.delete(url, arg);
+
+    return res.data;
+  } catch (e) {
+    throw e.response?.data || e.message;
+  }
+};
+
 export const fetchBody = async (body) => {
   const options = {
     method: "POST",

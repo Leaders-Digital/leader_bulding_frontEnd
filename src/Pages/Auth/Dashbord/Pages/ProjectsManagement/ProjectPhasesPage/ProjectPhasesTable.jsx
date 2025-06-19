@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { Table, message, Modal, Skeleton } from 'antd';
-import { Icon } from "@iconify/react";
+import React, {useEffect, useState} from 'react';
+import {message, Modal, Skeleton} from 'antd';
+import {Icon} from "@iconify/react";
 import ProjectPhasesColumns from '../../../../../../Utils/ProjectPhasesColumns';
 import useProjectPhases from '../../../../../../Hooks/ProjectPhases/useProjectPhases';
 import CostumTable from '../../../../../../Components/Tabs/CostumTable';
 import DeleteProjectPhase from './deleteProjectPhase';
 import ModifyProjectPhase from './Components/modifyProjectPhase';
 
-const ProjectPhasesTable = ({ filter }) => {
+const ProjectPhasesTable = ({filter, projects = []}) => {
     const [record, setRecord] = useState('');
     const [modifyModal, setModifyModal] = useState(false);
     const [deleteModal, setDeleteModal] = useState(false);
-    const [pagination, setPagination] = useState({ current: 1, pageSize: 10 });
-    
-    const { data: phases, loading, error, refetch } = useProjectPhases(filter, pagination);
+    const [pagination, setPagination] = useState({current: 1, pageSize: 10});
+
+    const {data: phases, loading, error, refetch} = useProjectPhases(filter, pagination);
 
     useEffect(() => {
-        setPagination((prevstate) => ({ ...prevstate, current: 1 }));
+        setPagination((prevstate) => ({...prevstate, current: 1}));
     }, [filter]);
 
     const handleTableChange = (newPagination) => {
@@ -40,27 +40,46 @@ const ProjectPhasesTable = ({ filter }) => {
 
     const handleCancelModify = () => {
         setModifyModal(false);
+        setRecord('');
     };
 
     const handleCancelDelete = () => {
         setDeleteModal(false);
+        setRecord('');
     };
 
     if (error) {
         message.error('Erreur lors du chargement des phases du projet');
     }
 
-    // Filter data based on search
     const filteredData = React.useMemo(() => {
         if (!phases) return [];
         if (!filter?.search) return phases;
-        
-        return phases.filter(phase => 
-            phase.name?.toLowerCase().includes(filter.search.toLowerCase())
-        );
-    }, [phases, filter?.search]);
 
-    // Calculate paginated data
+        const searchTerm = filter.search.toLowerCase();
+
+        return phases.filter(phase => {
+            const phaseNameMatch = phase.name?.toLowerCase().includes(searchTerm);
+
+            let projectName = '';
+            
+            if (phase.projectId && typeof phase.projectId === 'object' && phase.projectId.name) {
+                projectName = phase.projectId.name;
+            }
+            else if (phase.project && typeof phase.project === 'object' && phase.project.name) {
+                projectName = phase.project.name;
+            }
+            else if (phase.projectId && typeof phase.projectId === 'string') {
+                const project = projects.find(p => p._id === phase.projectId);
+                projectName = project?.name || '';
+            }
+
+            const projectNameMatch = projectName.toLowerCase().includes(searchTerm);
+
+            return phaseNameMatch || projectNameMatch;
+        });
+    }, [phases, filter?.search, projects]);
+
     const paginatedData = React.useMemo(() => {
         return filteredData.slice(
             (pagination.current - 1) * pagination.pageSize,
@@ -72,7 +91,7 @@ const ProjectPhasesTable = ({ filter }) => {
         <div className='w-full h-4/5'>
             {!loading ? (
                 <CostumTable
-                    columns={ProjectPhasesColumns({ onActionClick: handleActionClick })}
+                    columns={ProjectPhasesColumns({onActionClick: handleActionClick, projects})}
                     data={paginatedData}
                     loading={loading}
                     pagination={{
@@ -81,29 +100,30 @@ const ProjectPhasesTable = ({ filter }) => {
                         total: filteredData.length,
                         showSizeChanger: false,
                         onChange: (page, pageSize) => {
-                            setPagination({ current: page, pageSize });
+                            setPagination({current: page, pageSize});
                         }
                     }}
                     onChange={handleTableChange}
                 />
             ) : (
-                <Skeleton active paragraph={{ rows: 15 }} className='mt-10 bg-white' />
+                <Skeleton active paragraph={{rows: 15}} className='mt-10 bg-white'/>
             )}
 
-            <ModifyProjectPhase 
+            <ModifyProjectPhase
                 isOpen={modifyModal}
                 onClose={handleCancelModify}
                 phase={record}
+                projects={projects}
             />
 
             <Modal
                 open={deleteModal}
                 closeIcon={
-                    <Icon 
-                        icon="hugeicons:cancel-circle" 
-                        width="24" 
-                        height="24" 
-                        style={{ color: "#FF2E2E" }} 
+                    <Icon
+                        icon="hugeicons:cancel-circle"
+                        width="24"
+                        height="24"
+                        style={{color: "#FF2E2E"}}
                     />
                 }
                 footer={null}
@@ -111,7 +131,7 @@ const ProjectPhasesTable = ({ filter }) => {
                 centered={true}
                 onCancel={handleCancelDelete}
             >
-                <DeleteProjectPhase 
+                <DeleteProjectPhase
                     handleCancel={handleCancelDelete}
                     phase={record}
                     phasesMutation={refetch}

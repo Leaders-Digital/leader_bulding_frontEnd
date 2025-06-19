@@ -17,7 +17,7 @@ const ListeDevis = ({filter}) => {
         if (devis) {
             setItems(devis.map((d, i) => ({
                 key: d._id,
-                label: `${d?.name}     - Date du saisie: ${new Date(d?.createdAt).toLocaleDateString('fr-FR')}`,
+                label: `${d?.title}     - Date du saisie: ${new Date(d?.createdAt).toLocaleDateString('fr-FR')}`,
                 
                 children: <PDFGenerator formData={d}/>
             })));
@@ -28,7 +28,7 @@ const ListeDevis = ({filter}) => {
 
     return (
         
-        <div className='h-full w-full overflow-y-auto'>
+        <div className='h-full w-full overflow-y-auto mb-5'>
             {isLoading?<Spin size='large' />:<Collapse items={items} defaultActiveKey={[items[0]?.key]} className='bg-[rgba(247,212,122,0.2)]'/>}
         </div>
     )

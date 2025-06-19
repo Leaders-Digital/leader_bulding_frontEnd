@@ -23,7 +23,6 @@ export const AuthProvider = ({ children }) => {
       setIsAuthenticated(true);
       setUser(data);
       setIsLoading(false);
-      // If we're on the login page and we're authenticated, redirect to dashboard
       if (window.location.pathname === '/login') {
         navigate('/Dashboard', { replace: true });
       }
@@ -40,7 +39,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async () => {
     try {
-      // Manually trigger a revalidation of the user data
+
       await mutate("user/getCurrentUser");
       const userData = await getCurrentUser();
       toast.success("User logged in successfully!")

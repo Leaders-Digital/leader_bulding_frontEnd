@@ -11,7 +11,7 @@ const DeleteProject = ({handleCancel,project,refreshProjects}) => {
             const response = await toast.promise(
                 deleteProject({id:project._id}),{
                     pending: 'Suppression en cours...',
-                    success: 'Project supprimé avec succès!',
+                    success: 'Projet supprimé avec succès!',
                     error: 'Erreur lors de la suppression!',
                 }
             )
@@ -19,7 +19,9 @@ const DeleteProject = ({handleCancel,project,refreshProjects}) => {
                 refreshProjects()
                 handleCancel()
             }
-        }catch(e){console.log(e)}
+        }catch(e){
+            toast.error("Erreur lors de la suppression du projet");
+        }
     }
     return (
         <div className='w-full h-full flex flex-col gap-6   ' >
