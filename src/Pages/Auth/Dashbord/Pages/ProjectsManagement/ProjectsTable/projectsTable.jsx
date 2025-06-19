@@ -8,7 +8,7 @@ import {Icon} from "@iconify/react";
 import ModifyProjectForm from "../../../../../../Forms/ProjectForms/modifyProjectForm.jsx";
 import DeleteProject from "./deleteProject.jsx";
 
-const ProjectsTbale = ({filter}) => {
+const ProjectsTable = ({filter}) => {
 
     const [record, setRecord] = useState('')
     const [modifyModal, setModifyModal] = useState()
@@ -99,4 +99,4 @@ const ProjectsTbale = ({filter}) => {
     )
 }
 
-export default ProjectsTbale
+export default ProjectsTable
