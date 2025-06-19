@@ -18,26 +18,25 @@ const Prospect = ({prospect,isOverlay,mutate}) => {
     }
     const items=[ {key:"1",label:"Voir",icon:<Icon icon="hugeicons:eye" width="24" height="24" />,onClick:viewDetails},{key:'2',label:"Edit",icon:<Icon icon="hugeicons:pencil-edit-02" width="24" height="24" />,onClick:editProspect},{key:'3',label:"Delete",icon:<Icon icon="hugeicons:delete-02" width="24" height="24" style={{color:"#fb2424"}} />,onClick:()=>setIsOpenModal(true)}]
 
-    const getTagColor=(status)=>{
-switch (status){
-  case "Nouveau lead": return "processing"
-  case "A qualifie" :return "gold"
-  case "Contact Effectué":return "success"
-  case "En discussion" :return"processing"
-  case "Relance" :return "gold"
-  case "Proposition envoyeé" :return "processing"
-  case "En discussion" :return "processing"
-  case "Négociation en cours" :return "gold"
-  case "En attente de validation" :return"success"
-  case "Deal approuvé" :return "gold"
-  case "Contract signé" :return "success"
-  case "Paiement reçu" :return "success"
-  case "Perdu":return "red"
-  case "Sans Réponse":return "gold"
-  case "changement de projet":return "gold"
-  default:
-    return 'processing';
-}
+    const getTagColor = (status) => {
+        switch (status) {
+            case "Nouveau lead": return "processing";
+            case "A qualifie": return "gold";
+            case "Contact Effectué": return "success";
+            case "En discussion": return "processing";
+            case "Relance": return "gold";
+            case "Proposition envoyeé": return "processing";
+            case "Négociation en cours": return "gold";
+            case "En attente de validation": return "success";
+            case "Deal approuvé": return "gold";
+            case "Contract signé": return "success";
+            case "Paiement reçu": return "success";
+            case "Perdu": return "red";
+            case "Sans Réponse": return "gold";
+            case "changement de projet": return "gold";
+            default:
+                return 'processing';
+        }
     }
   return (
     <div
