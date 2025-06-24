@@ -1,24 +1,29 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Button, DatePicker, Form, Input, message, Modal, Select} from 'antd';
 import {Icon} from "@iconify/react";
 import dayjs from 'dayjs';
-import useProjectPhases from '../../../../../../../Hooks/ProjectPhases/useProjectPhases';
+import useUpdateProjectPhase from '../../../../../../../Hooks/ProjectPhases/useUpdateProjectPhase.js';
 
-const ModifyProjectPhase = ({isOpen, onClose, phase, projects = []}) => {
+const ModifyProjectPhase = ({isOpen, onClose, phase, projects = [], phasesMutation}) => {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
-    const {updateProjectPhase, refetch} = useProjectPhases();
+    const {updateProjectPhase, isMutating} = useUpdateProjectPhase();
     const formInitializedRef = useRef(false);
-
+    console.log("projects", projects)
     useEffect(() => {
         if (phase && isOpen && !formInitializedRef.current) {
             let projectId = phase.projectId;
+            let projectName = '';
+            
             if (projectId && typeof projectId === 'object' && projectId._id) {
                 projectId = projectId._id;
+                projectName = projectId.name || '';
+            } else if (projectId && typeof projectId === 'object' && projectId.name) {
+                projectName = projectId.name;
             }
 
             form.setFieldsValue({
-                projectId: projectId,
+                projectId: projectName,
                 name: phase.name,
                 status: phase.status,
                 pourcentage: phase.pourcentage,
@@ -27,12 +32,18 @@ const ModifyProjectPhase = ({isOpen, onClose, phase, projects = []}) => {
             });
             formInitializedRef.current = true;
         }
-        
-        // Reset the ref when modal closes
+
         if (!isOpen) {
             formInitializedRef.current = false;
         }
     }, [phase, isOpen]);
+
+    const handleStatusChange = (value) => {
+        if (value === 'Terminé') {
+            form.setFieldsValue({pourcentage: 100});
+        }
+
+    };
 
     const handleSubmit = async () => {
         try {
@@ -46,14 +57,25 @@ const ModifyProjectPhase = ({isOpen, onClose, phase, projects = []}) => {
                 return;
             }
 
+            // Get the original project ID from the phase data
+            let projectId = phase.projectId;
+            if (projectId && typeof projectId === 'object' && projectId._id) {
+                projectId = projectId._id;
+            }
+
             const formattedValues = {
                 ...values,
+                projectId: projectId, // Use the original project ID, not the name
                 startDate: values.startDate ? values.startDate.format('YYYY-MM-DD') : '',
                 finishDate: values.finishDate ? values.finishDate.format('YYYY-MM-DD') : ''
             };
 
             await updateProjectPhase({id: phaseId, data: formattedValues});
-            await refetch();
+
+            if (phasesMutation) {
+                await phasesMutation();
+            }
+
             form.resetFields();
             onClose();
             message.success('Phase modifiée avec succès');
@@ -131,7 +153,7 @@ const ModifyProjectPhase = ({isOpen, onClose, phase, projects = []}) => {
                         disabled={true}
                     >
                         {projects.map(project => (
-                            <Select.Option key={project._id} value={project._id}>
+                            <Select.Option key={project._id} value={project.name}>
                                 {project.name || 'Projet sans nom'}
                             </Select.Option>
                         ))}
@@ -147,7 +169,7 @@ const ModifyProjectPhase = ({isOpen, onClose, phase, projects = []}) => {
                         placeholder="Entrez le nom de la phase"
                         className="h-12 rounded-lg"
                         disabled={true}
-                        
+
                     />
                 </Form.Item>
 
@@ -159,6 +181,7 @@ const ModifyProjectPhase = ({isOpen, onClose, phase, projects = []}) => {
                     <Select
                         placeholder="Sélectionner le statut"
                         className="h-12 rounded-lg"
+                        onChange={handleStatusChange}
                     >
                         <Select.Option value="En cours">En cours</Select.Option>
                         <Select.Option value="Terminé">Terminé</Select.Option>
@@ -219,7 +242,7 @@ const ModifyProjectPhase = ({isOpen, onClose, phase, projects = []}) => {
                     <Button
                         type="primary"
                         onClick={handleSubmit}
-                        loading={loading}
+                        loading={loading || isMutating}
                         className="h-10 px-6 rounded-lg bg-[#F7D47A] hover:bg-[#F7D47A]/80"
                     >
                         Modifier

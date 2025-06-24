@@ -1,13 +1,11 @@
-import React, {useEffect, useState, useMemo} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {Button, DatePicker, Form, Input, message, Modal, Select} from 'antd';
 import {Icon} from "@iconify/react";
-import useProjectPhases from '../../../../../../../Hooks/ProjectPhases/useProjectPhases';
+import useProjectPhases from '../../../../../../../Hooks/ProjectPhases/useProjectPhases.js';
 
-// Move extractPhaseNames outside the component to prevent recreation on every render
 const extractPhaseNames = (projectsData, currentPhases = [], allPhases = []) => {
     const allPhaseNames = new Set();
-    
-    // Add phase names from all phases API
+
     if (allPhases && Array.isArray(allPhases)) {
         allPhases.forEach(phase => {
             if (phase.name) {
@@ -15,8 +13,7 @@ const extractPhaseNames = (projectsData, currentPhases = [], allPhases = []) => 
             }
         });
     }
-    
-    // Add phase names from projects data
+
     if (projectsData && projectsData.length > 0) {
         projectsData.forEach(project => {
             if (project.phases && Array.isArray(project.phases)) {
@@ -29,7 +26,6 @@ const extractPhaseNames = (projectsData, currentPhases = [], allPhases = []) => 
         });
     }
 
-    // Add phase names from current project phases
     if (currentPhases && Array.isArray(currentPhases)) {
         currentPhases.forEach(phase => {
             if (phase.name) {
@@ -52,11 +48,9 @@ const AddProjectPhase = ({
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const [showCustomInput, setShowCustomInput] = useState(false);
-    
-    // Fetch all phases from the API
-    const { data: allPhases } = useProjectPhases();
 
-    // Use useMemo instead of useEffect to calculate phaseNames
+    const {data: allPhases} = useProjectPhases();
+
     const phaseNames = useMemo(() => {
         return extractPhaseNames(projects, currentProjectPhases, allPhases);
     }, [projects, currentProjectPhases, allPhases]);
@@ -72,7 +66,7 @@ const AddProjectPhase = ({
             setLoading(true);
             const values = await form.validateFields();
 
-            // Convert DatePicker values to string format
+
             const formattedValues = {
                 ...values,
                 startDate: values.startDate ? values.startDate.format('YYYY-MM-DD') : '',
@@ -81,8 +75,6 @@ const AddProjectPhase = ({
 
             await onSubmit(formattedValues);
 
-            // Don't manually add to phaseNames - let the useEffect handle it when currentProjectPhases updates
-            // This prevents duplicates when the component re-renders
 
             form.resetFields();
             setShowCustomInput(false);
@@ -101,14 +93,12 @@ const AddProjectPhase = ({
         onClose();
     };
 
-    // Filter function for project search
     const filterProjects = (input, option) => {
         const projectName = option.children?.toLowerCase() || '';
         const searchTerm = input.toLowerCase();
         return projectName.includes(searchTerm);
     };
 
-    // Filter function for phase names search
     const filterPhaseNames = (input, option) => {
         const phaseName = option.children?.toLowerCase() || '';
         const searchTerm = input.toLowerCase();
@@ -129,7 +119,6 @@ const AddProjectPhase = ({
     };
 
     const handleStatusChange = (value) => {
-        // If status is "terminé", automatically set percentage to 100
         if (value === 'terminé') {
             form.setFieldsValue({pourcentage: '100'});
         }
@@ -264,6 +253,7 @@ const AddProjectPhase = ({
                         <Select.Option value="en attente">En attente</Select.Option>
                         <Select.Option value="en cours">En cours</Select.Option>
                         <Select.Option value="terminé">Terminé</Select.Option>
+                        <Select.Option value="annulé">Annulé</Select.Option>
                     </Select>
                 </Form.Item>
 

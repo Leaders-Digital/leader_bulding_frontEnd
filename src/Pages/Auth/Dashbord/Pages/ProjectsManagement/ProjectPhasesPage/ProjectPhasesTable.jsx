@@ -5,7 +5,7 @@ import ProjectPhasesColumns from '../../../../../../Utils/ProjectPhasesColumns';
 import useProjectPhases from '../../../../../../Hooks/ProjectPhases/useProjectPhases';
 import CostumTable from '../../../../../../Components/Tabs/CostumTable';
 import DeleteProjectPhase from './deleteProjectPhase';
-import ModifyProjectPhase from './Components/modifyProjectPhase';
+import ModifyProjectPhase from '../ProjectDetailPage/Components/modifyProjectPhase.jsx';
 
 const ProjectPhasesTable = ({filter, projects = []}) => {
     const [record, setRecord] = useState('');
@@ -62,14 +62,12 @@ const ProjectPhasesTable = ({filter, projects = []}) => {
             const phaseNameMatch = phase.name?.toLowerCase().includes(searchTerm);
 
             let projectName = '';
-            
+
             if (phase.projectId && typeof phase.projectId === 'object' && phase.projectId.name) {
                 projectName = phase.projectId.name;
-            }
-            else if (phase.project && typeof phase.project === 'object' && phase.project.name) {
+            } else if (phase.project && typeof phase.project === 'object' && phase.project.name) {
                 projectName = phase.project.name;
-            }
-            else if (phase.projectId && typeof phase.projectId === 'string') {
+            } else if (phase.projectId && typeof phase.projectId === 'string') {
                 const project = projects.find(p => p._id === phase.projectId);
                 projectName = project?.name || '';
             }

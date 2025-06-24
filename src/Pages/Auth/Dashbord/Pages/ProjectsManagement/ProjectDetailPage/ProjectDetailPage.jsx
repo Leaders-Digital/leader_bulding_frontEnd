@@ -10,15 +10,15 @@ import {
     FileExcelOutlined,
     FileImageOutlined,
     FilePdfOutlined,
-    FileUnknownOutlined,
-    PlusOutlined
+    FileUnknownOutlined
 } from '@ant-design/icons'
 import ProjectImages from "./Components/ProjectImages.jsx";
-import AddProjectPhase from '../ProjectPhasesPage/Components/addProjectPhase.jsx';
+import AddProjectPhase from './Components/addProjectPhase.jsx';
 import useProjectPhases from '../../../../../../Hooks/ProjectPhases/useProjectPhases';
 import useProjects from '../../../../../../Hooks/ProjectHooks/useProjects';
 import usePhasesByProject from '../../../../../../Hooks/ProjectPhases/usePhasesByProject';
 import ProjectMembers from "./Components/ProjectMembers.jsx";
+import ProjectPhases from "./Components/ProjectPhases.jsx";
 
 const ProjectDetailPage = () => {
     const [filter, setFilter] = useState()
@@ -30,10 +30,8 @@ const ProjectDetailPage = () => {
     const {file, mutate, isLoading: isLoadingFile, error: errorFile} = useFile(id, "Project")
     const {createProjectPhase} = useProjectPhases();
 
-    // Fetch projects for the phase creation dropdown
     const {projects} = useProjects({search: "", status: ""}, {current: 1, pageSize: 1000});
 
-    // Fetch phases for the current project using SWR
     const {phases, loading: phasesLoading, refetch: refetchPhases} = usePhasesByProject(id);
 
     const showDrawer = () => {
@@ -119,7 +117,6 @@ const ProjectDetailPage = () => {
 
                 {project && project.data && (
                     <div className="grid grid-cols-3 gap-x-8 gap-y-4 w-full mt-4">
-                        {/* First Row */}
                         <div className="flex flex-col">
                             <span className="min-w-[110px] font-bold text-gray-700">Nom :</span>
                             <span className="flex-1 break-words">{project.data.name}</span>
@@ -146,56 +143,10 @@ const ProjectDetailPage = () => {
                             <span
                                 className="flex-1 break-words">{new Date(project.data.dateEnd).toLocaleDateString('fr-FR')}</span>
                         </div>
-                        <ProjectMembers project={project} onProjectUpdate={() => window.location.reload()} />
-                        {/* Phases Section */}
-                        <div className="col-span-3 mt-4">
-                            <div className="flex flex-col gap-4">
-                                <div className="flex justify-between items-center">
-                                    <span className="font-bold text-xl text-gray-700">Phases du projet :</span>
+                        <ProjectMembers project={project} onProjectUpdate={() => window.location.reload()}/>
+                        <ProjectPhases projects={projects} phases={phases} handleAddPhase={handleAddPhase}
+                                       phasesMutation={refetchPhases}/>
 
-                                </div>
-                                {phases && phases.length > 0 ? (
-                                    <div className="grid grid-cols-1 gap-4">
-                                        {phases.map((phase, index) => (
-                                            <div key={phase._id || index}
-                                                 className="flex flex-col p-4 border rounded-lg">
-                                                <div className="flex justify-between items-center mb-2">
-                                                    <span
-                                                        className="font-bold text-gray-700">Phase {index + 1}: {phase.name}</span>
-                                                    <span
-                                                        className="font-bold text-gray-700">{phase.pourcentage}%</span>
-                                                </div>
-                                                <div className="w-full bg-gray-200 rounded-full h-2.5">
-                                                    <div
-                                                        className="bg-Golden h-2.5 rounded-full"
-                                                        style={{width: `${phase.pourcentage}%`}}
-                                                    ></div>
-                                                </div>
-                                                <div className="flex justify-between mt-2 text-sm text-gray-600">
-                                                    <span>Status: {phase.status}</span>
-                                                    <span>
-                                                        {phase.startDate && `Début: ${new Date(phase.startDate).toLocaleDateString('fr-FR')}`}
-                                                        {phase.finishDate && ` - Fin: ${new Date(phase.finishDate).toLocaleDateString('fr-FR')}`}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        ))}
-                                        <Button
-                                            type="primary"
-                                            icon={<PlusOutlined/>}
-                                            onClick={handleAddPhase}
-                                            className="!bg-Golden !border-Golden !text-[#3A3541] font-jakarta font-bold px-4 py-2 rounded-lg hover:!bg-[#ddb84e] hover:!border-[#ddb84e]"
-                                        >
-                                            Ajouter une phase
-                                        </Button>
-                                    </div>
-                                ) : (
-                                    <div className="text-gray-500 text-center py-4">
-                                        Aucune phase définie pour ce projet
-                                    </div>
-                                )}
-                            </div>
-                        </div>
                     </div>
                 )}
             </div>

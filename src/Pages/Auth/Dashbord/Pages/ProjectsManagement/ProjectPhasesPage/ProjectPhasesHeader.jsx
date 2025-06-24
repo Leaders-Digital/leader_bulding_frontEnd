@@ -1,7 +1,7 @@
 import {Icon} from '@iconify/react/dist/iconify.js'
 import {Input} from 'antd'
-import React, {useState, useCallback} from 'react'
-import AddProjectPhase from "./Components/addProjectPhase.jsx";
+import React, {useCallback, useState} from 'react'
+import AddProjectPhase from "../ProjectDetailPage/Components/addProjectPhase.jsx";
 import useProjectPhases from '../../../../../../Hooks/ProjectPhases/useProjectPhases';
 import useProjects from '../../../../../../Hooks/ProjectHooks/useProjects';
 

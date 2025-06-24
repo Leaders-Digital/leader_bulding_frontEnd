@@ -1,7 +1,7 @@
-
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { Button, Input, Modal, Select } from 'antd'
 import React, { useState } from 'react'
+import { toast } from 'react-toastify'
 import CreateUserForm from '../../../../../Forms/createUserForm'
 
 const PageHeader = ({onFilterChange}) => {
@@ -36,6 +36,16 @@ const PageHeader = ({onFilterChange}) => {
   }
   const handleCancel=()=>{
     setIsModalVisible(false)
+  }
+
+  const handleUserCreated = () => {
+    toast.success('Utilisateur ajouté avec succès!')
+    setIsModalVisible(false)
+  }
+
+  const handleUserError = (error) => {
+    toast.error('Erreur lors de l\'ajout de l\'utilisateur')
+    console.error('Error creating user:', error)
   }
 
   return (
@@ -74,6 +84,8 @@ const PageHeader = ({onFilterChange}) => {
              >
             <CreateUserForm
             handelCancel={handleCancel}
+            onUserCreated={handleUserCreated}
+            onUserError={handleUserError}
             />
              </Modal>
                          

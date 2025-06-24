@@ -6,29 +6,42 @@ import dayjs from 'dayjs';
 
 import UseCreateUser from '../Hooks/UseCreateUser';
 import { ToastContainer, toast } from 'react-toastify';
-const CreateUserForm = ({handelCancel}) => {
+const CreateUserForm = ({handelCancel, onUserCreated, onUserError}) => {
     const methods= useForm();
     const{handleSubmit,reset,control}=methods
     const roles=[{value:"user",label:"User"},{value:"admin",label:"Admin"}]
     const{createUser,error,data,isMutating}=UseCreateUser()
     
     const onSubmit= async(user)=>{
-        
-        const dateNaissance= dayjs(user.birth).toISOString()
-        
-      await createUser(user)
-    if(data){
-      reset()
-    }
-      }
-      if(isMutating){
-        console.log("IsMutating")
-      }
-      useEffect(() => {
-        if (error) {
-          toast.error(error.message);
+        try {
+            const dateNaissance= dayjs(user.birth).toISOString()
+            await createUser(user)
+        } catch (error) {
+            if (onUserError) {
+                onUserError(error)
+            }
         }
-      }, [error]);
+    }
+    
+    // Watch for successful data response
+    useEffect(() => {
+        if (data && !isMutating) {
+            reset()
+            if (onUserCreated) {
+                onUserCreated()
+            }
+        }
+    }, [data, isMutating, onUserCreated, reset]);
+    
+    // Watch for errors
+    useEffect(() => {
+        if (error) {
+            toast.error(error.message || 'Erreur lors de l\'ajout de l\'utilisateur');
+            if (onUserError) {
+                onUserError(error)
+            }
+        }
+    }, [error, onUserError]);
    
   return (
     <div className='h-[48rem] max-h-[40rem] overflow-y-auto '>

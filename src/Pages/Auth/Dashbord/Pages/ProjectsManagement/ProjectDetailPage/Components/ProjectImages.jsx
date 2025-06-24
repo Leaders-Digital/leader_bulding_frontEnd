@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Swiper, SwiperSlide} from 'swiper/react';
 import {Autoplay, Navigation} from 'swiper/modules';
-import {Button, message, Modal, Upload} from 'antd';
+import {Button, Empty, message, Modal, Upload} from 'antd';
 import {DeleteOutlined, PlusOutlined} from '@ant-design/icons';
 import {Icon} from '@iconify/react/dist/iconify.js';
 import 'swiper/css';
@@ -153,7 +153,7 @@ const ProjectImages = ({id}) => {
 
     if (!projectPhotos || projectPhotos.length === 0) {
         return (
-            <div className="w-full bg-white rounded-xl pb-6 pl-6 pt-2">
+            <div className="w-full bg-white rounded-xl pb-6 pl-6 pt-2  ">
                 <div className="w-full h-14 border-b-2 border-b-[#DBDCDE] mb-4 flex justify-between items-center">
                     <span className="font-jakarta text-xl font-bold text-[#3A3541] ml-3">Images du chantier</span>
                     <Upload {...uploadProps}>
@@ -166,8 +166,8 @@ const ProjectImages = ({id}) => {
                         </Button>
                     </Upload>
                 </div>
-                <div className="flex justify-center items-center h-64 text-gray-500">
-                    Aucune image disponible
+                <div className="flex justify-center items-center h-28 mt-16  text-gray-500">
+                    <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}/>
                 </div>
                 <ProjectVideos id={id}/>
             </div>
@@ -248,7 +248,6 @@ const ProjectImages = ({id}) => {
                 </Swiper>
             </div>
             <ProjectVideos id={id}/>
-
             <Modal
                 open={deleteModalVisible}
                 onCancel={() => {

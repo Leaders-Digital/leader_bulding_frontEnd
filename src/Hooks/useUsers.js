@@ -11,7 +11,7 @@ const userUsers = (filter = "", pagination = {current: 1, pageSize: 10}) => {
             revalidateOnFocus: false,
         }
     );
-    console.log(data)
+  
     return {
         users: data?.data,
         error,
