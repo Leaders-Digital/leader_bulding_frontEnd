@@ -213,14 +213,7 @@ const ProjectPhases = ({phases, handleAddPhase, phasesMutation, projects}) => {
                                     </Collapse.Panel>
                                 ))}
                             </Collapse>
-                            <Button
-                                type="primary"
-                                icon={<PlusOutlined/>}
-                                onClick={handleAddPhase}
-                                className="!bg-Golden !border-Golden !text-[#3A3541] font-jakarta font-bold px-4 py-2 rounded-lg hover:!bg-[#ddb84e] hover:!border-[#ddb84e]"
-                            >
-                                Ajouter une phase
-                            </Button>
+
                         </div>
                     ) : (
                         <div className="text-gray-500 text-center py-4">
@@ -228,6 +221,14 @@ const ProjectPhases = ({phases, handleAddPhase, phasesMutation, projects}) => {
                         </div>
                     )}
                 </div>
+                <Button
+                    type="primary"
+                    icon={<PlusOutlined/>}
+                    onClick={handleAddPhase}
+                    className="!bg-Golden w-full !border-Golden !text-[#3A3541] font-jakarta font-bold px-4 py-2 rounded-lg hover:!bg-[#ddb84e] hover:!border-[#ddb84e]"
+                >
+                    Ajouter une phase
+                </Button>
             </div>
 
             <ModifyProjectPhase

@@ -14,7 +14,6 @@ const ProjectPhasesTable = ({filter, projects = []}) => {
     const [pagination, setPagination] = useState({current: 1, pageSize: 10});
 
     const {data: phases, loading, error, refetch} = useProjectPhases(filter, pagination);
-
     useEffect(() => {
         setPagination((prevstate) => ({...prevstate, current: 1}));
     }, [filter]);

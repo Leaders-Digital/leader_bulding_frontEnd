@@ -26,7 +26,7 @@ const ProjectDetailPage = () => {
     const [addPhaseModal, setAddPhaseModal] = useState(false)
     const {id} = useParams()
     const navigate = useNavigate()
-    const {project, isLoading, error} = useProject(id)
+    const {project, isLoading, error, mutate: mutateProject} = useProject(id)
     const {file, mutate, isLoading: isLoadingFile, error: errorFile} = useFile(id, "Project")
     const {createProjectPhase} = useProjectPhases();
 
@@ -101,6 +101,11 @@ const ProjectDetailPage = () => {
         }
     }
 
+    const handleProjectUpdate = async () => {
+        // Use mutate to refresh project data without page reload
+        await mutateProject();
+    }
+
     return (
         <div className=' w-full flex flex-col'>
             <div className=' mb-3'><span className=' font-jakarta text-3xl  font-bold size-6  text-[#3A3541]'>Gestion projets </span>
@@ -143,7 +148,7 @@ const ProjectDetailPage = () => {
                             <span
                                 className="flex-1 break-words">{new Date(project.data.dateEnd).toLocaleDateString('fr-FR')}</span>
                         </div>
-                        <ProjectMembers project={project} onProjectUpdate={() => window.location.reload()}/>
+                        <ProjectMembers project={project} onProjectUpdate={handleProjectUpdate}/>
                         <ProjectPhases projects={projects} phases={phases} handleAddPhase={handleAddPhase}
                                        phasesMutation={refetchPhases}/>
 

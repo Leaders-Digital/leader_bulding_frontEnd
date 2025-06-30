@@ -10,6 +10,7 @@ import {Icon} from "@iconify/react/dist/iconify.js";
 import CostumButton from "../../Components/CostumButton";
 import LogoAnimation from "../../Components/Animated/LogoAnimation";
 import {UseAuth} from "../../Contexts/AuthContext";
+import {toast} from "react-toastify";
 
 const LoginPage = () => {
 
@@ -19,7 +20,13 @@ const LoginPage = () => {
         control,
         handleSubmit,
         formState: {errors},
-    } = useForm();
+    } = useForm({
+        defaultValues: {
+            email: "",
+            password: ""
+        },
+        mode: "onChange"
+    });
     const navigate = useNavigate();
 
     const OnSubmit = async (data) => {
@@ -27,14 +34,25 @@ const LoginPage = () => {
             setIsLoading(true)
             const response = await Login(data.email, data.password);
             console.log("Login", response);
-            if (response) {
-                await login();
-            }
+            await login();
             setIsLoading(false)
 
         } catch (e) {
             setIsLoading(false)
             console.log("failed");
+            let errorMessage = "Échec de la connexion";
+            
+            if (e.message) {
+                errorMessage = e.message;
+            } else if (e.response?.status === 401) {
+                errorMessage = "Email ou mot de passe incorrect";
+            } else if (e.response?.status === 404) {
+                errorMessage = "Utilisateur non trouvé";
+            } else if (e.response?.status >= 500) {
+                errorMessage = "Erreur du serveur. Veuillez réessayer plus tard";
+            }
+            
+            toast.error(errorMessage);
         }
     };
 
@@ -57,6 +75,13 @@ const LoginPage = () => {
                                     name="email"
                                     control={control}
                                     defaultValue=""
+                                    rules={{
+                                        required: "L'email est requis",
+                                        pattern: {
+                                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                            message: "Format d'email invalide"
+                                        }
+                                    }}
                                     render={({field}) => (
                                         <CostumInput
                                             {...field}
@@ -70,6 +95,9 @@ const LoginPage = () => {
                                         />
                                     )}
                                 />
+                                {errors.email && (
+                                    <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+                                )}
                             </div>
                             <div>
                                 <label htmlFor="password" className="font-medium mb-6">
@@ -80,6 +108,9 @@ const LoginPage = () => {
                                     name="password"
                                     control={control}
                                     defaultValue=""
+                                    rules={{
+                                        required: "Le mot de passe est requis"
+                                    }}
                                     render={({field}) => (
                                         <PasswordInput
                                             {...field}
@@ -89,6 +120,9 @@ const LoginPage = () => {
                                         />
                                     )}
                                 />
+                                {errors.password && (
+                                    <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
+                                )}
                             </div>
                         </div>
                         <div className="flex flex-row justify-center items-center mt-20 pr-8">

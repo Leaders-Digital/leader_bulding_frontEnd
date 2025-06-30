@@ -1,29 +1,29 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {Button, DatePicker, Form, Input, message, Modal, Select} from 'antd';
 import {Icon} from "@iconify/react";
 import dayjs from 'dayjs';
 import useUpdateProjectPhase from '../../../../../../../Hooks/ProjectPhases/useUpdateProjectPhase.js';
+import {useNavigate, useParams} from "react-router-dom";
+import useProject from "../../../../../../../Hooks/ProjectHooks/useProject.js";
 
-const ModifyProjectPhase = ({isOpen, onClose, phase, projects = [], phasesMutation}) => {
+const ModifyProjectPhase = ({isOpen, onClose, phase, phasesMutation}) => {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const {updateProjectPhase, isMutating} = useUpdateProjectPhase();
     const formInitializedRef = useRef(false);
-    console.log("projects", projects)
+    const {id} = useParams()
+    const {project, isLoading, error} = useProject(id)
+
+
     useEffect(() => {
         if (phase && isOpen && !formInitializedRef.current) {
             let projectId = phase.projectId;
-            let projectName = '';
-            
             if (projectId && typeof projectId === 'object' && projectId._id) {
                 projectId = projectId._id;
-                projectName = projectId.name || '';
-            } else if (projectId && typeof projectId === 'object' && projectId.name) {
-                projectName = projectId.name;
             }
 
             form.setFieldsValue({
-                projectId: projectName,
+                projectId: projectId,
                 name: phase.name,
                 status: phase.status,
                 pourcentage: phase.pourcentage,
@@ -42,7 +42,6 @@ const ModifyProjectPhase = ({isOpen, onClose, phase, projects = [], phasesMutati
         if (value === 'Terminé') {
             form.setFieldsValue({pourcentage: 100});
         }
-
     };
 
     const handleSubmit = async () => {
@@ -57,15 +56,8 @@ const ModifyProjectPhase = ({isOpen, onClose, phase, projects = [], phasesMutati
                 return;
             }
 
-            // Get the original project ID from the phase data
-            let projectId = phase.projectId;
-            if (projectId && typeof projectId === 'object' && projectId._id) {
-                projectId = projectId._id;
-            }
-
             const formattedValues = {
                 ...values,
-                projectId: projectId, // Use the original project ID, not the name
                 startDate: values.startDate ? values.startDate.format('YYYY-MM-DD') : '',
                 finishDate: values.finishDate ? values.finishDate.format('YYYY-MM-DD') : ''
             };
@@ -152,11 +144,11 @@ const ModifyProjectPhase = ({isOpen, onClose, phase, projects = [], phasesMutati
                         placeholder="Sélectionner un projet"
                         disabled={true}
                     >
-                        {projects.map(project => (
-                            <Select.Option key={project._id} value={project.name}>
-                                {project.name || 'Projet sans nom'}
+                        {project && (
+                            <Select.Option key={project._id} value={project._id}>
+                                {project.data.name || 'Projet sans nom'}
                             </Select.Option>
-                        ))}
+                        )}
                     </Select>
                 </Form.Item>
 
