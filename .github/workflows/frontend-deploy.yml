@@ -3,9 +3,7 @@ name: Build and Deploy Frontend Docker Container
 on:
   push:
     branches: [ master ]  # or your deployment branch
-    paths:
-      - 'leader_bulding_frontEnd/**'
-
+    
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
