@@ -14,7 +14,8 @@ const CreateProspectForm = ({onSubmitForm,prospect}) => {
     const methods=useForm({
       defaultValues:{
         telephone:[{number:''}]
-      }
+      },
+      mode: "onChange"
     })
     const[forceReset,SetforceReset]=useState()
     const{handleSubmit,reset,control,formState:{isValid}}=methods
@@ -88,6 +89,7 @@ if(prospect){
     adress:prospect?.adresse,
     platform:(prospect?.source==="rs")?prospect?.socialMedia?.platform:null,
     link:(prospect?.source==='rs')?prospect?.socialMedia.link:null,
+    autre:(prospect?.source==="autre")?prospect?.otherSourceDescription:null,
     service:prospect?.service,
     projet:prospect?.projectType,
     bien:prospect?.propertyType,
@@ -113,48 +115,56 @@ if(prospect){
 }
 },[prospect,reset])
     const onSubmit=async(data)=>{
- 
-      const propertyDetails = {
-        rooms: roomsRef.current,  
-        floors: Array.from({ length: floor }, (_, i) => ({
-          floorNumber: i + 1,
-          rooms: roomsRef.current[i + 1] || 1, 
-        })),
-      };
-      
-      const prospectData = {
-        name: data.name,
-        lastName: data.lastName,
-          telephone: data.telephone.map(t => t.number),
-          email: data.email,
-        adress: data.adress,
-        status: "prospection",
-        propertyType: data.bien,
-        propertyDetails: data.bien==="R+N"? propertyDetails:{floors:[{floorNumber:1,rooms:data.rdcRooms}],rooms:{'1':data.rdcRooms}},
-        projectType: data.projet,
-        source: data.source,
-        agence: data.source === "agence" ? { name: data.agence, agent: data.agent } : {},
-        socialMedia: data.source === "rs" ? { platform: data.platform, link: data.link } : {},
-        otherSourceDescription: data.source === "Other" ? data.autre : null,
-        service: data.service,
-        profilePicId: data.profilePicId,
-        percent:data.percent,
-        lotissement:data.location,
-        lotissementCords:data?.location ==="Lotissement"?{nom:data?.nomLotiss,numLot:data?.numeroLotiss}:{},
-        adressParticulier:data?.adressParticulier
-      };
-        console.log("the data of prospect",prospectData)
-      const result =  await createProspect(prospectData)
-        if(result.data){
-           
-            toast.success(result.message)
-           
-            resetFloors()
-            reset()
-            SetforceReset(true)
-            refreshData("","")
-           
+      console.log("Form submitted with data:", data)
+      toast.info("Tentative de création du prospect...")
+      try {
+        const propertyDetails = {
+          rooms: roomsRef.current,  
+          floors: Array.from({ length: floor }, (_, i) => ({
+            floorNumber: i + 1,
+            rooms: roomsRef.current[i + 1] || 1, 
+          })),
+        };
+        
+        const prospectData = {
+          name: data.name,
+          lastName: data.lastName,
+            telephone: data.telephone.map(t => t.number),
+            email: data.email,
+          adress: data.adress,
+          status: "prospection",
+          propertyType: data.bien,
+          propertyDetails: data.bien==="R+N"? propertyDetails:{floors:[{floorNumber:1,rooms:data.rdcRooms}],rooms:{'1':data.rdcRooms}},
+          projectType: data.projet,
+          source: data.source,
+          agence: data.source === "agence" ? { name: data.agence, agent: data.agent } : {},
+          socialMedia: data.source === "rs" ? { platform: data.platform, link: data.link } : {},
+          otherSourceDescription: data.source === "autre" ? data.autre : 
+                                 data.source === "Site Web" ? "Site web" : null,
+          service: data.service,
+          profilePicId: data.profilePicId,
+          percent:data.percent,
+          lotissement:data.location,
+          lotissementCords:data?.location ==="Lotissement"?{nom:data?.nomLotiss,numLot:data?.numeroLotiss}:{},
+          adressParticulier:data?.adressParticulier
+        };
+          console.log("the data of prospect",prospectData)
+        const result = await createProspect(prospectData)
+        console.log("API response:", result)
+        
+        if(result){
+          toast.success("Prospect créé avec succès!")
+          resetFloors()
+          reset()
+          SetforceReset(true)
+          refreshData("","")
+        } else {
+          toast.error("Erreur lors de la création du prospect")
         }
+      } catch (error) {
+        console.error("Error creating prospect:", error)
+        toast.error(error.message || "Erreur lors de la création du prospect")
+      }
     }
     if(isMutating){
         console.log("IsMutating")

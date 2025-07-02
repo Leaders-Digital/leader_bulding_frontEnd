@@ -226,7 +226,7 @@ const ProjectImages = ({id}) => {
                             <SwiperSlide key={index} className={'!flex !w-[200px] !justify-center items-center'}>
                                 <div className="relative w-[150px] h-[150px] overflow-hidden rounded-lg group">
                                     <img
-                                        src={`${import.meta.env.VITE_API_URL}/${photo.FilePath}`}
+                                        src={`${import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.split('/api')[0] : 'https://serveur.leaders-building.com'}/${photo.FilePath}`}
                                         alt={`Project image ${index + 1}`}
                                         className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                                     />

@@ -1,30 +1,45 @@
 import {UploadOutlined} from '@ant-design/icons'
-import {Button, Upload} from 'antd'
+import {Button, message, Upload} from 'antd'
 import React from 'react'
 import {toast} from 'react-toastify'
 import useFile from '../../../../../../Hooks/FileHooks/useFile'
+import {UseAuth} from '../../../../../../Contexts/AuthContext'
 
 const AddProjectFile = ({id}) => {
     const {mutate} = useFile(id, "Project")
+    const {user} = UseAuth()
     const modelTyepe = "Project"
     const refId = id
-    const backendUrl = `https://serveur.leaders-building.com/api/file/addFile/${modelTyepe}/${refId}`
+    const backendUrl = `${import.meta.env.VITE_API_URL || 'https://serveur.leaders-building.com/api'}/file/addFile/${modelTyepe}/${refId}`
 
     const props = {
         name: "file",
         action: backendUrl,
+        headers: {
+            'Authorization': `Bearer ${user?.token}`,
+        },
+        beforeUpload: (file) => {
+            const isLt20M = file.size / 1024 / 1024 < 20;
+            if (!isLt20M) {
+                message.error('File must be smaller than 20MB!');
+                return false;
+            }
+            return true;
+        },
         onChange(info) {
             const {status} = info.file
             if (status === "done") {
-
-                toast.success("File uploaded")
+                toast.success("File uploaded successfully")
                 mutate()
             } else if (status === "error") {
-
-                toast.error("File upload failed")
+                console.error("Upload error:", info.file.error)
+                toast.error("File upload failed. Please try again.")
+            } else if (status === "uploading") {
+                console.log("Uploading...", info.file.percent)
             }
         },
-        showUploadList: false
+        showUploadList: false,
+        accept: ".jpg,.png,.jpeg,.pdf,.xlsx"
     }
 
     return (

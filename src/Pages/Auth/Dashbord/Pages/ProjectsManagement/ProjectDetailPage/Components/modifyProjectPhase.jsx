@@ -1,19 +1,18 @@
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Button, DatePicker, Form, Input, message, Modal, Select} from 'antd';
 import {Icon} from "@iconify/react";
 import dayjs from 'dayjs';
 import useUpdateProjectPhase from '../../../../../../../Hooks/ProjectPhases/useUpdateProjectPhase.js';
-import {useNavigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import useProject from "../../../../../../../Hooks/ProjectHooks/useProject.js";
 
-const ModifyProjectPhase = ({isOpen, onClose, phase, phasesMutation}) => {
+const ModifyProjectPhase = ({isOpen, onClose, phase, phasesMutation, projects}) => {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const {updateProjectPhase, isMutating} = useUpdateProjectPhase();
     const formInitializedRef = useRef(false);
     const {id} = useParams()
     const {project, isLoading, error} = useProject(id)
-
 
     useEffect(() => {
         if (phase && isOpen && !formInitializedRef.current) {
@@ -110,6 +109,25 @@ const ModifyProjectPhase = ({isOpen, onClose, phase, phasesMutation}) => {
         return current && current.isBefore(startDate, 'day');
     };
 
+    // Get project name based on different data structures
+    const getProjectName = () => {
+        if (project && project.data && project.data.name) {
+            return project.data.name;
+        }
+
+
+        if (projects && phase && phase.projectId) {
+            if (typeof phase.projectId === 'object' && phase.projectId.name) {
+                return phase.projectId.name;
+            } else if (typeof phase.projectId === 'string') {
+                const foundProject = projects.find(p => p._id === phase.projectId);
+                return foundProject?.name || 'Projet sans nom';
+            }
+        }
+
+        return 'Projet sans nom';
+    };
+
     return (
         <Modal
             title={
@@ -144,11 +162,24 @@ const ModifyProjectPhase = ({isOpen, onClose, phase, phasesMutation}) => {
                         placeholder="Sélectionner un projet"
                         disabled={true}
                     >
-                        {project && (
-                            <Select.Option key={project._id} value={project._id}>
-                                {project.data.name || 'Projet sans nom'}
-                            </Select.Option>
-                        )}
+                        {(() => {
+                            let projectId = '';
+                            if (project && project.data && project.data._id) {
+                                projectId = project.data._id;
+                            } else if (phase && phase.projectId) {
+                                if (typeof phase.projectId === 'object' && phase.projectId._id) {
+                                    projectId = phase.projectId._id;
+                                } else if (typeof phase.projectId === 'string') {
+                                    projectId = phase.projectId;
+                                }
+                            }
+
+                            return projectId ? (
+                                <Select.Option key={projectId} value={projectId}>
+                                    {getProjectName()}
+                                </Select.Option>
+                            ) : null;
+                        })()}
                     </Select>
                 </Form.Item>
 
