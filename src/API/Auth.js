@@ -22,3 +22,15 @@ export const getCurrentUser = async () => {
         );
     }
 };
+
+export const userlogout = async () => {
+    try {
+        const response = await Axios.post("/user/logout", {});
+        console.log("Logout", response);
+        return response.data;
+    } catch (e) {
+        throw new Error(
+            e.response.data?.message || "failed to get the currnt user"
+        );
+    }
+};

@@ -7,7 +7,7 @@ const DeleteProjectPhase = ({ handleCancel, phase, phasesMutation }) => {
     const HandleDeletePhase = async () => {
         try {
             const response = await toast.promise(
-                axios.delete(`http://localhost:5000/api/projectPhase/delete/${phase._id}`),
+                axios.delete(`${import.meta.env.VITE_API_URL || 'https://serveur.leaders-building.com/api'}/projectPhase/delete/${phase._id}`),
                 {
                     pending: 'Suppression en cours...',
                     success: 'Phase supprimée avec succès!',

@@ -28,7 +28,7 @@ const UserProfilePage = () => {
 
   useEffect(() => {
     if (file?.data && file.data.length > 0) {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+      const apiUrl = import.meta.env.VITE_API_URL || 'https://serveur.leaders-building.com/api'
       const baseUrl = apiUrl.split('/api')[0]
     
       const lastFile= file?.data[file?.data.length-1]
@@ -38,7 +38,7 @@ const UserProfilePage = () => {
 
   const handleImageError = () => {
     if (file?.data && file.data.length > 0) {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+      const apiUrl = import.meta.env.VITE_API_URL || 'https://serveur.leaders-building.com/api'
       const baseUrl = apiUrl.split('/api')[0]
       const filePath = file.data[0]?.FilePath
 

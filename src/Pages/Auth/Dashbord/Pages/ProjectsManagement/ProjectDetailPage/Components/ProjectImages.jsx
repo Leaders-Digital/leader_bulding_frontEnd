@@ -22,6 +22,7 @@ const ProjectImages = ({id}) => {
     const {modifyProject, isMutating: isUpdatingProject} = useModifyProject();
     const [deleteModalVisible, setDeleteModalVisible] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
+    const [isUploading, setIsUploading] = useState(false);
 
     const projectPhotos = project?.data?.photos || [];
 
@@ -81,6 +82,7 @@ const ProjectImages = ({id}) => {
 
     const handleUpload = async ({file: uploadedFile}) => {
         try {
+            setIsUploading(true);
             console.log('Uploading file:', uploadedFile); // Debug log
 
             const uploadResponse = await uploadFile({
@@ -113,6 +115,8 @@ const ProjectImages = ({id}) => {
         } catch (e) {
             console.error('Upload error:', e);
             toast.error("Erreur lors du téléchargement!");
+        } finally {
+            setIsUploading(false);
         }
     };
 
@@ -160,7 +164,7 @@ const ProjectImages = ({id}) => {
                         <Button
                             icon={<PlusOutlined/>}
                             className="mr-6 bg-Golden text-black border-Golden hover:bg-yellow-600 hover:border-yellow-600"
-                            loading={isUpdatingProject}
+                            loading={isUploading}
                         >
                             Ajouter une image
                         </Button>
@@ -181,8 +185,8 @@ const ProjectImages = ({id}) => {
                 <Upload {...uploadProps}>
                     <Button
                         icon={<PlusOutlined/>}
-                        className="mr-6 bg-Golden text-black !border-Golden !hover:bg-yellow-600 !hover:border-yellow-600"
-                        loading={isUpdatingProject}
+                        className="mr-6 bg-Golden text-black border-Golden hover:bg-yellow-600 hover:border-yellow-600"
+                        loading={isUploading}
                     >
                         Ajouter une image
                     </Button>
@@ -222,7 +226,7 @@ const ProjectImages = ({id}) => {
                             <SwiperSlide key={index} className={'!flex !w-[200px] !justify-center items-center'}>
                                 <div className="relative w-[150px] h-[150px] overflow-hidden rounded-lg group">
                                     <img
-                                        src={`${import.meta.env.VITE_API_URL}/${photo.FilePath}`}
+                                        src={`${import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.split('/api')[0] : 'https://serveur.leaders-building.com'}/${photo.FilePath}`}
                                         alt={`Project image ${index + 1}`}
                                         className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                                     />

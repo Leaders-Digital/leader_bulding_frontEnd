@@ -29,6 +29,12 @@ RUN echo 'server { \
 }' > /etc/nginx/conf.d/default.conf
 
 # Expose port
+RUN npm run build
+
+FROM nginx:stable-alpine
+
+COPY --from=build /app/dist /usr/share/nginx/html
+
 EXPOSE 3002
 
 # Start Nginx

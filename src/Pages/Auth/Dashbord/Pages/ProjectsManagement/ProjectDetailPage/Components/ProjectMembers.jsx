@@ -12,6 +12,7 @@ const ProjectMembers = ({project, onProjectUpdate}) => {
     const [currentMembers, setCurrentMembers] = useState([]);
     const [filter, setFilter] = useState({search: "", status: ""});
     const [pagination, setPagination] = useState({current: 1, pageSize: 1000});
+    const [deletingMemberId, setDeletingMemberId] = useState(null);
 
     const {users, isLoading, error, totalPages, totalItems, usersMutation} = useUsers(filter, pagination);
     const {modifyProject, isMutating} = useModifyProject();
@@ -56,6 +57,13 @@ const ProjectMembers = ({project, onProjectUpdate}) => {
         }
     }, [users, project?.data?.members, project?.members]);
 
+    // Cleanup effect to reset deleting state when component unmounts
+    useEffect(() => {
+        return () => {
+            setDeletingMemberId(null);
+        };
+    }, []);
+
     const showModal = () => {
         setIsModalVisible(true);
     };
@@ -92,12 +100,8 @@ const ProjectMembers = ({project, onProjectUpdate}) => {
             toast.dismiss(loadingToast);
             toast.success("Membres ajoutés avec succès!");
 
-            if (project && project.data) {
-                project.data.members = updatedMembers;
-            }
-
             if (onProjectUpdate) {
-                onProjectUpdate();
+                await onProjectUpdate();
             }
 
             setIsModalVisible(false);
@@ -110,6 +114,7 @@ const ProjectMembers = ({project, onProjectUpdate}) => {
 
     const handleRemoveMember = async (userId) => {
         try {
+            setDeletingMemberId(userId);
             const loadingToast = toast.loading("Suppression du membre en cours...");
 
             const currentMembers = Array.isArray(project?.data?.members)
@@ -144,16 +149,14 @@ const ProjectMembers = ({project, onProjectUpdate}) => {
             toast.dismiss(loadingToast);
             toast.success("Membre supprimé avec succès!");
 
-            if (project && project.data) {
-                project.data.members = updatedMembers;
-            }
-
             if (onProjectUpdate) {
-                onProjectUpdate();
+                await onProjectUpdate();
             }
         } catch (error) {
             console.error('Error removing member:', error);
             toast.error("Erreur lors de la suppression du membre");
+        } finally {
+            setDeletingMemberId(null);
         }
     };
 
@@ -203,7 +206,7 @@ const ProjectMembers = ({project, onProjectUpdate}) => {
                                     icon={<CloseOutlined/>}
                                     onClick={() => handleRemoveMember(member._id)}
                                     className="!text-red-500 hover:!text-red-700 hover:!bg-red-50 opacity-0 group-hover:opacity-100 transition-opacity rounded-full w-6 h-6 flex items-center justify-center"
-                                    loading={isMutating}
+                                    loading={deletingMemberId === member._id}
                                 />
                             </div>
                         ))}
