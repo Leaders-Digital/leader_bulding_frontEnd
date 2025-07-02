@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  front-building:
+    image: ${DOCKER_USERNAME}/front-building:latest
+    container_name: front-building
+    ports:
+      - "0.0.0.0:3002:3002"
+    environment:
+      - NODE_ENV=development
+      - PORT=3002
+      - VITE_API_URL=https://serveur.leaders-building.com
+      - VITE_API_KEY=lead!ers@bus!iness@!20!24
+      - VITE_API_TIMEOUT=30000
+      - VITE_APP_TITLE=Leader Building Frontend
+    volumes:
+      - .:/app
+      - /app/node_modules 
