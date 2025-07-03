@@ -215,14 +215,15 @@ const AddProjectPhase = ({
                         notFoundContent="Aucune phase trouvée"
                         allowClear
                     >
+                        <Select.Option value="new">
+                            ──── Créer une nouvelle phase ────
+                        </Select.Option>
                         {phaseNames.map(phaseName => (
                             <Select.Option key={phaseName} value={phaseName}>
                                 {phaseName}
                             </Select.Option>
                         ))}
-                        <Select.Option value="new">
-                            ──── Créer une nouvelle phase ────
-                        </Select.Option>
+
                     </Select>
                 </Form.Item>
 

@@ -207,7 +207,16 @@ const CreateProjectForm = ({handleCancel, project, onSubmittingChange}) => {
                                             field.onChange(value);
                                             onChangeState(value);
                                         }}
-                                    />
+                                    >
+                                        <Select.Option value="new">
+                                            ──── Créer une nouvelle ville ────
+                                        </Select.Option>
+                                        {states.map(state => (
+                                            <Select.Option key={state.value} value={state.value}>
+                                                {state.label}
+                                            </Select.Option>
+                                        ))}
+                                    </Select>
                                 )}/>
                             </div>
 
@@ -271,7 +280,16 @@ const CreateProjectForm = ({handleCancel, project, onSubmittingChange}) => {
                                             className='h-12 '
                                             placeholder="Délégation"
                                             disabled={isMutating}
-                                        />
+                                        >
+                                            <Select.Option value="new">
+                                                ──── Créer une nouvelle délégation ────
+                                            </Select.Option>
+                                            {cities.map(city => (
+                                                <Select.Option key={city.value} value={city.value}>
+                                                    {city.label}
+                                                </Select.Option>
+                                            ))}
+                                        </Select>
                                     )}
                                 />
                             </div>
