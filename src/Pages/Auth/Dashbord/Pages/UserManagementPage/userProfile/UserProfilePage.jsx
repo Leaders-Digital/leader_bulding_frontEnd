@@ -28,15 +28,25 @@ const UserProfilePage = () => {
 
   useEffect(() => {
     if (file?.data && file.data.length > 0) {
-      const lastFile = file?.data[file?.data.length-1]
-      setImageUrl(`https://serveur.leaders-building.com/${lastFile.FilePath}`)
+      const apiUrl = import.meta.env.VITE_API_URL || 'https://serveur.leaders-building.com/api'
+      const baseUrl = apiUrl.split('/api')[0]
+    
+      const lastFile= file?.data[file?.data.length-1]
+      setImageUrl(`${baseUrl}/${lastFile.FilePath}`)
     }
   }, [file])
 
   const handleImageError = () => {
     if (file?.data && file.data.length > 0) {
+      const apiUrl = import.meta.env.VITE_API_URL || 'https://serveur.leaders-building.com/api'
+      const baseUrl = apiUrl.split('/api')[0]
       const filePath = file.data[0]?.FilePath
-      setImageUrl(`https://serveur.leaders-building.com/${filePath}`)
+
+      if (imageUrl.includes(apiUrl)) {
+        setImageUrl(`${baseUrl}${filePath}`)
+      } else if (imageUrl === `${baseUrl}${filePath}`) {
+        setImageUrl(`${baseUrl}/${filePath}`)
+      }
     }
   }
 

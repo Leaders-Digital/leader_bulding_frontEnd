@@ -7,13 +7,20 @@ const ProjectPageHeader = ({onFilterChange}) => {
     const [status, setStatus] = useState("")
     const [search, setSearch] = useState("")
     const [createModal, setCreateModal] = useState(false)
+    const [isSubmitting, setIsSubmitting] = useState(false)
 
     const handleCreateModal = () => {
         setCreateModal(true)
     }
 
     const handleCnacelCreate = () => {
-        setCreateModal(false)
+        if (!isSubmitting) {
+            setCreateModal(false)
+        }
+    }
+    
+    const handleSubmittingChange = (submitting) => {
+        setIsSubmitting(submitting)
     }
 
     const projstatus = [
@@ -89,7 +96,7 @@ const ProjectPageHeader = ({onFilterChange}) => {
                 open={createModal}
                 style={{top: 40}}
                 onCancel={handleCnacelCreate}
-                closeIcon={<Icon icon="hugeicons:cancel-circle" width="24" height="24" style={{color: "#F7D47A"}}/>}
+                closeIcon={<Icon icon="hugeicons:cancel-circle" width="24" height="24" style={{color: isSubmitting ? "#ccc" : "#F7D47A"}}/>}
                 width={"45rem"}
                 bodyStyle={{
                     height: "44rem",
@@ -97,8 +104,10 @@ const ProjectPageHeader = ({onFilterChange}) => {
 
                 }}
                 footer={null}
+                maskClosable={!isSubmitting}
+                keyboard={!isSubmitting}
             >
-                <CreateProjectForm handleCancel={handleCnacelCreate}/>
+                <CreateProjectForm handleCancel={handleCnacelCreate} onSubmittingChange={handleSubmittingChange}/>
             </Modal>
         </div>
     )

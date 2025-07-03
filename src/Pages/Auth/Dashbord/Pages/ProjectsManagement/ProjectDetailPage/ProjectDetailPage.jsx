@@ -188,9 +188,12 @@ const ProjectDetailPage = () => {
 
             <Drawer title="Tous fiches projet" onClose={onCloseDrawer} open={openDrawer}>
                 {file?.data.map((f) => {
+                    const baseUrl = import.meta.env.VITE_API_URL ? 
+                        import.meta.env.VITE_API_URL.split('/api')[0] : 
+                        'https://serveur.leaders-building.com';
                     return (
                         <div key={f._id} className='mb-3 px-2 rounded-lg hover:bg-slate-100 '>
-                            <a href={`https://serveur.leaders-building.com/${f.FilePath}`} target="_blank" rel="noreferrer">
+                            <a href={`${baseUrl}/${f.FilePath}`} target="_blank" rel="noreferrer">
                                 {getFileIcon(f.fileType)}
                                 <span className='font-jakarta text-sm font-bold text-[#3A3541] '>
                                     {f.originalName}</span>

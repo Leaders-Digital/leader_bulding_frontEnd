@@ -8,7 +8,15 @@ const ProjectPhasesColumns = ({onActionClick, projects = []}) => [
         key: "projectId",
         width: "20%",
         render: (projectId, record) => {
-            return projectId.name;
+            if (!projectId) return '-';
+            if (typeof projectId === 'object' && projectId.name) {
+                return projectId.name;
+            }
+            if (typeof projectId === 'string') {
+                const project = projects.find(p => p._id === projectId);
+                return project?.name || '-';
+            }
+            return '-';
         },
         sorter: (a, b) => {
             // Handle populated projectId objects
@@ -28,6 +36,11 @@ const ProjectPhasesColumns = ({onActionClick, projects = []}) => [
                 projectBName = projectB?.name || '';
             }
 
+            // Handle null/undefined values
+            if (!projectAName && !projectBName) return 0;
+            if (!projectAName) return 1; // null values go to the end
+            if (!projectBName) return -1; // null values go to the end
+
             return projectAName.localeCompare(projectBName);
         }
     },
@@ -44,6 +57,7 @@ const ProjectPhasesColumns = ({onActionClick, projects = []}) => [
         key: "status",
         width: "15%",
         render: (status) => {
+            if (!status) return '-';
             const statusColors = {
                 'En cours': '#1890ff',
                 'Terminé': '#52c41a',
@@ -63,7 +77,7 @@ const ProjectPhasesColumns = ({onActionClick, projects = []}) => [
         dataIndex: "pourcentage",
         key: "pourcentage",
         width: "15%",
-        render: (pourcentage) => `${pourcentage}%`,
+        render: (pourcentage) => pourcentage ? `${pourcentage}%` : '-',
         sorter: true,
     },
     {

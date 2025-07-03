@@ -3,7 +3,7 @@ import React from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 import UseDeleteProject from "../../../../../../Hooks/ProjectHooks/useDeleteProject.js";
 
-const DeleteProject = ({handleCancel,project,refreshProjects}) => {
+const DeleteProject = ({handleCancel,project,onProjectDeleted}) => {
 
     const { data,deleteProject,isMutating,error  }=UseDeleteProject()
     const HandleDeleteUser=async()=>{
@@ -16,7 +16,7 @@ const DeleteProject = ({handleCancel,project,refreshProjects}) => {
                 }
             )
             if(response){
-                refreshProjects()
+                onProjectDeleted()
                 handleCancel()
             }
         }catch(e){

@@ -10,7 +10,7 @@ import useCreateProject from '../../Hooks/ProjectHooks/useCreateProject'
 import {toast} from 'react-toastify'
 import useProjects from "../../Hooks/ProjectHooks/useProjects.js";
 
-const CreateProjectForm = ({handleCancel, project}) => {
+const CreateProjectForm = ({handleCancel, project, onSubmittingChange}) => {
     const [states, setStates] = useState([])
     const [state, setState] = useState()
     const [clientsData, setClientsData] = useState([])
@@ -57,6 +57,13 @@ const CreateProjectForm = ({handleCancel, project}) => {
         }
         getCities()
     }, [state])
+    
+    // Notify parent component when submitting state changes
+    useEffect(() => {
+        if (onSubmittingChange) {
+            onSubmittingChange(isMutating)
+        }
+    }, [isMutating, onSubmittingChange])
 
     const onChangeState = (v) => {
         setState(v)
@@ -129,9 +136,9 @@ const CreateProjectForm = ({handleCancel, project}) => {
 
             if (result?.data) {
                 toast.success("Projet créé avec succès!");
-                await refreshProjects();
                 handleCancel();
                 reset();
+                refreshProjects();
             }
         } catch (error) {
             console.error("Error saving project:", error);
@@ -163,21 +170,25 @@ const CreateProjectForm = ({handleCancel, project}) => {
                         <div className='flex flex-col gap-2 w-full'>
                             <InputField name="name" label="Nom du projet" placeholder="Nom"
                                         required="Nom propjet et obligatoire"
-                                        className="h-12 w-full rounded-lg bg-[#F4F5F9] p-4"/>
+                                        className="h-12 w-full rounded-lg bg-[#F4F5F9] p-4"
+                                        disabled={isMutating}/>
                             <InputField name="description" label="Description" placeholder="Description"
                                         required="Description propjet et obligatoire"
-                                        className="h-12 w-full rounded-lg bg-[#F4F5F9] p-4"/>
+                                        className="h-12 w-full rounded-lg bg-[#F4F5F9] p-4"
+                                        disabled={isMutating}/>
                             <div className='flex flex-col gap-2 px-2 '>
                                 <label className='font-jakarta font-bold'>Date de début</label>
                                 <Controller name='dateStart' control={control} render={({field}) => (
                                     <DatePicker {...field} showTime={false} format="YYYY-MM-DD"
-                                                onChange={(date) => field.onChange(date)} className='h-12 w-full'/>
+                                                onChange={(date) => field.onChange(date)} className='h-12 w-full'
+                                                disabled={isMutating}/>
                                 )}/>
                             </div>
                             <div className='flex flex-col gap-1 px-2'>
                                 <label className='font-jakarta font-bold'>Budget</label>
                                 <Controller name='budget' control={control} render={({field}) => (
-                                    <Input {...field} suffix="TND" className='h-12 w-full' type='Number'/>
+                                    <Input {...field} suffix="TND" className='h-12 w-full' type='Number'
+                                           disabled={isMutating}/>
                                 )}/>
                             </div>
 
@@ -191,6 +202,7 @@ const CreateProjectForm = ({handleCancel, project}) => {
                                         options={states}
                                         className='h-12'
                                         placeholder="Ville"
+                                        disabled={isMutating}
                                         onChange={(value) => {
                                             field.onChange(value);
                                             onChangeState(value);
@@ -207,13 +219,13 @@ const CreateProjectForm = ({handleCancel, project}) => {
                                 <Controller name='clientId' control={control} render={({field}) => (
                                     <Select {...field} options={clientsData} showSearch optionFilterProp='label'
                                             className='h-12 w-full' placeholder="Client" onSearch={onSearchClient}
-                                            loading={isLoading}/>
+                                            loading={isLoading} disabled={isMutating}/>
                                 )}/>
                             </div>
                             <div className='flex flex-col gap-1 px-2 pt-5'>
                                 <label className='font-jakarta font-bold'>Status</label>
                                 <Controller name='status' control={control} render={({field}) => (
-                                    <Select {...field} options={projstatus} className='h-12 w-full'/>
+                                    <Select {...field} options={projstatus} className='h-12 w-full' disabled={isMutating}/>
                                 )}/>
                             </div>
                             <div className='flex flex-col gap-2 px-2'>
@@ -225,6 +237,7 @@ const CreateProjectForm = ({handleCancel, project}) => {
                                         format="YYYY-MM-DD"
                                         onChange={(date) => field.onChange(date)}
                                         className='h-12 w-full'
+                                        disabled={isMutating}
                                         disabledDate={(current) => {
                                             const startDate = watch('dateStart');
                                             return startDate && current && current.isBefore(dayjs(startDate), 'day');
@@ -240,6 +253,7 @@ const CreateProjectForm = ({handleCancel, project}) => {
                                         {...field}
                                         options={projTypes}
                                         className='h-12 w-full'
+                                        disabled={isMutating}
                                     />
                                 )}/>
                             </div>
@@ -256,6 +270,7 @@ const CreateProjectForm = ({handleCancel, project}) => {
                                             options={cities}
                                             className='h-12 '
                                             placeholder="Délégation"
+                                            disabled={isMutating}
                                         />
                                     )}
                                 />
@@ -271,9 +286,15 @@ const CreateProjectForm = ({handleCancel, project}) => {
                                 placeholder="Adresse complète"
                                 required="Adresse complète est obligatoire"
                                 className="h-12 w-full rounded-lg bg-[#F4F5F9] p-4"
+                                disabled={isMutating}
                             />
                             <div className='flex flex-row justify-end'>
-                                <Button type='button' onClick={getCurrentPosition}>
+                                <Button 
+                                    type='button' 
+                                    onClick={getCurrentPosition}
+                                    disabled={isMutating}
+                                    className={isMutating ? 'opacity-50 cursor-not-allowed' : ''}
+                                >
                                     Obtenir l'emplacement actuel
                                 </Button>
                             </div>
@@ -281,10 +302,19 @@ const CreateProjectForm = ({handleCancel, project}) => {
                             <div className='flex flex-row justify-end'>
                                 <button
                                     type='submit'
-                                    className='group h-12 w-32 mt-4 bg-Golden rounded-lg hover:bg-transparent hover:border-2 hover:border-yellow-300'
+                                    disabled={isMutating}
+                                    className={`group h-12 w-32 mt-4 rounded-lg transition-all duration-200 ${
+                                        isMutating 
+                                            ? 'bg-gray-400 cursor-not-allowed' 
+                                            : 'bg-Golden hover:bg-transparent hover:border-2 hover:border-yellow-300'
+                                    }`}
                                 >
-                                    <span className='font-jakarta font-bold text-[#3A3541] group-hover:text-black'>
-                                        Créer
+                                    <span className={`font-jakarta font-bold ${
+                                        isMutating 
+                                            ? 'text-gray-600' 
+                                            : 'text-[#3A3541] group-hover:text-black'
+                                    }`}>
+                                        {isMutating ? 'Création...' : 'Créer'}
                                     </span>
                                 </button>
                             </div>

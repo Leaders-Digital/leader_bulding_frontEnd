@@ -19,9 +19,9 @@ const AddProjectFile = ({id}) => {
             'Authorization': `Bearer ${user?.token}`,
         },
         beforeUpload: (file) => {
-            const isLt20M = file.size / 1024 / 1024 < 20;
-            if (!isLt20M) {
-                message.error('File must be smaller than 20MB!');
+            const isLt100M = file.size / 1024 / 1024 < 100;
+            if (!isLt100M) {
+                message.error('File must be smaller than 100MB!');
                 return false;
             }
             return true;

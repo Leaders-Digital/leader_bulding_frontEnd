@@ -17,10 +17,12 @@ const CostumTable = ({
       }),
     }));
   
-   const handlePaginationTable=(page,pageSize)=>{
-   onChange({current:page,pageSize: pageSize}) 
-   
+   const handlePaginationTable = (page, pageSize) => {
+     if (onChange) {
+       onChange({current: page, pageSize: pageSize}) 
+     }
    }
+   
   return (
     <div className='w-full h-full flex flex-col '  >
 <div className='flex-1 overflow-y-auto flex-grow min-h-[34rem] '><Table
@@ -28,7 +30,6 @@ const CostumTable = ({
       dataSource={data}
       pagination={false} 
       loading={loading} 
-      onChange={onChange} 
       rowClassName={()=>'custom-table-row'}
       className='w-full '
       size='middle'

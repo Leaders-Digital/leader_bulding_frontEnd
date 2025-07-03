@@ -286,6 +286,7 @@ const AddProjectPhase = ({
                 <Form.Item
                     name="startDate"
                     label="Date de début"
+                    rules={[{required: true, message: 'Veuillez sélectionner une date de début'}]}
                 >
                     <DatePicker
                         placeholder="Sélectionner une date de début"
@@ -299,6 +300,7 @@ const AddProjectPhase = ({
                     label="Date de fin"
                     dependencies={['startDate']}
                     rules={[
+                        {required: true, message: 'Veuillez sélectionner une date de fin'},
                         {
                             validator: validateFinishDate
                         }

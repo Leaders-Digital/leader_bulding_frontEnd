@@ -16,20 +16,26 @@ const ProjectsTable = ({filter}) => {
     const navigate = useNavigate()
     const [pagination, setPagination] = useState({current: 1, pageSize: 10})
     const {projects, isLoading, totalItems, totalPages, mutate: refreshProjects} = useProjects(filter, pagination)
+
+
     useEffect(() => {
-
-        setPagination((prevstate) => ({...prevstate, current: 1}))
-
+        setPagination(prevState => ({...prevState, current: 1}))
     }, [filter])
-    const handleTbaleChange = (newPagination) => {
-        const updatedPagination = {
-            current: newPagination?.current || pagination.current,
-            pageSize: newPagination.pageSize || pagination.pageSize
+
+    useEffect(() => {
+        // Ensure current page is valid when totalPages changes
+        if (totalPages > 0 && pagination.current > totalPages) {
+            setPagination(prevState => ({...prevState, current: totalPages}))
         }
-        setPagination(updatedPagination)
+    }, [totalPages, pagination.current])
+
+    const handleTableChange = (newPagination) => {
+        setPagination({
+            current: newPagination.current || pagination.current,
+            pageSize: newPagination.pageSize || pagination.pageSize
+        })
     }
 
-    const currentPage = pagination.current > totalPages ? totalPages : pagination.current
     const onActionClick = (action, record) => {
         if (action === "edit") {
             setRecord(record)
@@ -39,17 +45,28 @@ const ProjectsTable = ({filter}) => {
             setRecord(record)
             setDeleteModal(true)
         }
-
     }
+
     const handleCancelModify = () => {
         setModifyModal(false)
     }
+
     const handleCancelDelete = () => {
         setDeleteModal(false)
     }
+
+    const handleProjectDeleted = () => {
+
+        // Add a small delay to ensure backend deletion is complete
+        setTimeout(() => {
+            refreshProjects()
+        }, 500)
+    }
+
     const onClickDetails = (id) => {
         navigate(`/gestionProject/project/${id}`)
     }
+
     return (
         <div className='w-full h-4/5'>
             {!isLoading ? <CostumTable
@@ -57,14 +74,11 @@ const ProjectsTable = ({filter}) => {
                 data={projects}
                 loading={isLoading}
                 pagination={{
-                    current: currentPage,
+                    current: pagination.current,
                     pageSize: pagination.pageSize,
                     total: totalItems,
-                    onchange: (page, pageSize) => {
-                        setPagination({current: page, pageSize})
-                    }
                 }}
-                onChange={handleTbaleChange}
+                onChange={handleTableChange}
             /> : <Skeleton active paragraph={{rows: 15}} className='mt-5 bg-white'/>}
             <Modal
                 title={<span
@@ -93,7 +107,8 @@ const ProjectsTable = ({filter}) => {
                 centered={true}
                 onCancel={handleCancelDelete}
             >
-                <DeleteProject handleCancel={handleCancelDelete} project={record} refreshProjects={refreshProjects}/>
+                <DeleteProject handleCancel={handleCancelDelete} project={record}
+                               onProjectDeleted={handleProjectDeleted}/>
             </Modal>
         </div>
     )
