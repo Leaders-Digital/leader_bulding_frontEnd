@@ -407,6 +407,8 @@ const ProjectVideos = ({id}) => {
                             {isUpdatingProject ? 'En cours...' : 'Supprimer'}
                         </button>
                     </div>
+
+                    
                 </div>
             </Modal>
         </>
